@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketPair: Daily GTO Deduction</title>
+    <link rel="stylesheet" href="styles/main.css"> 
+</head>
+<body>
+    <div id="game-container">
+        <h1>PocketPair</h1>
+        
+        <div id="poker-table">
+            <div id="action-log-zone">
+                </div>
+            
+            <div id="felt-oval">
+                <div id="villain-area">
+                    <div id="villain-label">Villain</div>
+                    <div id="villain-cards">
+                        <span class="card card-back"></span>
+                        <span class="card card-back"></span>
+                    </div>
+                </div>
+
+                <div id="board-area">
+                    <div id="pot-size">Pot: $10.00</div>
+                    <div id="board-cards">
+                        </div>
+                </div>
+                
+                <div id="hero-area">
+                    <div id="hero-cards">
+                        </div>
+                    <div id="hero-label">Hero</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="guess-history-zone">
+            <h3>Previous Guesses (<span id="attempts-left">6</span> left)</h3>
+            <div id="guess-history-list">
+            </div>
+        </div>
+
+        <div id="deduction-tool-zone">
+            <h3>Select Your PocketPair</h3>
+            <div id="selection-area">
+                <div id="selected-cards-display">
+                    <span id="card-slot-1" class="selected-slot" data-card="">Card 1</span>
+                    <span id="card-slot-2" class="selected-slot" data-card="">Card 2</span>
+                </div>
+                
+                <button id="submit-guess-btn" disabled>Submit Guess</button>
+                <button id="next-street-btn" disabled>Show Next Street</button>
+            </div>
+
+            <div id="card-grid" class="card-grid-container">
+            </div>
+        </div>
+        
+    </div>
+
+    <script src="js/gameLogic.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
