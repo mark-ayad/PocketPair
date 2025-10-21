@@ -3,62 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PocketPair: Daily GTO Deduction</title>
-    <link rel="stylesheet" href="styles/main.css"> 
+    <title>PocketPair - GTO Poker Deduction</title>
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <div id="game-container">
-        <h1>PocketPair</h1>
-        
-        <div id="poker-table">
-            <div id="action-log-zone">
-                </div>
+    <div class="game-container">
+        <header>
+            <h1>PocketPair</h1>
+        </header>
+
+        <main class="game-zone">
             
-            <div id="felt-oval">
+            <section class="action-history-container">
+                <div id="action-log-zone">
+                    </div>
+            </section>
+
+            <section id="table-felt">
                 <div id="villain-area">
-                    <div id="villain-label">Villain</div>
+                    <span class="player-label">Villain</span>
                     <div id="villain-cards">
-                        <span class="card card-back"></span>
-                        <span class="card card-back"></span>
+                        <span class="card"></span>
+                        <span class="card"></span>
                     </div>
                 </div>
 
                 <div id="board-area">
-                    <div id="pot-size">Pot: $10.00</div>
+                    <span id="pot-size">Pot: $0.00</span>
                     <div id="board-cards">
                         </div>
                 </div>
-                
+
                 <div id="hero-area">
                     <div id="hero-cards">
                         </div>
-                    <div id="hero-label">Hero</div>
+                    <span class="player-label">Hero</span>
                 </div>
-            </div>
-        </div>
+            </section>
 
-        <div id="guess-history-zone">
-            <h3>Previous Guesses (<span id="attempts-left">6</span> left)</h3>
-            <div id="guess-history-list">
-            </div>
-        </div>
-
-        <div id="deduction-tool-zone">
-            <h3>Select Your PocketPair</h3>
-            <div id="selection-area">
-                <div id="selected-cards-display">
-                    <span id="card-slot-1" class="selected-slot" data-card="">Card 1</span>
-                    <span id="card-slot-2" class="selected-slot" data-card="">Card 2</span>
-                </div>
+            <section class="guess-history-container" id="guess-history-zone">
+                <h2>Previous Guesses (<span id="attempts-left">6</span> left)</h2>
                 
-                <button id="submit-guess-btn" disabled>Submit Guess</button>
-                <button id="next-street-btn" disabled>Show Next Street</button>
-            </div>
+                <div class="feedback-legend">
+                    <p style="margin-bottom: 10px;"><strong>Feedback Legend</strong></p>
+                    <div class="legend-item">
+                        <span class="legend-color-box green"></span>
+                        <p><strong>Green:</strong> Exact card match (Rank & Suit)</p>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color-box yellow"></span>
+                        <p><strong>Yellow:</strong> Correct Rank, wrong Suit</p>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color-box grey"></span>
+                        <p><strong>Grey:</strong> Rank not in Villain's hand</p>
+                    </div>
+                </div>
 
-            <div id="card-grid" class="card-grid-container">
-            </div>
-        </div>
-        
+                <div id="guess-history-grid">
+                    <div class="guess-street-row">
+                        <div class="guess-street-column" id="preflop-guesses">
+                            <h4>Pre-Flop</h4>
+                            <div class="guess-list"></div>
+                        </div>
+                        <div class="guess-street-column" id="flop-guesses">
+                            <h4>Flop</h4>
+                            <div class="guess-list"></div>
+                        </div>
+                        <div class="guess-street-column" id="turn-guesses">
+                            <h4>Turn</h4>
+                            <div class="guess-list"></div>
+                        </div>
+                    </div>
+                    <div class="guess-street-row">
+                        <div class="guess-street-column river-column" id="river-guesses">
+                            <h4>River</h4>
+                            <div class="guess-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="selection-grid-container" id="selection-grid-zone">
+                <h2>Select Your PocketPair</h2>
+                <div id="selection-controls">
+                    <div id="card-slot-1" class="card-slot" data-card="">Card 1</div>
+                    <div id="card-slot-2" class="card-slot" data-card="">Card 2</div>
+                    <div id="selection-buttons">
+                        <button id="submit-guess-btn" class="btn" disabled>Submit Guess</button>
+                        <button id="next-street-btn" class="btn" disabled>Show Next Street</button>
+                    </div>
+                </div>
+                <div id="card-grid">
+                    </div>
+            </section>
+
+        </main>
     </div>
 
     <script src="js/gameLogic.js"></script>

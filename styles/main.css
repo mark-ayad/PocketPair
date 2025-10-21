@@ -1,314 +1,503 @@
-/* style/main.css */
-
-/* Color Variables */
 :root {
-    --color-felt: #004d40; /* Dark Green Felt */
-    --color-table-border: #8d6e63; /* Wood/Brown border */
-    --color-background: #121212;
-    --color-text: #E0E0E0;
-    --color-accent: #00A36C; /* Emerald Green */
-    --color-green: #4CAF50; 
-    --color-yellow: #FFC107; 
-    --color-red: #F44336;   
-    --color-grey-dark: #333333; 
-    --color-log-bg: #222222;
-    --color-card-black: #222; 
-    --color-card-red: #C0392B; 
-    --color-placeholder: rgba(255, 255, 255, 0.1); 
-}
-
-/* Global Styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
+    --color-green-wordle: #6aaa64;
+    --color-yellow-wordle: #c9b458;
+    --color-grey-wordle: #787c7e;
+    
+    --color-primary-bg: #1f1f1f; 
+    --color-secondary-bg: #2d2d2d;
+    --color-table-felt: #2d6b5e;
+    --color-table-felt-dark: #1a4a3e;
+    --color-table-outline: #5c3a21;
+    --color-text-light: #f0f0f0;
+    --color-text-dark: #333;
+    --color-text-medium: #aaa;
+    --color-text-header: #4CAF50; 
+    --color-card-bg: #f8f8f8;
+    --color-card-border: #999;
+    --color-card-red: #D90000;
+    --color-card-black: #222;
+    --color-button-submit: #4CAF50;
+    --color-button-submit-hover: #45a049;
+    --color-button-next: #555;
+    --color-button-next-hover: #666;
+    --color-disabled-btn: #444;
+    --color-error: #dc3545;
 }
 
 body {
-    background-color: var(--color-background);
-    color: var(--color-text);
-    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: var(--color-primary-bg);
+    color: var(--color-text-light);
     display: flex;
     justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-#game-container {
-    max-width: 900px;
+.game-container {
     width: 100%;
+    max-width: 900px;
     margin: 0 auto;
-    display: grid;
-    gap: 30px;
-}
-
-h1 {
-    color: var(--color-accent);
-    text-align: center;
-    font-size: 2.5em;
-}
-
-/* --- Poker Table Area (Fixed Size) --- */
-#poker-table {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 10px;
-    border-radius: 15px;
-    background-color: var(--color-table-border);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    height: 520px; 
+    gap: 20px;
 }
 
-/* Fix: Action History - Columnar Display (Non-Scrollable) */
-#action-log-zone {
-    height: 120px; /* Adjusted fixed height for 4 columns */
-    width: 100%;
-    background-color: var(--color-log-bg);
-    padding: 10px 15px; /* Reduced side padding slightly */
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #444;
-    
-    /* Layout change: Grid for 4 columns */
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 10px;
-    overflow: hidden; /* Ensure it is NOT scrollable */
+header {
     text-align: center;
+}
+
+header h1 {
+    font-size: 2.5em;
+    color: var(--color-text-header);
+    margin: 0;
+    font-weight: 600;
+}
+
+.game-zone {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+}
+
+.action-history-container,
+.guess-history-container,
+.selection-grid-container {
+    background-color: var(--color-secondary-bg);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+#action-log-zone {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    background-color: #252525;
+    padding: 15px;
+    border-radius: 8px;
+    min-height: 100px;
 }
 
 .street-column {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border-right: 1px solid #333; /* Separator line */
-    padding-right: 10px;
-    padding-left: 5px;
-}
-.street-column:last-child {
-    border-right: none; /* No border on the last column */
-    padding-right: 0;
+    flex-basis: 22%;
+    min-width: 120px;
+    padding: 0 10px;
 }
 
 .street-column h4 {
-    color: var(--color-accent);
-    font-size: 1em; 
-    margin-bottom: 5px;
+    color: var(--color-text-header);
+    margin-top: 0;
+    margin-bottom: 10px;
+    border-bottom: 2px solid var(--color-text-header);
+    padding-bottom: 5px;
 }
 
 .action-line {
-    font-size: 0.85em; /* Smaller text to fit more */
-    line-height: 1.1;
-    margin-bottom: 2px;
-    word-break: break-word; /* Prevents text overflow */
+    font-size: 0.9em;
+    color: var(--color-text-medium);
+    margin: 4px 0;
 }
 
-
-/* Felt Oval Height */
-#felt-oval {
-    width: 90%;
-    max-width: 800px;
-    height: 350px; 
-    background-color: var(--color-felt);
-    border-radius: 50% / 60%; 
-    border: 5px solid var(--color-felt);
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr; 
-    padding: 10px;
-    box-sizing: content-box; 
+#table-felt {
+    width: 100%;
+    height: 350px;
+    background: radial-gradient(ellipse at center, var(--color-table-felt) 0%, var(--color-table-felt-dark) 100%);
+    border-radius: 175px; 
+    border: 10px solid var(--color-table-outline);
+    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+    box-sizing: border-box;
 }
 
-/* Player Areas (Villain, Board, Hero) */
-#villain-area, #hero-area, #board-area {
+#villain-area, #hero-area {
+    position: relative;
+    width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
-    color: var(--color-text);
-    position: relative; 
 }
 
-/* Player Labels - Correct Spacing */
-#villain-label, #hero-label {
-    background-color: var(--color-log-bg);
-    border: 1px solid #666;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.9em;
-    font-weight: bold;
-}
-#villain-area {
-    flex-direction: column; 
-    justify-content: flex-start;
-}
-#villain-label { margin-bottom: 10px; }
-#villain-cards, #hero-cards { display: flex; gap: 5px; }
-
-#hero-area {
-    flex-direction: column;
-    justify-content: flex-end; 
-}
-#hero-label { margin-top: 10px; }
-
-
-/* Board Area Positioning */
 #board-area {
     display: flex;
-    flex-direction: row; 
-    justify-content: space-between; 
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    width: 90%; 
+    width: 90%;
     margin: 0 auto;
-    position: relative; 
+    position: relative;
 }
+
 #pot-size {
     font-size: 1.2em;
     font-weight: bold;
-    position: static; 
-    align-self: center; 
-    white-space: nowrap; 
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
     flex-shrink: 0;
 }
+
 #board-cards {
     display: flex;
-    gap: 5px;
-    justify-content: center;
-    flex-grow: 1; 
+    gap: 8px;
 }
 
+.player-label {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--color-text-light);
+    padding: 3px 10px;
+    border-radius: 4px;
+    font-size: 0.8em;
+    position: absolute;
+    top: -22px; 
+}
 
-/* Card Placeholders */
+#hero-area .player-label {
+    top: auto;
+    bottom: -22px;
+}
+
+#villain-cards, #hero-cards {
+    display: flex;
+    gap: 8px;
+}
+
+#villain-cards .card,
+#hero-cards .card,
+#board-cards .card,
 .card-placeholder {
-    width: 50px; 
+    width: 50px;
     height: 70px;
-    margin: 0 3px;
-    border-radius: 5px;
-    border: 1px dashed var(--color-placeholder);
-    background-color: var(--color-placeholder);
 }
 
-/* Cards (Active) */
 .card {
-    display: flex; 
+    background-color: var(--color-card-bg);
+    border: 2px solid var(--color-card-border);
+    border-radius: 6px;
+    color: var(--color-text-dark);
+    font-weight: bold;
+    font-size: 1.2em;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 50px; 
-    height: 70px;
-    margin: 0 3px; 
-    border-radius: 5px; 
-    border: 1px solid #000;
-    background-color: #FFFFFF;
-    font-weight: bold;
-    padding: 2px;
-    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-}
-.card-rank-display { font-size: 1.2em; line-height: 1; margin-bottom: 2px; }
-.card-symbol-display { font-size: 1.5em; line-height: 1; }
-
-/* Back of Villain Cards */
-.card-back {
-    background-color: #A00;
-    border: 2px solid #FFF;
-    color: #FFF;
-    display: flex; 
-    justify-content: center;
-    align-items: center;
+    user-select: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    position: relative;
+    box-sizing: border-box;
 }
 
-/* Card Suit Colors (from JS) */
-.card-suit-black { color: var(--color-card-black); }
-.card-suit-red { color: var(--color-card-red); }
+.card-placeholder {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 2px dashed rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+}
 
+#villain-cards .card {
+    background-color: #B22222; 
+    border-color: #8B0000;
+}
 
-/* --- Guess History Zone --- */
-#guess-history-zone {
+.card-rank-display {
+    font-size: 1.3em;
+    line-height: 1;
+}
+
+.card-symbol-display {
+    font-size: 1.1em;
+    line-height: 1;
+}
+
+.card-suit-red {
+    color: var(--color-card-red);
+}
+
+.card-suit-black {
+    color: var(--color-card-black);
+}
+
+#guess-history-zone h2,
+#selection-grid-zone h2 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+
+.feedback-legend {
+    background-color: var(--color-primary-bg);
     padding: 15px;
-    background-color: var(--color-grey-dark);
     border-radius: 8px;
-    border: 1px solid #444;
+    margin-bottom: 20px;
 }
-#guess-history-zone h3 { margin-bottom: 10px; }
-#guess-history-list {
-    margin-top: 15px;
+
+.feedback-legend p {
+    margin: 0;
+    font-size: 0.9em;
+}
+
+.feedback-legend strong {
+    color: var(--color-text-light);
+}
+
+.legend-item {
     display: flex;
-    flex-direction: column-reverse; 
+    align-items: center;
+    margin-bottom: 8px;
+    color: var(--color-text-medium);
 }
+
+.legend-item:last-child {
+    margin-bottom: 0;
+}
+
+.legend-color-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 10px;
+    border: 1px solid var(--color-text-medium);
+    flex-shrink: 0;
+}
+
+.legend-color-box.green { background-color: var(--color-green-wordle); }
+.legend-color-box.yellow { background-color: var(--color-yellow-wordle); }
+.legend-color-box.grey { background-color: var(--color-grey-wordle); }
+
+
+#guess-history-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.guess-street-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.guess-street-column {
+    flex-basis: 32%;
+    background-color: var(--color-primary-bg);
+    border-radius: 8px;
+    padding: 10px;
+    min-height: 80px;
+}
+
+.guess-street-column h4 {
+    margin: 0 0 10px 0;
+    text-align: center;
+    color: var(--color-text-medium);
+    font-weight: 600;
+}
+
+.guess-street-column.river-column {
+    flex-basis: 100%;
+    max-width: 100%;
+}
+
+.guess-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
 .guess-row {
     display: flex;
     align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #444;
+    gap: 15px;
 }
-.guess-cards { display: flex; flex-shrink: 0; margin-right: 20px; }
-.guess-cards .card { width: 35px; height: 50px; }
-.guess-cards .card-rank-display { font-size: 0.9em; }
-.guess-cards .card-symbol-display { font-size: 1.1em; }
 
-
-.feedback-boxes {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: 4px;
-    width: 60px;
-    height: 60px;
-    padding: 5px;
-    background-color: #444;
-    border-radius: 4px;
+.guess-cards {
+    display: flex;
+    gap: 8px;
 }
-.feedback-box { display: block; border-radius: 2px; }
-.feedback-box.green { background-color: var(--color-green); }
-.feedback-box.yellow { background-color: var(--color-yellow); }
-.feedback-box.red { background-color: var(--color-red); }
 
-/* --- Deduction Tool / Grid --- */
-#deduction-tool-zone {
-    padding: 15px;
-    background-color: var(--color-grey-dark);
-    border-radius: 8px;
-    border: 1px solid #444;
+.guess-cards .card {
+    width: 45px;
+    height: 65px;
+    font-size: 1.1em;
 }
-#selection-area { display: flex; align-items: center; gap: 20px; margin-bottom: 15px; }
 
-/* Selected Cards - Ensure they are side-by-side */
-#selected-cards-display {
-    display: flex; 
-    flex-direction: row; 
+.guess-row .card.green {
+    background-color: var(--color-green-wordle);
+    border-color: var(--color-green-wordle);
+    color: var(--color-text-light);
+}
+
+.guess-row .card.yellow {
+    background-color: var(--color-yellow-wordle);
+    border-color: var(--color-yellow-wordle);
+    color: var(--color-text-light);
+}
+
+.guess-row .card.grey {
+    background-color: var(--color-grey-wordle);
+    border-color: var(--color-grey-wordle);
+    color: var(--color-text-light);
+    opacity: 0.8;
+}
+
+#selection-controls {
+    display: flex;
     gap: 10px;
+    margin-bottom: 20px;
+    align-items: stretch;
 }
 
-.selected-slot {
-    padding: 8px 15px;
-    border: 1px solid #555;
-    border-radius: 4px;
-    min-width: 80px;
-    text-align: center;
-    color: var(--color-text);
-}
-
-.card-grid-container { grid-template-columns: repeat(13, 1fr); display: grid; margin-top: 15px; }
-.card-wrapper {
-    display: inline-flex;
+.card-slot {
+    flex-grow: 1;
+    height: 65px;
+    background-color: var(--color-primary-bg);
+    border: 2px dashed var(--color-text-medium);
+    border-radius: 6px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    padding: 2px;
-    margin: 1px;
-    border-radius: 4px;
-    cursor: pointer;
-    background-color: var(--color-grey-dark);
-    transition: all 0.1s;
+    color: var(--color-text-medium);
+    font-weight: 500;
+    font-size: 0.9em;
 }
-.card-wrapper:hover { background-color: #444; }
-.card-wrapper.selected { border: 2px solid var(--color-accent); background-color: #334; }
-.card-wrapper.known-card, .card-wrapper.rank-eliminated { opacity: 0.3; pointer-events: none; cursor: default; background-color: #1a1a1a; }
-button {
-    padding: 10px 20px;
+
+.card-slot .card {
+    width: 45px;
+    height: 65px;
+    font-size: 1.1em;
+    margin: -2px; 
+}
+
+#selection-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn {
+    padding: 10px 15px;
+    font-size: 1em;
+    font-weight: 600;
     border: none;
-    border-radius: 4px;
-    font-weight: bold;
+    border-radius: 6px;
     cursor: pointer;
-    background-color: var(--color-accent);
-    color: var(--color-background);
+    transition: background-color 0.2s ease;
+    height: 100%;
+    min-height: 40px;
 }
-button:disabled { opacity: 0.5; cursor: not-allowed; }
-#next-street-btn { background-color: #555; }
+
+#submit-guess-btn {
+    background-color: var(--color-button-submit);
+    color: white;
+}
+
+#submit-guess-btn:hover {
+    background-color: var(--color-button-submit-hover);
+}
+
+#next-street-btn {
+    background-color: var(--color-button-next);
+    color: white;
+}
+
+#next-street-btn:hover {
+    background-color: var(--color-button-next-hover);
+}
+
+.btn:disabled {
+    background-color: var(--color-disabled-btn);
+    color: var(--color-text-medium);
+    cursor: not-allowed;
+}
+
+#card-grid {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    gap: 5px;
+}
+
+.card-wrapper {
+    cursor: pointer;
+    border-radius: 6px;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+}
+
+.card-wrapper .card {
+    width: 100%;
+    height: 65px;
+    font-size: 1.1em;
+    padding-top: 5px;
+    transition: all 0.2s ease;
+}
+
+.card-wrapper:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+}
+
+.card-wrapper.selected .card {
+    border-color: var(--color-button-submit);
+    box-shadow: 0 0 10px var(--color-button-submit);
+}
+
+.card-wrapper.known-card .card {
+    background-color: var(--color-grey-wordle);
+    border-color: var(--color-grey-wordle);
+    color: var(--color-text-light);
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.card-wrapper.rank-miss .card {
+    background-color: var(--color-grey-wordle);
+    border-color: var(--color-grey-wordle);
+    color: var(--color-text-light);
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.card-wrapper.rank-match .card {
+    background-color: var(--color-card-bg);
+    border-color: var(--color-yellow-wordle);
+    box-shadow: 0 0 10px var(--color-yellow-wordle);
+}
+.card-wrapper.rank-match:hover .card {
+     border-color: var(--color-yellow-wordle);
+}
+
+.card-wrapper.exact-match .card {
+    background-color: var(--color-green-wordle);
+    border-color: var(--color-green-wordle);
+    color: var(--color-text-light);
+    opacity: 1;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.card-wrapper.known-card:hover,
+.card-wrapper.rank-miss:hover,
+.card-wrapper.exact-match:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+.error-message {
+    color: var(--color-error);
+    font-weight: 500;
+    text-align: center;
+}

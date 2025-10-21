@@ -1,94 +1,53 @@
-// js/gameLogic.js
-
 /**
- * Generates the non-positional four-attribute feedback.
- * @param {Array<string>} guess - Two guessed cards (e.g., ["As", "Qs"])
- * @param {Array<string>} solution - The two hidden cards (e.g., ["Kd", "Qc"])
- * @returns {Array<string>} Four feedback colors (Rank1, Suit1, Rank2, Suit2)
+ * Generates Wordle-style feedback for a two-card guess.
+ *
+ * @param {string[]} guess - An array of two card strings (e.g., ["As", "Kh"]).
+ * @param {string[]} solution - The two-card solution (e.g., ["Ac", "Kd"]).
+ * @returns {Array<object>} An array of feedback objects, e.g.,
+ * [{card: "As", feedback: "YELLOW"}, {card: "Kh", feedback: "GREY"}]
+ * Feedback types: 'GREEN' (Exact match), 'YELLOW' (Rank match), 'GREY' (No match).
  */
 function generateFeedback(guess, solution) {
-    const feedback = [];
-    
-    // Helper to get card components
-    const parseCard = (card) => ({ 
-        rank: card.slice(0, -1), 
-        suit: card.slice(-1) 
-    });
-
-    const guessCard1 = parseCard(guess[0]);
-    const guessCard2 = parseCard(guess[1]);
-    
-    // Create flexible copies of the solution attributes for matching
-    let availableSolutions = [
-        parseCard(solution[0]),
-        parseCard(solution[1])
+    const feedback = [
+        { card: guess[0], feedback: 'GREY' },
+        { card: guess[1], feedback: 'GREY' }
     ];
 
-    // Card 1 and Card 2 attributes (Rank, Suit) are stored in this order: [R1, S1, R2, S2]
-    const attributes = [guessCard1.rank, guessCard1.suit, guessCard2.rank, guessCard2.suit];
-    
-    // --- Phase 1: Full Card Match (GREEN) ---
-    // Track which solution card has been used
-    let solutionUsed = [false, false];
+    const guessRanks = [guess[0].slice(0, -1), guess[1].slice(0, -1)];
+    const solRanks = [solution[0].slice(0, -1), solution[1].slice(0, -1)];
 
-    // Check guess card 1
-    if (guessCard1.rank === availableSolutions[0].rank && guessCard1.suit === availableSolutions[0].suit) {
-        feedback[0] = 'GREEN'; feedback[1] = 'GREEN'; solutionUsed[0] = true;
-    } else if (guessCard1.rank === availableSolutions[1].rank && guessCard1.suit === availableSolutions[1].suit) {
-        feedback[0] = 'GREEN'; feedback[1] = 'GREEN'; solutionUsed[1] = true;
-    }
+    // Make copies to "use up" matches
+    let solCopy = [...solution];
 
-    // Check guess card 2
-    if (!solutionUsed[0] && guessCard2.rank === availableSolutions[0].rank && guessCard2.suit === availableSolutions[0].suit) {
-        feedback[2] = 'GREEN'; feedback[3] = 'GREEN'; solutionUsed[0] = true;
-    } else if (!solutionUsed[1] && guessCard2.rank === availableSolutions[1].rank && guessCard2.suit === availableSolutions[1].suit) {
-        feedback[2] = 'GREEN'; feedback[3] = 'GREEN'; solutionUsed[1] = true;
-    }
+    // First pass: Check for GREEN (exact card match)
+    for (let i = 0; i < feedback.length; i++) {
+        const guessCard = feedback[i].card;
+        const exactMatchIndex = solCopy.indexOf(guessCard);
 
-    // --- Phase 2: Partial Match (YELLOW) on remaining attributes ---
-    
-    // Check Card 1 attributes (if not already GREEN)
-    if (feedback[0] !== 'GREEN') {
-        let matchedIndex = solutionUsed[0] ? 1 : 0; // Check the unmatched solution card
-        if (solutionUsed[0] && solutionUsed[1]) matchedIndex = -1; // Both used, no match possible
-
-        // Rank match?
-        if (matchedIndex !== -1 && guessCard1.rank === availableSolutions[matchedIndex].rank) {
-            feedback[0] = 'YELLOW';
-            // Mark the attribute as consumed to prevent double-matching
-            availableSolutions[matchedIndex].rank = null; 
-        } else {
-            feedback[0] = 'RED';
-        }
-        
-        // Suit match?
-        if (matchedIndex !== -1 && guessCard1.suit === availableSolutions[matchedIndex].suit) {
-             feedback[1] = 'YELLOW';
-        } else {
-            feedback[1] = 'RED';
+        if (exactMatchIndex !== -1) {
+            feedback[i].feedback = 'GREEN';
+            solCopy.splice(exactMatchIndex, 1); // Remove from copy
         }
     }
 
-    // Check Card 2 attributes (if not already GREEN)
-    if (feedback[2] !== 'GREEN') {
-        let matchedIndex = solutionUsed[0] ? 1 : 0; 
-        if (solutionUsed[0] && solutionUsed[1]) matchedIndex = -1; 
+    // Make a copy of remaining ranks
+    let solRanksCopy = solCopy.map(card => card.slice(0, -1));
 
-        // Rank match?
-        if (matchedIndex !== -1 && guessCard2.rank === availableSolutions[matchedIndex].rank) {
-            feedback[2] = 'YELLOW';
-        } else {
-            feedback[2] = 'RED';
+    // Second pass: Check for YELLOW (rank match)
+    for (let i = 0; i < feedback.length; i++) {
+        // Skip cards that are already green
+        if (feedback[i].feedback === 'GREEN') {
+            continue;
         }
 
-        // Suit match?
-        if (matchedIndex !== -1 && guessCard2.suit === availableSolutions[matchedIndex].suit) {
-            feedback[3] = 'YELLOW';
-        } else {
-            feedback[3] = 'RED';
+        const guessRank = guessRanks[i];
+        const rankMatchIndex = solRanksCopy.indexOf(guessRank);
+
+        if (rankMatchIndex !== -1) {
+            feedback[i].feedback = 'YELLOW';
+            solRanksCopy.splice(rankMatchIndex, 1); // Remove rank from copy
         }
     }
-    
-    // Ensure the output is always 4 colors
-    return feedback.map(c => c || 'RED');
+
+    return feedback;
 }
