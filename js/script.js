@@ -6,6 +6,7 @@ let currentStreetIndex = 0;
 let attempts = 6;
 let selectedCards = []; 
 let lockedCard = null; 
+let hasGuessedThisStreet = false; // Tracks if the player has used their one guess on Flop/Turn
 const MAX_ATTEMPTS = 6;
 const BOARD_SIZE = 5; 
 
@@ -79,7 +80,9 @@ function initializeGame(data) {
     generateCardGrid();
     markKnownCards(data.HeroHand, []); 
 
-    document.getElementById('next-street-btn').disabled = false;
+    // Initialize guess state and buttons
+    hasGuessedThisStreet = false;
+    updateButtonStates(); 
     
     // Clear old guess lists
     document.querySelectorAll('.guess-list').forEach(list => list.innerHTML = '');
@@ -144,6 +147,50 @@ function generateCardGrid() {
 }
 
 /**
+ * Updates the disabled state and styling of the action buttons, 
+ * and controls the Submit button text.
+ */
+function updateButtonStates() {
+    const submitBtn = document.getElementById('submit-guess-btn');
+    const nextBtn = document.getElementById('next-street-btn');
+    const isReadyToSubmit = selectedCards.length === 2;
+    const isRiver = currentStreetIndex === currentPuzzle.ActionHistory.length - 1;
+
+    // --- Submit Button Text ---
+    // Change to "Submit Final Guess" only if on the River AND it's the last attempt
+    if (isRiver && attempts === 1) {
+        submitBtn.textContent = 'Submit Final Guess';
+    } else {
+        submitBtn.textContent = 'Submit Guess';
+    }
+
+    // --- Submit Button Logic ---
+    let submitShouldBeEnabled = false;
+
+    if (isRiver) {
+        // On the River, submit is enabled if ready
+        submitShouldBeEnabled = isReadyToSubmit;
+    } else {
+        // Pre-River: enabled if ready AND no guess has been made this street
+        submitShouldBeEnabled = isReadyToSubmit && !hasGuessedThisStreet;
+    }
+    
+    submitBtn.disabled = !submitShouldBeEnabled;
+    submitBtn.classList.toggle('btn-primary', submitShouldBeEnabled);
+    
+    // --- Next Street Button Logic ---
+    // Enabled only if NOT River AND a guess has been made
+    let nextShouldBeEnabled = !isRiver && hasGuessedThisStreet;
+
+    nextBtn.disabled = !nextShouldBeEnabled;
+    nextBtn.classList.toggle('btn-primary', nextShouldBeEnabled);
+
+    // Ensure the Next Street button is hidden on the river
+    nextBtn.style.display = isRiver ? 'none' : 'inline-block';
+}
+
+
+/**
  * Handles card selection and updates the slots.
  */
 function handleCardSelection(cardCode, element) {
@@ -154,6 +201,11 @@ function handleCardSelection(cardCode, element) {
     }
 
     if (cardCode === lockedCard) return;
+    
+    // Prevent card changes if a guess has already been made on this street (pre-river)
+    if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1 && hasGuessedThisStreet) {
+        return; 
+    }
 
     const isSelected = selectedCards.includes(cardCode);
     const slot1 = document.getElementById('card-slot-1');
@@ -183,11 +235,7 @@ function handleCardSelection(cardCode, element) {
         }
     }
 
-    const isReady = selectedCards.length === 2;
-    document.getElementById('submit-guess-btn').disabled = !isReady;
-
-    const isRiver = currentStreetIndex === currentPuzzle.ActionHistory.length - 1;
-    document.getElementById('next-street-btn').disabled = isRiver;
+    updateButtonStates();
 }
 
 
@@ -197,20 +245,37 @@ function handleCardSelection(cardCode, element) {
 function submitGuess() {
     if (selectedCards.length !== 2) return;
     
+    // Pre-River: prevent multiple guesses on the same street
+    if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1 && hasGuessedThisStreet) {
+        return;
+    }
+    
     attempts--;
     document.getElementById('attempts-left').textContent = attempts;
 
     const feedbackResult = generateFeedback(selectedCards, currentPuzzle.VillainSolution);
     
     renderGuessHistory(feedbackResult, currentStreetIndex);
+    
     updateDeductionAid(feedbackResult);
 
     if (feedbackResult.every(item => item.feedback === 'GREEN')) {
         endGame(true);
+        return; 
     } else if (attempts === 0) {
         endGame(false);
+        return;
     }
 
+    // After a successful guess (pre-river), lock the guessing phase
+    if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1) {
+        hasGuessedThisStreet = true;
+    }
+    
+    // Update button states: this will disable Submit and enable Next Street (if pre-river)
+    updateButtonStates(); 
+    
+    // Reset selection for the next action (either next street or next guess on river)
     resetSelection();
 }
 
@@ -252,6 +317,9 @@ function updateDeductionAid(feedbackResult) {
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${item.card}"]`)?.parentNode;
         if (!wrapper) return;
 
+        // Use the normalized rank for grid updates
+        const itemRank = normalizeRank(item.card.slice(0, -1));
+
         switch (item.feedback) {
             case 'GREEN':
                 wrapper.classList.remove('rank-match');
@@ -264,12 +332,16 @@ function updateDeductionAid(feedbackResult) {
                 }
                 break;
             case 'GREY':
-                const rank = item.card.slice(0, -1);
-                document.querySelectorAll(`.card-wrapper .card[data-card^="${rank}"]`).forEach(c => {
-                    const w = c.parentNode;
-                    if (!w.classList.contains('exact-match')) {
-                        w.classList.add('rank-miss');
-                        w.classList.remove('rank-match');
+                // Select all cards in the grid with this rank
+                document.querySelectorAll(`.card-wrapper .card`).forEach(c => {
+                    const cardRank = normalizeRank(c.dataset.card.slice(0, -1));
+                    
+                    if (cardRank === itemRank) {
+                        const w = c.parentNode;
+                        if (!w.classList.contains('exact-match')) {
+                            w.classList.add('rank-miss');
+                            w.classList.remove('rank-match');
+                        }
                     }
                 });
                 break;
@@ -283,19 +355,25 @@ function updateDeductionAid(feedbackResult) {
  */
 function markKnownCards(heroCards, boardCards) {
     const knownCards = [...heroCards, ...boardCards];
+    
+    // Also normalize known cards for T/10
+    const normalizedKnownCards = knownCards.map(normalizeCard);
+
     document.querySelectorAll('.card-wrapper').forEach(wrapper => {
         const cardElement = wrapper.querySelector('.card');
         const cardCode = cardElement ? cardElement.dataset.card : null;
         
         wrapper.classList.remove('known-card'); 
-        if (knownCards.includes(cardCode)) {
+        
+        // Check against the normalized list
+        if (normalizedKnownCards.includes(normalizeCard(cardCode))) {
             wrapper.classList.add('known-card');
         }
     });
 }
 
 /**
- * Resets the selection slots after a guess, accounting for a locked card.
+ * Resets the selection slots and grid selection after a guess.
  */
 function resetSelection() {
     selectedCards.forEach(cardCode => {
@@ -317,8 +395,6 @@ function resetSelection() {
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${lockedCard}"]`)?.parentNode;
         if (wrapper) wrapper.classList.add('selected');
     }
-
-    document.getElementById('submit-guess-btn').disabled = true;
 }
 
 /**
@@ -328,14 +404,12 @@ function revealNextStreet() {
     currentStreetIndex++;
     if (currentStreetIndex < currentPuzzle.ActionHistory.length) {
         renderFullActionStatus(); 
+        hasGuessedThisStreet = false; 
         resetSelection(); 
     }
     
-    if (currentStreetIndex === currentPuzzle.ActionHistory.length - 1) {
-        document.getElementById('next-street-btn').style.display = 'none';
-        document.getElementById('next-street-btn').disabled = true;
-        document.getElementById('submit-guess-btn').textContent = 'Submit Final Guess';
-    }
+    // Recalculate button states for the new street
+    updateButtonStates();
 }
 
 /**

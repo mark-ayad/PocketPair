@@ -309,6 +309,7 @@ header h1 {
     max-width: 100%;
 }
 
+/* This is the default for Pre-Flop, Flop, Turn */
 .guess-list {
     display: flex;
     flex-direction: row;
@@ -316,6 +317,18 @@ header h1 {
     gap: 10px;
     justify-content: center;
 }
+
+/* --- THIS IS THE FIX --- */
+/* This rule OVERRIDES the default flex behavior for the river */
+/* and creates the 3-column layout you want. */
+.guess-street-column.river-column .guess-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Create 3 equal columns */
+    gap: 10px; /* Spacing between guesses */
+    justify-items: center; /* Center each guess horizontally */
+}
+/* --- End of Fix --- */
+
 
 .guess-row {
     display: flex;
@@ -399,25 +412,16 @@ header h1 {
     min-height: 40px;
 }
 
-#submit-guess-btn {
+.btn.btn-primary { 
     background-color: var(--color-button-submit);
     color: white;
 }
 
-#submit-guess-btn:hover {
+.btn.btn-primary:hover:not(:disabled) {
     background-color: var(--color-button-submit-hover);
 }
 
-#next-street-btn {
-    background-color: var(--color-button-next);
-    color: white;
-}
-
-#next-street-btn:hover {
-    background-color: var(--color-button-next-hover);
-}
-
-.btn:disabled {
+.btn:disabled { 
     background-color: var(--color-disabled-btn);
     color: var(--color-text-medium);
     cursor: not-allowed;
@@ -472,9 +476,10 @@ header h1 {
 }
 
 .card-wrapper.rank-match .card {
-    background-color: var(--color-card-bg);
+    background-color: var(--color-yellow-wordle); 
     border-color: var(--color-yellow-wordle);
-    box-shadow: 0 0 10px var(--color-yellow-wordle);
+    color: var(--color-text-light); 
+    box-shadow: none; 
 }
 .card-wrapper.rank-match:hover .card {
      border-color: var(--color-yellow-wordle);

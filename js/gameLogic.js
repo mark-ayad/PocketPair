@@ -1,11 +1,34 @@
+// js/gameLogic.js
+
+/**
+ * Normalizes a card string's rank from "10" to "T".
+ * e.g., "10d" becomes "Td", "As" remains "As".
+ * @param {string} card - The card string.
+ * @returns {string} - The normalized card string.
+ */
+function normalizeCard(card) {
+    if (card.startsWith("10")) {
+        return card.replace("10", "T");
+    }
+    return card;
+}
+
+/**
+ * Normalizes just the rank part of a card.
+ * @param {string} rank - The rank (e.g., "10", "T", "K")
+ * @returns {string} - The normalized rank (e.g., "T", "T", "K")
+ */
+function normalizeRank(rank) {
+    return rank === "10" ? "T" : rank;
+}
+
 /**
  * Generates Wordle-style feedback for a two-card guess.
  *
- * @param {string[]} guess - An array of two card strings (e.g., ["As", "Kh"]).
- * @param {string[]} solution - The two-card solution (e.g., ["Ac", "Kd"]).
+ * @param {string[]} guess - An array of two card strings (e.g., ["Td", "Jd"]).
+ * @param {string[]} solution - The two-card solution (e.g., ["10d", "Jd"]).
  * @returns {Array<object>} An array of feedback objects, e.g.,
- * [{card: "As", feedback: "YELLOW"}, {card: "Kh", feedback: "GREY"}]
- * Feedback types: 'GREEN' (Exact match), 'YELLOW' (Rank match), 'GREY' (No match).
+ * [{card: "Td", feedback: "GREEN"}, {card: "Jd", feedback: "GREEN"}]
  */
 function generateFeedback(guess, solution) {
     const feedback = [
@@ -13,40 +36,48 @@ function generateFeedback(guess, solution) {
         { card: guess[1], feedback: 'GREY' }
     ];
 
-    const guessRanks = [guess[0].slice(0, -1), guess[1].slice(0, -1)];
-    const solRanks = [solution[0].slice(0, -1), solution[1].slice(0, -1)];
+    // Normalize both guess and solution for 10/T mismatch
+    const normalizedGuess = guess.map(normalizeCard);
+    const normalizedSolution = solution.map(normalizeCard);
 
-    // Make copies to "use up" matches
-    let solCopy = [...solution];
+    // Get ranks from the normalized guess
+    const guessRanks = [
+        normalizedGuess[0].slice(0, -1), 
+        normalizedGuess[1].slice(0, -1)
+    ];
 
-    // First pass: Check for GREEN (exact card match)
+    // Make a mutable copy of the normalized solution pool
+    let solutionPool = [...normalizedSolution];
+
+    // --- Pass 1: Check for GREEN (Exact Card Match) ---
     for (let i = 0; i < feedback.length; i++) {
-        const guessCard = feedback[i].card;
-        const exactMatchIndex = solCopy.indexOf(guessCard);
+        const guessCard = normalizedGuess[i]; // e.g., "Td"
+        const matchIndex = solutionPool.indexOf(guessCard); // e.g., finds "Td" in ["Jd", "Td"]
 
-        if (exactMatchIndex !== -1) {
+        if (matchIndex !== -1) {
             feedback[i].feedback = 'GREEN';
-            solCopy.splice(exactMatchIndex, 1); // Remove from copy
+            solutionPool.splice(matchIndex, 1); // Remove from pool
         }
     }
 
-    // Make a copy of remaining ranks
-    let solRanksCopy = solCopy.map(card => card.slice(0, -1));
+    // Get the ranks of the *remaining* cards in the solution pool
+    let solutionRanksAvailable = solutionPool.map(card => card.slice(0, -1));
 
-    // Second pass: Check for YELLOW (rank match)
+    // --- Pass 2: Check for YELLOW (Rank Match) ---
     for (let i = 0; i < feedback.length; i++) {
-        // Skip cards that are already green
+        // Skip cards that are already GREEN
         if (feedback[i].feedback === 'GREEN') {
             continue;
         }
 
-        const guessRank = guessRanks[i];
-        const rankMatchIndex = solRanksCopy.indexOf(guessRank);
+        const guessRank = guessRanks[i]; // e.g., "T"
+        const rankMatchIndex = solutionRanksAvailable.indexOf(guessRank);
 
         if (rankMatchIndex !== -1) {
             feedback[i].feedback = 'YELLOW';
-            solRanksCopy.splice(rankMatchIndex, 1); // Remove rank from copy
-        }
+            solutionRanksAvailable.splice(rankMatchIndex, 1); // Consume the rank
+        } 
+        // If not GREEN or YELLOW, it remains GREY
     }
 
     return feedback;
