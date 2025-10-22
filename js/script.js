@@ -440,6 +440,31 @@ function endGame(win) {
 // Event Listeners
 document.getElementById('submit-guess-btn').addEventListener('click', submitGuess);
 document.getElementById('next-street-btn').addEventListener('click', revealNextStreet); 
+// --- Intro Screen Logic ---
 
-// Start the game loop
-fetchDailyPuzzle();
+// Get elements
+const introScreen = document.getElementById('intro-screen');
+const gameContainer = document.querySelector('.game-container');
+const playButton = document.getElementById('play-game-btn');
+const dateElement = document.getElementById('intro-date');
+
+// Set the date on the intro screen
+if (dateElement) {
+    const today = new Date();
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    dateElement.textContent = today.toLocaleDateString('en-US', options);
+}
+
+// Play Button Listener
+if (playButton) {
+    playButton.addEventListener('click', () => {
+        introScreen.style.display = 'none'; // Hide intro
+        gameContainer.style.display = 'flex'; // Show game
+        
+        // Add the new class to the body to switch themes/layouts
+        document.body.classList.add('game-active');
+        
+        // Now that the user wants to play, fetch the puzzle and start the game
+        fetchDailyPuzzle(); 
+    });
+}

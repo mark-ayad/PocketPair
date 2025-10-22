@@ -26,8 +26,9 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    background-color: var(--color-primary-bg);
-    color: var(--color-text-light);
+    /* Default to light theme for the intro screen */
+    background-color: #f3f3f3; 
+    color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,11 +38,23 @@ body {
     box-sizing: border-box;
 }
 
+/* This class is added by JS when the game starts */
+body.game-active {
+    /* Switch to dark theme */
+    background-color: var(--color-primary-bg);
+    color: var(--color-text-light);
+    
+    /* Remove flex centering to allow scrolling */
+    display: block;
+    justify-content: unset;
+    align-items: unset;
+}
+
 .game-container {
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    display: flex;
+    display: none; /* Hidden by default */
     flex-direction: column;
     gap: 20px;
 }
@@ -146,6 +159,8 @@ header h1 {
     transform: translateY(-50%);
     white-space: nowrap;
     flex-shrink: 0;
+    /* Color update for dark theme */
+    color: var(--color-text-light); 
 }
 
 #board-cards {
@@ -309,7 +324,6 @@ header h1 {
     max-width: 100%;
 }
 
-/* This is the default for Pre-Flop, Flop, Turn */
 .guess-list {
     display: flex;
     flex-direction: row;
@@ -318,16 +332,12 @@ header h1 {
     justify-content: center;
 }
 
-/* --- THIS IS THE FIX --- */
-/* This rule OVERRIDES the default flex behavior for the river */
-/* and creates the 3-column layout you want. */
 .guess-street-column.river-column .guess-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* Create 3 equal columns */
-    gap: 10px; /* Spacing between guesses */
-    justify-items: center; /* Center each guess horizontally */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px; 
+    justify-items: center;
 }
-/* --- End of Fix --- */
 
 
 .guess-row {
@@ -511,48 +521,27 @@ header h1 {
 
 @media (min-width: 1100px) {
     .game-container {
-        max-width: 1600px; /* Allow the container to be wider */
+        /* Allow it to be wider on large screens */
+        max-width: 1600px; 
     }
 
     .game-zone {
-        /* Switch to a 2-column grid */
-        grid-template-columns: 1fr 1fr;
-        
-        /* Define the layout areas */
-        grid-template-areas:
-            "gameplay   tools"
-            "gameplay   history";
-        
-        gap: 30px; /* Add a bit more space between columns */
-    }
-
-    /* * We need to group the action history and the table felt together 
-     * into the "gameplay" area. The easiest way is to wrap them 
-     * in a new <div> in your HTML.
-     *
-     * But, we can also do it with *just* CSS grid magic.
-     * Let's try that first to avoid HTML changes.
-    */
-
-    .game-zone {
-        grid-template-columns: 55fr 45fr; /* Give table slightly more space */
+        grid-template-columns: 55fr 45fr; 
         grid-template-areas:
             "gameplay-top      tools"
             "gameplay-main     tools"
             "gameplay-main     history";
         
-        /* Align items at the top, not stretching them */
         align-items: start; 
+        gap: 30px;
     }
 
-    /* Assign our existing sections to the new grid areas */
     .action-history-container {
         grid-area: gameplay-top;
     }
     
     #table-felt {
         grid-area: gameplay-main;
-        /* Make the table height-adjustable */
         height: 400px; 
         min-height: 350px;
     }
@@ -565,20 +554,101 @@ header h1 {
         grid-area: history;
     }
 
-    /* Make the river column use its space better */
     .guess-street-column.river-column .guess-list {
-        /* Allow more guesses to fit horizontally */
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
 }
 
-/* A small tweak for very wide, short screens (like 1920x1080) */
 @media (min-width: 1100px) and (max-height: 800px) {
      #table-felt {
-        height: 350px; /* Keep table a bit shorter */
+        height: 350px; 
      }
-     body {
-        align-items: flex-start; /* Don't center vertically if screen is short */
+     body.game-active {
+        /* Keep it aligned to top, but add padding */
         padding-top: 20px;
      }
+}
+
+
+/* --- Intro Screen Styles --- */
+
+#intro-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+    text-align: center;
+    padding: 20px;
+}
+
+.intro-content {
+    max-width: 450px;
+    width: 100%;
+}
+
+#intro-screen h1 {
+    font-size: 3.5em;
+    color: #333;
+    margin: 0 0 10px 0;
+    font-weight: 600;
+}
+
+.intro-tagline {
+    font-size: 1.25em;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.intro-legend-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 320px;
+    margin: 0 auto 30px auto;
+    gap: 10px;
+}
+.intro-legend-preview .legend-item {
+    display: flex;
+    align-items: center;
+    color: #787c7e;
+    font-size: 0.9em;
+}
+.intro-legend-preview .legend-item p {
+    margin: 0;
+}
+.intro-legend-preview .legend-item strong {
+    color: #333;
+}
+.intro-legend-preview .legend-color-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    border: none;
+}
+.intro-legend-preview .legend-color-box.green { background-color: var(--color-green-wordle); }
+.intro-legend-preview .legend-color-box.yellow { background-color: var(--color-yellow-wordle); }
+.intro-legend-preview .legend-color-box.grey { background-color: var(--color-grey-wordle); }
+
+#play-game-btn {
+    border-radius: 30px; 
+    padding: 15px 50px;
+    font-size: 1.2em;
+    font-weight: 600;
+    background-color: var(--color-button-submit);
+    color: white;
+    border: none;
+    transition: background-color 0.2s ease;
+    height: auto; 
+}
+#play-game-btn:hover {
+    background-color: var(--color-button-submit-hover);
+}
+
+.intro-date {
+    margin-top: 20px;
+    color: #787c7e;
+    font-size: 0.9em;
 }

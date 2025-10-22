@@ -1,22 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PocketPair - GTO Poker Deduction</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
+
 <body>
+
+    <div id="intro-screen">
+        <div class="intro-content">
+            <h1>PocketPair</h1>
+            <p class="intro-tagline">Get 6 chances to deduce the 2 hidden cards.</p>
+
+            <div class="intro-legend-preview">
+                <div class="legend-item">
+                    <span class="legend-color-box green"></span>
+                    <p><strong>Green:</strong> Exact card match (Rank & Suit)</p>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color-box yellow"></span>
+                    <p><strong>Yellow:</strong> Correct Rank, wrong Suit</p>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-color-box grey"></span>
+                    <p><strong>Grey:</strong> Rank not in Villain's hand</p>
+                </div>
+            </div>
+
+            <button id="play-game-btn" class="btn">Play</button>
+            <p id="intro-date" class="intro-date"></p>
+        </div>
+    </div>
+
     <div class="game-container">
         <header>
             <h1>PocketPair</h1>
         </header>
 
         <main class="game-zone">
-            
+
             <section class="action-history-container">
                 <div id="action-log-zone">
-                    </div>
+                </div>
             </section>
 
             <section id="table-felt">
@@ -31,19 +59,19 @@
                 <div id="board-area">
                     <span id="pot-size">Pot: $0.00</span>
                     <div id="board-cards">
-                        </div>
+                    </div>
                 </div>
 
                 <div id="hero-area">
                     <div id="hero-cards">
-                        </div>
+                    </div>
                     <span class="player-label">Hero</span>
                 </div>
             </section>
 
             <section class="guess-history-container" id="guess-history-zone">
                 <h2>Previous Guesses (<span id="attempts-left">6</span> left)</h2>
-                
+
                 <div class="feedback-legend">
                     <p style="margin-bottom: 10px;"><strong>Feedback Legend</strong></p>
                     <div class="legend-item">
@@ -95,7 +123,7 @@
                     </div>
                 </div>
                 <div id="card-grid">
-                    </div>
+                </div>
             </section>
 
         </main>
@@ -104,4 +132,5 @@
     <script src="js/gameLogic.js"></script>
     <script src="js/script.js"></script>
 </body>
+
 </html>
