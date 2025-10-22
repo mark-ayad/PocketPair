@@ -437,7 +437,7 @@ function endGame(win) {
     historyZone.appendChild(resultHeader);
 }
 
-// Event Listeners
+// Event Listeners 
 document.getElementById('submit-guess-btn').addEventListener('click', submitGuess);
 document.getElementById('next-street-btn').addEventListener('click', revealNextStreet); 
 // --- Intro Screen Logic ---
