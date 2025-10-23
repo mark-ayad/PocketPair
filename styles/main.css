@@ -159,6 +159,45 @@ header h1 {
     gap: 10px;
 }
 
+/* Wrapper for cards + button */
+.player-hand-area {
+    display: flex; /* This is just to wrap the cards div */
+    justify-content: center;
+    position: relative; /* This is the anchor */
+    /* This width ensures the cards (108px) are centered */
+    /* and provides space for the button (30px) + gap */
+    width: 150px; 
+}
+
+
+/* --- Dealer Button Styles --- */
+.dealer-button {
+    width: 30px;
+    height: 30px;
+    background-color: #f0f0f0;
+    border: 2px solid #333;
+    border-radius: 50%;
+    color: #333;
+    font-weight: bold;
+    font-size: 1.1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    position: absolute; /* Positioned relative to player-hand-area */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%);
+    
+    /* Position it to the right of the cards */
+    /* Card width (50*2) + gap (8) = 108. Half is 54. */
+    left: calc(50% + 54px + 5px); /* (Half cards width) + (small gap) */
+}
+
+.hidden {
+    display: none;
+}
+/* --- End Button Styles --- */
+
 #board-area {
     display: flex;
     flex-direction: column;

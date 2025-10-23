@@ -1,16 +1,17 @@
 [
     {
         "id": "1",
-        "name": "Rivered Straight",
+        "name": "Rivered Pair",
+        "HeroPosition": "SB",
         "HeroHand": ["As", "Ks"],
         "VillainSolution": ["Jd", "10d"],
         "Board": ["Qc", "9s", "4h", "7d", "Jh"],
-        "StartingPot": 10.00,
+        "StartingPot": 1.5,
         "ActionHistory": [
-            {"Street": "Pre-Flop", "Actions": ["Hero raises to 3.00", "Villain calls 3.00"], "PotEnd": 6.00, "CardsShown": []},
-            {"Street": "Flop", "Actions": ["Hero checks", "Villain checks"], "PotEnd": 6.00, "CardsShown": ["Qc", "9s", "4h"]},
-            {"Street": "Turn", "Actions": ["Hero checks", "Villain bets 4.00", "Hero calls 4.00"], "PotEnd": 14.00, "CardsShown": ["Qc", "9s", "4h", "7d"]},
-            {"Street": "River", "Actions": ["Hero checks", "Villain bets 9.00 (into 14.00 pot)"], "PotEnd": 23.00, "CardsShown": ["Qc", "9s", "4h", "7d", "Jh"]}
+            {"Street": "Pre-Flop", "Actions": ["Hero raises to 3.00 BBs", "Villain calls 3.00 BBs"], "PotEnd": 6.0, "CardsShown": []},
+            {"Street": "Flop", "Actions": ["Villain checks", "Hero checks"], "PotEnd": 6.0, "CardsShown": ["Qc", "9s", "4h"]},
+            {"Street": "Turn", "Actions": ["Villain bets 4.00 BBs", "Hero calls 4.00 BBs"], "PotEnd": 14.0, "CardsShown": ["Qc", "9s", "4h", "7d"]},
+            {"Street": "River", "Actions": ["Villain bets 9.00 BBs (into 14.00 BBs pot)"], "PotEnd": 23.0, "CardsShown": ["Qc", "9s", "4h", "7d", "Jh"]}
         ]
     }
 ]

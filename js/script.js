@@ -1,14 +1,3 @@
-/**
- * Normalizes just the rank part of a card.
- * @param {string} rank - The rank (e.g., "10", "T", "K")
- * @returns {string} - The normalized rank (e.g., "T", "T", "K")
- */
-function normalizeRank(rank) {
-    // Handle potential null or undefined input
-    if (!rank) return '';
-    return rank === "10" ? "T" : rank;
-}
-
 // js/script.js
 
 const API_URL = 'http://127.0.0.1:5000/api/daily-puzzle';
@@ -98,7 +87,7 @@ function initializeGame(data) {
     document.getElementById('hero-cards').innerHTML =
         data.HeroHand.map(card => renderCard(card)).join('');
 
-    document.getElementById('pot-size').textContent = `Pot: $${data.StartingPot.toFixed(2)}`;
+    document.getElementById('pot-size').textContent = `Pot: ${data.StartingPot.toFixed(2)} BBs`;
 
     // Ensure villain cards start hidden (or show placeholders if needed)
     document.getElementById('villain-cards').innerHTML = `
@@ -111,7 +100,9 @@ function initializeGame(data) {
     boardContainer.innerHTML = Array(BOARD_SIZE).fill('<span class="card-placeholder"></span>').join('');
 
     document.getElementById('action-log-zone').innerHTML = '';
-    renderFullActionStatus();
+    
+    // This function will now also handle setting positions
+    renderFullActionStatus(); 
 
     generateCardGrid();
     markKnownCards(data.HeroHand, []);
@@ -140,10 +131,32 @@ function initializeGame(data) {
 
 /**
  * Renders the entire columnar action status display.
+ * NOW ALSO UPDATES PLAYER POSITIONS AND DEALER BUTTON.
  */
 function renderFullActionStatus() {
     const logZone = document.getElementById('action-log-zone');
     if (!logZone || !currentPuzzle || !currentPuzzle.ActionHistory) return; // Add guards
+
+    // --- Handle Position Display ---
+    const heroLabel = document.getElementById('hero-label');
+    const villainLabel = document.getElementById('villain-label');
+    const heroButton = document.getElementById('hero-button-marker');
+    const villainButton = document.getElementById('villain-button-marker');
+
+    // Set static labels
+    heroLabel.textContent = 'Hero';
+    villainLabel.textContent = 'Villain';
+
+    // Toggle the button visibility
+    if (currentPuzzle.HeroPosition === 'SB') {
+        heroButton.classList.remove('hidden');
+        villainButton.classList.add('hidden');
+    } else {
+        heroButton.classList.add('hidden');
+        villainButton.classList.remove('hidden');
+    }
+    // --- End Position Display ---
+
 
     const allHistory = currentPuzzle.ActionHistory;
     logZone.innerHTML = '';
@@ -166,7 +179,7 @@ function renderFullActionStatus() {
     const boardContainer = document.getElementById('board-cards');
     const potElement = document.getElementById('pot-size');
 
-    if (potElement) potElement.textContent = `Pot: $${currentStreetData.PotEnd.toFixed(2)}`;
+    if (potElement) potElement.textContent = `Pot: ${currentStreetData.PotEnd.toFixed(2)} BBs`;
 
     if (boardContainer) {
         const cardsRendered = currentStreetData.CardsShown.map(card => renderCard(card)).join('');
