@@ -53,7 +53,7 @@
             </section>
 
             <section id="table-felt">
-                <div id="villain-area">
+                <div id="villain-area" class="player-area">
                     <span class="player-label">Villain</span>
                     <div id="villain-cards">
                         <span class="card"></span>
@@ -62,12 +62,12 @@
                 </div>
 
                 <div id="board-area">
-                    <span id="pot-size">Pot: $0.00</span>
                     <div id="board-cards">
                     </div>
+                    <span id="pot-size">Pot: $0.00</span>
                 </div>
 
-                <div id="hero-area">
+                <div id="hero-a" class="player-area">
                     <div id="hero-cards">
                     </div>
                     <span class="player-label">Hero</span>
@@ -75,9 +75,13 @@
             </section>
 
             <section class="guess-history-container" id="guess-history-zone">
-                <h2>Previous Guesses (<span id="attempts-left">6</span> left)</h2>
 
-                <div class="feedback-legend">
+                <div class="guess-history-header">
+                    <h2>Previous Guesses (<span id="attempts-left">6</span> left)</h2>
+                    <button id="show-legend-btn" class="btn-icon" title="Show Legend">?</button>
+                </div>
+
+                <div id="feedback-legend" class="feedback-legend">
                     <p style="margin-bottom: 10px;"><strong>Feedback Legend</strong></p>
                     <div class="legend-item">
                         <span class="legend-color-box green"></span>
@@ -118,7 +122,7 @@
             </section>
 
             <section class="selection-grid-container" id="selection-grid-zone">
-                <h2></h2>
+                <h2>Make Your Guess</h2>
                 <div id="selection-controls">
                     <div id="card-slot-1" class="card-slot" data-card="">Card 1</div>
                     <div id="card-slot-2" class="card-slot" data-card="">Card 2</div>

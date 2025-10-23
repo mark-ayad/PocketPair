@@ -1,17 +1,28 @@
 :root {
+    /* --- Wordle Colors --- */
     --color-green-wordle: #6aaa64;
     --color-yellow-wordle: #c9b458;
     --color-grey-wordle: #787c7e;
     
-    --color-primary-bg: #1f1f1f; 
+    /* --- Light Theme (New Default) --- */
+    --color-background: #f3f3f3;
+    --color-container-bg: #ffffff;
+    --color-container-bg-inner: #f9f9f9; /* New color for inner boxes */
+    --color-text-primary: #333;
+    --color-text-secondary: #787c7e;
+    --color-border: #d3d6da;
+    --color-header-green: #4CAF50;
+    /* Keeping the green for branding */
+
+    /* --- Dark Theme (Old) --- */
+    --color-primary-bg: #1f1f1f;
     --color-secondary-bg: #2d2d2d;
+    --color-text-light: #f0f0f0;
+
+    /* --- Shared Colors --- */
     --color-table-felt: #2d6b5e;
     --color-table-felt-dark: #1a4a3e;
     --color-table-outline: #5c3a21;
-    --color-text-light: #f0f0f0;
-    --color-text-dark: #333;
-    --color-text-medium: #aaa;
-    --color-text-header: #4CAF50; 
     --color-card-bg: #f8f8f8;
     --color-card-border: #999;
     --color-card-red: #D90000;
@@ -20,15 +31,16 @@
     --color-button-submit-hover: #45a049;
     --color-button-next: #555;
     --color-button-next-hover: #666;
-    --color-disabled-btn: #444;
+    --color-disabled-btn: #a7a7a7;
+    /* Lighter disabled for light theme */
     --color-error: #dc3545;
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     /* Default to light theme for the intro screen */
-    background-color: #f3f3f3; 
-    color: #333;
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,11 +52,7 @@ body {
 
 /* This class is added by JS when the game starts */
 body.game-active {
-    /* Switch to dark theme */
-    background-color: var(--color-primary-bg);
-    color: var(--color-text-light);
-    
-    /* Remove flex centering to allow scrolling */
+    /* Game theme is now light by default, just remove centering */
     display: block;
     justify-content: unset;
     align-items: unset;
@@ -54,7 +62,8 @@ body.game-active {
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    display: none; /* Hidden by default */
+    display: none;
+    /* Hidden by default */
     flex-direction: column;
     gap: 20px;
 }
@@ -65,7 +74,7 @@ header {
 
 header h1 {
     font-size: 2.5em;
-    color: var(--color-text-header);
+    color: var(--color-header-green);
     margin: 0;
     font-weight: 600;
 }
@@ -77,24 +86,31 @@ header h1 {
     gap: 20px;
 }
 
+/* Updated container styles for light theme */
 .action-history-container,
 .guess-history-container,
 .selection-grid-container {
-    background-color: var(--color-secondary-bg);
+    background-color: var(--color-container-bg);
     border-radius: 12px;
     padding: 20px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    /* Softer shadow */
+    position: relative;
+    border: 1px solid var(--color-border);
 }
 
+/* Updated action log for light theme */
 #action-log-zone {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
-    background-color: #252525;
+    background-color: var(--color-container-bg-inner);
+    /* Lighter background */
     padding: 15px;
     border-radius: 8px;
     min-height: 100px;
+    border: 1px solid var(--color-border);
 }
 
 .street-column {
@@ -104,88 +120,78 @@ header h1 {
 }
 
 .street-column h4 {
-    color: var(--color-text-header);
+    color: var(--color-header-green);
     margin-top: 0;
     margin-bottom: 10px;
-    border-bottom: 2px solid var(--color-text-header);
+    border-bottom: 2px solid var(--color-header-green);
     padding-bottom: 5px;
 }
 
 .action-line {
     font-size: 0.9em;
-    color: var(--color-text-medium);
+    color: var(--color-text-secondary);
     margin: 4px 0;
 }
 
+/* --- Minimalist Oval Table --- */
+
 #table-felt {
     width: 100%;
-    height: 350px;
-    background: radial-gradient(ellipse at center, var(--color-table-felt) 0%, var(--color-table-felt-dark) 100%);
-    border-radius: 175px; 
-    border: 10px solid var(--color-table-outline);
-    box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    padding: 25px 0;
+    background-color: var(--color-green-wordle); /* Set to Wordle Green */
+    border-radius: 175px; /* The oval shape */
+    padding: 20px;
     box-sizing: border-box;
+    border: none; 
+
+    /* Keep the clean grid layout */
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 20px; 
+    justify-items: center;
 }
 
-#villain-area, #hero-area {
-    position: relative;
-    width: 100%;
+.player-area {
+    /* For Villain and Hero */
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 #board-area {
     display: flex;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    width: 90%;
-    margin: 0 auto;
-    position: relative;
+    gap: 15px;
+    width: 100%;
 }
 
-#pot-size {
-    font-size: 1.2em;
-    font-weight: bold;
-    position: absolute;
-    left: 40px;
-    top: 50%;
-    transform: translateY(-50%);
-    white-space: nowrap;
-    flex-shrink: 0;
-    /* Color update for dark theme */
-    color: var(--color-text-light); 
-}
-
+#villain-cards,
+#hero-cards,
 #board-cards {
     display: flex;
     gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.player-label {
-    background-color: rgba(0, 0, 0, 0.7);
+/* Pot Label (Light text for dark table) */
+#pot-size {
+    font-size: 1.2em;
+    font-weight: bold;
     color: var(--color-text-light);
-    padding: 3px 10px;
-    border-radius: 4px;
-    font-size: 0.8em;
-    position: absolute;
-    top: -22px; 
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
 }
 
-#hero-area .player-label {
-    top: auto;
-    bottom: -22px;
-}
-
-#villain-cards, #hero-cards {
-    display: flex;
-    gap: 8px;
+/* Player Labels (Light text for dark table) */
+.player-label {
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--color-text-light);
+    opacity: 1.0;
 }
 
 #villain-cards .card,
@@ -214,15 +220,36 @@ header h1 {
 }
 
 .card-placeholder {
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 2px dashed rgba(255, 255, 255, 0.3);
+    /* A lighter placeholder for the light table */
+    background-color: rgba(255, 255, 255, 0.4); 
+    border: 2px dashed var(--color-text-secondary);
+    opacity: 0.6;
     border-radius: 6px;
 }
 
+/* Initial state of Villain's cards (hidden) */
 #villain-cards .card {
-    background-color: #B22222; 
+    background-color: #B22222;
     border-color: #8B0000;
 }
+
+/* --- Final Card Reveal Styles --- */
+
+/* Final state: Card was correctly identified (Green) */
+#villain-cards .card.final-green {
+    background-color: var(--color-green-wordle);
+    border-color: var(--color-green-wordle);
+    color: var(--color-text-light);
+}
+
+/* Final state: Card was missed (Light Red) */
+#villain-cards .card.final-red {
+    background-color: #f8d7da; /* Light Red */
+    border-color: #f5c6cb;
+    color: #721c24; /* Dark red text */
+}
+
+/* Normal Card Styles */
 
 .card-rank-display {
     font-size: 1.3em;
@@ -242,39 +269,19 @@ header h1 {
     color: var(--color-card-black);
 }
 
+/* Text colors updated for light theme */
 #guess-history-zone h2,
 #selection-grid-zone h2 {
     margin-top: 0;
     margin-bottom: 15px;
-    color: var(--color-text-light);
+    color: var(--color-text-primary);
     font-weight: 500;
 }
 
-.feedback-legend {
-    background-color: var(--color-primary-bg);
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-.feedback-legend p {
-    margin: 0;
-    font-size: 0.9em;
-}
-
-.feedback-legend strong {
-    color: var(--color-text-light);
-}
-
+/* Base style for legend items */
 .legend-item {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
-    color: var(--color-text-medium);
-}
-
-.legend-item:last-child {
-    margin-bottom: 0;
 }
 
 .legend-color-box {
@@ -282,15 +289,23 @@ header h1 {
     height: 20px;
     border-radius: 4px;
     margin-right: 10px;
-    border: 1px solid var(--color-text-medium);
+    border: 1px solid var(--color-text-secondary);
     flex-shrink: 0;
 }
 
-.legend-color-box.green { background-color: var(--color-green-wordle); }
-.legend-color-box.yellow { background-color: var(--color-yellow-wordle); }
-.legend-color-box.grey { background-color: var(--color-grey-wordle); }
+.legend-color-box.green {
+    background-color: var(--color-green-wordle);
+}
 
+.legend-color-box.yellow {
+    background-color: var(--color-yellow-wordle);
+}
 
+.legend-color-box.grey {
+    background-color: var(--color-grey-wordle);
+}
+
+/* Guess grid updated for light theme */
 #guess-history-grid {
     display: flex;
     flex-direction: column;
@@ -306,7 +321,9 @@ header h1 {
 
 .guess-street-column {
     flex-basis: 32%;
-    background-color: var(--color-primary-bg);
+    background-color: var(--color-container-bg-inner);
+    /* Lighter inner bg */
+    border: 1px solid var(--color-border);
     border-radius: 8px;
     padding: 10px;
     min-height: 80px;
@@ -315,7 +332,8 @@ header h1 {
 .guess-street-column h4 {
     margin: 0 0 10px 0;
     text-align: center;
-    color: var(--color-text-medium);
+    color: var(--color-text-secondary);
+    /* Lighter text */
     font-weight: 600;
 }
 
@@ -334,8 +352,8 @@ header h1 {
 
 .guess-street-column.river-column .guess-list {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 10px; 
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
     justify-items: center;
 }
 
@@ -376,6 +394,7 @@ header h1 {
     opacity: 0.8;
 }
 
+/* Selection controls updated for light theme */
 #selection-controls {
     display: flex;
     gap: 10px;
@@ -386,13 +405,14 @@ header h1 {
 .card-slot {
     flex-grow: 1;
     height: 65px;
-    background-color: var(--color-primary-bg);
-    border: 2px dashed var(--color-text-medium);
+    background-color: var(--color-container-bg-inner);
+    /* Lighter bg */
+    border: 2px dashed var(--color-border);
     border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--color-text-medium);
+    color: var(--color-text-secondary);
     font-weight: 500;
     font-size: 0.9em;
 }
@@ -401,7 +421,7 @@ header h1 {
     width: 45px;
     height: 65px;
     font-size: 1.1em;
-    margin: -2px; 
+    margin: -2px;
 }
 
 #selection-buttons {
@@ -410,6 +430,7 @@ header h1 {
     gap: 8px;
 }
 
+/* Button styles updated for light theme */
 .btn {
     padding: 10px 15px;
     font-size: 1em;
@@ -422,7 +443,7 @@ header h1 {
     min-height: 40px;
 }
 
-.btn.btn-primary { 
+.btn.btn-primary {
     background-color: var(--color-button-submit);
     color: white;
 }
@@ -431,12 +452,13 @@ header h1 {
     background-color: var(--color-button-submit-hover);
 }
 
-.btn:disabled { 
+.btn:disabled {
     background-color: var(--color-disabled-btn);
-    color: var(--color-text-medium);
+    color: #f9f9f9;
     cursor: not-allowed;
 }
 
+/* Card grid updated for light theme */
 #card-grid {
     display: grid;
     grid-template-columns: repeat(13, 1fr);
@@ -486,13 +508,14 @@ header h1 {
 }
 
 .card-wrapper.rank-match .card {
-    background-color: var(--color-yellow-wordle); 
+    background-color: var(--color-yellow-wordle);
     border-color: var(--color-yellow-wordle);
-    color: var(--color-text-light); 
-    box-shadow: none; 
+    color: var(--color-text-light);
+    box-shadow: none;
 }
+
 .card-wrapper.rank-match:hover .card {
-     border-color: var(--color-yellow-wordle);
+    border-color: var(--color-yellow-wordle);
 }
 
 .card-wrapper.exact-match .card {
@@ -521,29 +544,27 @@ header h1 {
 
 @media (min-width: 1100px) {
     .game-container {
-        /* Allow it to be wider on large screens */
-        max-width: 1600px; 
+        max-width: 1600px;
     }
 
     .game-zone {
-        grid-template-columns: 55fr 45fr; 
+        grid-template-columns: 55fr 45fr;
         grid-template-areas:
-            "gameplay-top      tools"
-            "gameplay-main     tools"
-            "gameplay-main     history";
-        
-        align-items: start; 
+            "gameplay-top      history"
+            "gameplay-main     history"
+            "gameplay-main     tools";
+
+        align-items: start;
         gap: 30px;
     }
 
     .action-history-container {
         grid-area: gameplay-top;
     }
-    
+
     #table-felt {
         grid-area: gameplay-main;
-        height: 400px; 
-        min-height: 350px;
+        padding: 20px;
     }
 
     .selection-grid-container {
@@ -557,16 +578,6 @@ header h1 {
     .guess-street-column.river-column .guess-list {
         grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     }
-}
-
-@media (min-width: 1100px) and (max-height: 800px) {
-     #table-felt {
-        height: 350px; 
-     }
-     body.game-active {
-        /* Keep it aligned to top, but add padding */
-        padding-top: 20px;
-     }
 }
 
 
@@ -589,15 +600,24 @@ header h1 {
 
 #intro-screen h1 {
     font-size: 3.5em;
-    color: #333;
+    color: var(--color-text-primary);
     margin: 0 0 10px 0;
     font-weight: 600;
 }
 
 .intro-tagline {
     font-size: 1.25em;
-    color: #333;
+    color: var(--color-text-primary);
     margin-bottom: 30px;
+}
+
+.intro-description {
+    font-size: 0.95em;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    max-width: 400px;
+    margin: 15px auto 30px auto;
+    text-align: center;
 }
 
 .intro-legend-preview {
@@ -606,34 +626,28 @@ header h1 {
     align-items: flex-start;
     max-width: 320px;
     margin: 0 auto 30px auto;
-    gap: 10px;
 }
+
 .intro-legend-preview .legend-item {
-    display: flex;
-    align-items: center;
-    color: #787c7e;
+    color: var(--color-text-secondary);
     font-size: 0.9em;
+    margin-bottom: 8px;
 }
+
 .intro-legend-preview .legend-item p {
     margin: 0;
 }
+
 .intro-legend-preview .legend-item strong {
-    color: #333;
+    color: var(--color-text-primary);
 }
+
 .intro-legend-preview .legend-color-box {
-    width: 20px;
-    height: 20px;
-    border-radius: 4px;
-    margin-right: 10px;
-    flex-shrink: 0;
     border: none;
 }
-.intro-legend-preview .legend-color-box.green { background-color: var(--color-green-wordle); }
-.intro-legend-preview .legend-color-box.yellow { background-color: var(--color-yellow-wordle); }
-.intro-legend-preview .legend-color-box.grey { background-color: var(--color-grey-wordle); }
 
 #play-game-btn {
-    border-radius: 30px; 
+    border-radius: 30px;
     padding: 15px 50px;
     font-size: 1.2em;
     font-weight: 600;
@@ -641,22 +655,98 @@ header h1 {
     color: white;
     border: none;
     transition: background-color 0.2s ease;
-    height: auto; 
+    height: auto;
 }
+
 #play-game-btn:hover {
     background-color: var(--color-button-submit-hover);
 }
 
 .intro-date {
     margin-top: 20px;
-    color: #787c7e;
+    color: var(--color-text-secondary);
     font-size: 0.9em;
 }
-.intro-description {
-    font-size: 0.95em;
-    color: #787c7e; 
-    line-height: 1.5;
-    max-width: 400px; /* Give it a bit more width */
-    margin: 15px auto 30px auto; /* Give it normal top margin */
-    text-align: center; /* Center the text */
+
+/* --- Legend Popup Styles --- */
+
+.guess-history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#guess-history-zone h2 {
+    margin: 0;
+}
+
+/* Icon button updated for light theme */
+.btn-icon {
+    background-color: var(--color-container-bg);
+    color: var(--color-text-secondary);
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+    background-color: var(--color-container-bg-inner);
+    color: var(--color-text-primary);
+    border-color: var(--color-text-secondary);
+}
+
+/* Popup style updated for light theme */
+#feedback-legend {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    z-index: 10;
+
+    background-color: rgba(255, 255, 255, 0.85);
+    /* Light, semi-transparent */
+    border: 1px solid var(--color-border);
+    backdrop-filter: blur(4px);
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 0;
+    width: 350px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#feedback-legend.show {
+    display: block;
+}
+
+/* Specific styles for the legend popup */
+#feedback-legend p {
+    color: var(--color-text-secondary);
+    margin: 0;
+}
+
+#feedback-legend strong {
+    color: var(--color-text-primary);
+}
+
+#feedback-legend .legend-item {
+    color: var(--color-text-secondary);
+    margin-bottom: 4px;
+}
+
+#feedback-legend .legend-item:last-child {
+    margin-bottom: 0;
+}
+
+#feedback-legend .legend-color-box {
+    border-color: var(--color-border);
 }
