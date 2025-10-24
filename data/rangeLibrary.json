@@ -1,45 +1,197 @@
 [
     {
         "id": "1",
-        "name": "Rivered Pair",
-        "HeroPosition": "SB",
-        "StartingStackBBs": 100.0,
-        "HeroHand": ["As", "Ks"],
-        "VillainSolution": ["Jd", "10d"],
-        "Board": ["Qc", "9s", "4h", "7d", "Jh"],
-        "StartingPot": 1.5,
+        "name": "Quads vs. Full House",
+        "heroPlayer": "Daniel Negreanu",
+        "villainPlayer": "Gus Hansen",
+        "youtubeLink": "https://www.youtube.com/watch?v=n1FxXwfTx_E",
+        "context": "A legendary $575,700 pot from 'High Stakes Poker'. A brutal 'set over set' flop turns into one of the most memorable coolers in televised poker history when the turn card gives Gus Hansen quads.",
+        "HeroPosition": "MP",
+        "heroStartingStackBBs": 287000.00,
+        "villainStartingStackBBs": 287000.00,
+        "HeroHand": ["6s", "6h"],
+        "VillainSolution": ["5d", "5c"],
+        "Board": ["9c", "6d", "5h", "5s", "8s"],
+        "StartingPot": 1700.00,
         "ActionHistory": [
             {
-                "Street": "Pre-Flop", 
-                "Actions": ["Hero raises to 3.00 BBs", "Villain calls 3.00 BBs"], 
-                "PotEnd": 6.0, 
-                "HeroStack": 97.0,
-                "VillainStack": 97.0,
+                "Street": "Pre-Flop",
+                "Actions": ["Villain raises to $2,100", "Hero 3-bets to $5,000", "Villain calls $2,900"],
+                "PotEnd": 11700.00,
+                "HeroStack": 282000.00,
+                "VillainStack": 282000.00,
                 "CardsShown": []
             },
             {
-                "Street": "Flop", 
-                "Actions": ["Villain checks", "Hero checks"], 
-                "PotEnd": 6.0, 
-                "HeroStack": 97.0,
-                "VillainStack": 97.0,
-                "CardsShown": ["Qc", "9s", "4h"]
+                "Street": "Flop",
+                "Actions": ["Villain checks", "Hero bets $8,000", "Villain check-raises to $26,000", "Hero calls $18,000"],
+                "PotEnd": 63700.00,
+                "HeroStack": 256000.00,
+                "VillainStack": 256000.00,
+                "CardsShown": ["9c", "6d", "5h"]
             },
             {
-                "Street": "Turn", 
-                "Actions": ["Villain bets 4.00 BBs", "Hero calls 4.00 BBs"], 
-                "PotEnd": 14.0, 
-                "HeroStack": 93.0,
-                "VillainStack": 93.0,
-                "CardsShown": ["Qc", "9s", "4h", "7d"]
+                "Street": "Turn",
+                "Actions": ["Villain bets $24,000", "Hero calls $24,000"],
+                "PotEnd": 111700.00,
+                "HeroStack": 232000.00,
+                "VillainStack": 232000.00,
+                "CardsShown": ["9c", "6d", "5h", "5s"]
             },
             {
-                "Street": "River", 
-                "Actions": ["Villain bets 9.00 BBs (into 14.00 BBs pot)"], 
-                "PotEnd": 23.0, 
-                "HeroStack": 93.0,
-                "VillainStack": 84.0,
-                "CardsShown": ["Qc", "9s", "4h", "7d", "Jh"]
+                "Street": "River",
+                "Actions": ["Villain checks", "Hero bets $65,000", "Villain check-raises All-in ($232,000)", "Hero calls $167,000"],
+                "PotEnd": 575700.00,
+                "HeroStack": 0.00,
+                "VillainStack": 464000.00,
+                "CardsShown": ["9c", "6d", "5h", "5s", "8s"]
+            }
+        ]
+    },
+    {
+        "id": "2",
+        "name": "Bluff of the Century",
+        "heroPlayer": "Chris Moneymaker",
+        "villainPlayer": "Sammy Farha",
+        "youtubeLink": "https://www.youtube.com/watch?v=EUxk1P172Xc",
+        "context": "The 2003 WSOP Main Event. An unknown amateur (Hero) runs a massive bluff with King-high against a seasoned pro (Villain), changing poker history and igniting the 'poker boom'.",
+        "HeroPosition": "SB",
+        "heroStartingStackBBs": 4600000.00,
+        "villainStartingStackBBs": 3700000.00,
+        "HeroHand": ["Ks", "7h"],
+        "VillainSolution": ["Qs", "9h"],
+        "Board": ["9s", "2d", "6s", "8s", "3h"],
+        "StartingPot": 70000.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Hero raises to $100,000", "Villain calls $60,000"],
+                "PotEnd": 210000.00,
+                "HeroStack": 4500000.00,
+                "VillainStack": 3600000.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Villain checks", "Hero checks"],
+                "PotEnd": 210000.00,
+                "HeroStack": 4500000.00,
+                "VillainStack": 3600000.00,
+                "CardsShown": ["9s", "2d", "6s"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Villain bets $300,000", "Hero raises to $800,000", "Villain calls $500,000"],
+                "PotEnd": 1810000.00,
+                "HeroStack": 3700000.00,
+                "VillainStack": 2800000.00,
+                "CardsShown": ["9s", "2d", "6s", "8s"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Villain checks", "Hero goes All-in ($2,800,000)", "Villain folds"],
+                "PotEnd": 1810000.00,
+                "HeroStack": 5510000.00,
+                "VillainStack": 2800000.00,
+                "CardsShown": ["9s", "2d", "6s", "8s", "3h"]
+            }
+        ]
+    },
+    {
+        "id": "3",
+        "name": "You Call, It's All Over",
+        "heroPlayer": "Kevin McBride",
+        "villainPlayer": "Scotty Nguyen",
+        "youtubeLink": "https://www.youtube.com/watch?v=zIeF6UlSGiw",
+        "context": "The legendary final hand of the 1998 WSOP Main Event. With a full house on the board, Scotty Nguyen (Villain) shoves all-in and delivers the most famous line in poker: 'You call, it's gonna be all over, baby!'",
+        "HeroPosition": "SB",
+        "heroStartingStackBBs": 610000.00,
+        "villainStartingStackBBs": 2890000.00,
+        "HeroHand": ["Qh", "Th"],
+        "VillainSolution": ["Jd", "9c"],
+        "Board": ["9d", "9h", "8c", "8h", "8s"],
+        "StartingPot": 75000.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Hero raises to $100,000", "Villain calls $50,000"],
+                "PotEnd": 200000.00,
+                "HeroStack": 510000.00,
+                "VillainStack": 2790000.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Villain checks", "Hero bets $100,000", "Villain calls $100,000"],
+                "PotEnd": 400000.00,
+                "HeroStack": 410000.00,
+                "VillainStack": 2690000.00,
+                "CardsShown": ["9d", "9h", "8c"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Villain checks", "Hero bets $100,000", "Villain calls $100,000"],
+                "PotEnd": 600000.00,
+                "HeroStack": 310000.00,
+                "VillainStack": 2590000.00,
+                "CardsShown": ["9d", "9h", "8c", "8h"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Villain goes All-in", "Hero calls $310,000"],
+                "PotEnd": 1220000.00,
+                "HeroStack": 0.00,
+                "VillainStack": 3200000.00,
+                "CardsShown": ["9d", "9h", "8c", "8h", "8s"]
+            }
+        ]
+    },
+    {
+        "id": "4",
+        "name": "Chan vs. Seidel (Rounders Hand)",
+        "heroPlayer": "Erik Seidel",
+        "villainPlayer": "Johnny Chan",
+        "youtubeLink": "https://www.youtube.com/watch?v=g65GP3i20sY",
+        "context": "The final hand of the 1988 WSOP Main Event, immortalized in the movie 'Rounders'. Chan (Villain) flops the nut straight and sets a legendary trap for Seidel (Hero) to win his second consecutive Main Event title.",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 280000.00,
+        "villainStartingStackBBs": 700000.00,
+        "HeroHand": ["Qc", "7h"],
+        "VillainSolution": ["Jc", "9c"],
+        "Board": ["Qd", "8d", "Th", "2s", "6d"],
+        "StartingPot": 0.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Villain limps", "Hero checks"],
+                "PotEnd": 0.00,
+                "HeroStack": 280000.00,
+                "VillainStack": 700000.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Hero checks", "Villain bets $40,000", "Hero raises to $90,000", "Villain calls $50,000"],
+                "PotEnd": 180000.00,
+                "HeroStack": 190000.00,
+                "VillainStack": 610000.00,
+                "CardsShown": ["Qd", "8d", "Th"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Hero checks", "Villain checks"],
+                "PotEnd": 180000.00,
+                "HeroStack": 190000.00,
+                "VillainStack": 610000.00,
+                "CardsShown": ["Qd", "8d", "Th", "2s"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Hero goes All-in ($190,000)", "Villain calls $190,000"],
+                "PotEnd": 560000.00,
+                "HeroStack": 0.00,
+                "VillainStack": 420000.00, 
+                "CardsShown": ["Qd", "8d", "Th", "2s", "6d"]
             }
         ]
     }

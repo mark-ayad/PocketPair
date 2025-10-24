@@ -1,13 +1,11 @@
 # PocketPair
-### The Daily GTO Poker Deduction Puzzle
+### The Daily Iconic Poker Hand Deduction Puzzle
 
-
-
-PocketPair is a daily puzzle game for poker players designed to sharpen your GTO (Game Theory Optimal) range-reading skills. Each day, you are presented with a complete, pre-solved poker hand. Your goal is to use the betting action and Wordle-style feedback to deduce the villain's exact two hidden cards in 6 attempts or less.
+PocketPair is a daily puzzle game for poker fans designed to test your hand-reading skills. Each day, you are presented with a complete, famous poker hand from a televised event. Your goal is to use the betting action and Wordle-style feedback to deduce the villain's exact two hidden cards in 6 attempts or less.
 
 ## How to Play
 
-The game flow is designed to mimic a real hand, revealing information street by street.
+The game flow is designed to mimic a real, televised hand, revealing information street by street.
 
 1.  **Start:** You are shown your (Hero's) hand and the **Pre-Flop** betting action.
 2.  **Guess (1 per street):** Make your first guess of the Villain's hand. You get one guess for Pre-Flop, one for the Flop, and one for the Turn.

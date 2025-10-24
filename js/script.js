@@ -1,13 +1,62 @@
 // js/script.js
 
+/**
+ * Formats a number into a currency string with K/M abbreviations.
+ * @param {number} num - The number to format.
+ * @returns {string} - The formatted currency string (e.g., $1.50M).
+ */
+function formatCurrency(num) {
+    if (num >= 1000000) {
+        return '$' + (num / 1000000).toFixed(2) + 'M';
+    }
+    if (num >= 1000) {
+        return '$' + (num / 1000).toFixed(2) + 'K';
+    }
+    return '$' + num.toFixed(2);
+}
+
+/**
+ * Normalizes a card string's rank from "10" to "T".
+ * e.g., "10d" becomes "Td", "As" remains "As".
+ * Returns null if the card format is invalid.
+ * @param {string} card - The card string.
+ * @returns {string|null} - The normalized card string or null.
+ */
+function normalizeCard(card) {
+    if (!card || typeof card !== 'string' || card.length < 2) {
+        return null; // Invalid card format
+    }
+    if (card.startsWith("10")) {
+        return card.replace("10", "T");
+    }
+    const rank = card.slice(0, -1);
+    const suit = card.slice(-1).toLowerCase();
+    if (!/^[2-9TJQKA]$/.test(rank) || !/^[sdhc]$/.test(suit)) {
+       // Allow potentially invalid card strings
+    }
+    return card;
+}
+
+
+/**
+ * Normalizes just the rank part of a card.
+ * @param {string} rank - The rank (e.g., "10", "T", "K")
+ * @returns {string} - The normalized rank (e.g., "T", "T", "K")
+ */
+function normalizeRank(rank) {
+    if (!rank) return '';
+    return rank === "10" ? "T" : rank;
+}
+
+
 const API_URL = 'http://127.0.0.1:5000/api/daily-puzzle';
 let currentPuzzle = null;
 let currentStreetIndex = 0;
 let attempts = 6;
 let selectedCards = [];
-let lockedCard = null;
+let lockedCards = [];
 let hasGuessedThisStreet = false;
-let knownYellowRanks = new Set(); 
+let knownYellowRanks = new Set();
 const MAX_ATTEMPTS = 6;
 const BOARD_SIZE = 5;
 
@@ -74,20 +123,20 @@ async function fetchDailyPuzzle() {
  */
 function initializeGame(data) {
     attempts = MAX_ATTEMPTS;
-    lockedCard = null;
+    lockedCards = [];
     knownYellowRanks = new Set();
-    currentStreetIndex = 0; 
-    hasGuessedThisStreet = false; 
+    currentStreetIndex = 0;
+    hasGuessedThisStreet = false;
 
     document.getElementById('attempts-left').textContent = MAX_ATTEMPTS;
 
     document.getElementById('hero-cards').innerHTML =
         data.HeroHand.map(card => renderCard(card)).join('');
 
-    document.getElementById('pot-size').textContent = `Pot: ${data.StartingPot.toFixed(2)} BBs`;
+    document.getElementById('pot-size').textContent = `Pot: ${formatCurrency(data.StartingPot)}`;
     
-    document.getElementById('hero-stack').innerHTML = `Stack:<br>${data.StartingStackBBs.toFixed(2)} BBs`;
-    document.getElementById('villain-stack').innerHTML = `Stack:<br>${data.StartingStackBBs.toFixed(2)} BBs`;
+    document.getElementById('hero-stack').innerHTML = `Stack:<br>${formatCurrency(data.heroStartingStackBBs)}`;
+    document.getElementById('villain-stack').innerHTML = `Stack:<br>${formatCurrency(data.villainStartingStackBBs)}`;
 
 
     document.getElementById('villain-cards').innerHTML = `
@@ -111,8 +160,8 @@ function initializeGame(data) {
     updateButtonStates();
 
      const nextBtn = document.getElementById('next-street-btn');
-     nextBtn.style.display = 'inline-block'; 
-     nextBtn.textContent = 'Show Next Street'; 
+     nextBtn.style.display = 'inline-block';
+     nextBtn.textContent = 'Show Next Street';
 
 
     const existingResultHeader = document.querySelector('#guess-history-zone h3[style*="color"]');
@@ -126,7 +175,7 @@ function initializeGame(data) {
  */
 function renderFullActionStatus() {
     const logZone = document.getElementById('action-log-zone');
-    if (!logZone || !currentPuzzle || !currentPuzzle.ActionHistory) return; 
+    if (!logZone || !currentPuzzle || !currentPuzzle.ActionHistory) return;
 
     const heroLabel = document.getElementById('hero-label');
     const villainLabel = document.getElementById('villain-label');
@@ -160,17 +209,17 @@ function renderFullActionStatus() {
     });
 
     const currentStreetData = allHistory[currentStreetIndex];
-    if (!currentStreetData) return; 
+    if (!currentStreetData) return;
 
     const boardContainer = document.getElementById('board-cards');
     const potElement = document.getElementById('pot-size');
     const heroStackEl = document.getElementById('hero-stack');
     const villainStackEl = document.getElementById('villain-stack');
 
-    if (potElement) potElement.textContent = `Pot: ${currentStreetData.PotEnd.toFixed(2)} BBs`;
+    if (potElement) potElement.textContent = `Pot: ${formatCurrency(currentStreetData.PotEnd)}`;
     
-    if (heroStackEl) heroStackEl.innerHTML = `Stack:<br>${currentStreetData.HeroStack.toFixed(2)} BBs`;
-    if (villainStackEl) villainStackEl.innerHTML = `Stack:<br>${currentStreetData.VillainStack.toFixed(2)} BBs`;
+    if (heroStackEl) heroStackEl.innerHTML = `Stack:<br>${formatCurrency(currentStreetData.HeroStack)}`;
+    if (villainStackEl) villainStackEl.innerHTML = `Stack:<br>${formatCurrency(currentStreetData.VillainStack)}`;
 
 
     if (boardContainer) {
@@ -188,14 +237,14 @@ function renderFullActionStatus() {
  */
 function generateCardGrid() {
     const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-    const suits = ['d', 's', 'h', 'c']; 
+    const suits = ['d', 's', 'h', 'c'];
     const gridContainer = document.getElementById('card-grid');
     gridContainer.innerHTML = '';
 
     suits.forEach(suit => {
         ranks.forEach(rank => {
             const cardCode = rank + suit;
-            const cardElement = renderCard(cardCode); 
+            const cardElement = renderCard(cardCode);
             const wrapper = document.createElement('div');
             wrapper.classList.add('card-wrapper');
             wrapper.innerHTML = cardElement;
@@ -212,7 +261,7 @@ function generateCardGrid() {
 function updateButtonStates() {
     const submitBtn = document.getElementById('submit-guess-btn');
     const nextBtn = document.getElementById('next-street-btn');
-    if (!submitBtn || !nextBtn || !currentPuzzle || !currentPuzzle.ActionHistory) return; 
+    if (!submitBtn || !nextBtn || !currentPuzzle || !currentPuzzle.ActionHistory) return;
 
     const isReadyToSubmit = selectedCards.length === 2;
     const isRiver = currentStreetIndex === currentPuzzle.ActionHistory.length - 1;
@@ -227,7 +276,7 @@ function updateButtonStates() {
     // --- Submit Button Logic ---
     let submitShouldBeEnabled = false;
     if (isRiver) {
-        submitShouldBeEnabled = isReadyToSubmit && attempts > 0; 
+        submitShouldBeEnabled = isReadyToSubmit && attempts > 0;
     } else {
         submitShouldBeEnabled = isReadyToSubmit && !hasGuessedThisStreet && attempts > 0;
     }
@@ -253,7 +302,7 @@ function handleCardSelection(cardCode, element) {
         return;
     }
 
-    if (cardCode === lockedCard) return;
+    if (lockedCards.includes(cardCode)) return;
 
     if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1 && hasGuessedThisStreet) {
         return;
@@ -262,7 +311,7 @@ function handleCardSelection(cardCode, element) {
     const isSelected = selectedCards.includes(cardCode);
     const slot1 = document.getElementById('card-slot-1');
     const slot2 = document.getElementById('card-slot-2');
-    if (!slot1 || !slot2) return; 
+    if (!slot1 || !slot2) return;
 
     if (isSelected) {
         selectedCards = selectedCards.filter(c => c !== cardCode);
@@ -279,7 +328,7 @@ function handleCardSelection(cardCode, element) {
         selectedCards.push(cardCode);
         element.classList.add('selected');
 
-        if (!slot1.dataset.card) { 
+        if (!slot1.dataset.card) {
             slot1.innerHTML = renderCard(cardCode);
             slot1.dataset.card = cardCode;
         } else if (!slot2.dataset.card) {
@@ -296,7 +345,7 @@ function handleCardSelection(cardCode, element) {
  * Runs the deduction logic.
  */
 function submitGuess() {
-    if (selectedCards.length !== 2 || !currentPuzzle || !currentPuzzle.VillainSolution) return; 
+    if (selectedCards.length !== 2 || !currentPuzzle || !currentPuzzle.VillainSolution) return;
 
     if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1 && hasGuessedThisStreet) {
         return;
@@ -320,12 +369,12 @@ function submitGuess() {
 
     if (feedbackResult.every(item => item.feedback === 'GREEN')) {
         endGame(true);
-        return; 
+        return;
     }
 
     if (attempts <= 0) {
         endGame(false);
-        return; 
+        return;
     }
 
     if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1) {
@@ -346,10 +395,10 @@ function renderGuessHistory(feedbackResult, streetIndex) {
         case 1: targetList = document.querySelector('#flop-guesses .guess-list'); break;
         case 2: targetList = document.querySelector('#turn-guesses .guess-list'); break;
         case 3: targetList = document.querySelector('#river-guesses .guess-list'); break;
-        default: targetList = document.querySelector('#preflop-guesses .guess-list'); 
+        default: targetList = document.querySelector('#preflop-guesses .guess-list');
     }
 
-    if (!targetList) return; 
+    if (!targetList) return;
 
     const guessHTML = `
         <div class="guess-row">
@@ -372,7 +421,7 @@ function renderGuessHistory(feedbackResult, streetIndex) {
  */
 function updateDeductionAid(feedbackResult) {
     const ranksInCurrentGuess = { green: new Set(), yellow: new Set(), grey: new Set() };
-    const specificCardsProcessed = new Set(); 
+    const specificCardsProcessed = new Set();
 
     feedbackResult.forEach(item => {
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${item.card}"]`)?.parentNode;
@@ -380,13 +429,17 @@ function updateDeductionAid(feedbackResult) {
 
         const itemRank = normalizeRank(item.card.slice(0, -1));
         const cardCode = item.card;
-        specificCardsProcessed.add(cardCode); 
+        specificCardsProcessed.add(cardCode);
 
         switch (item.feedback) {
             case 'GREEN':
                 wrapper.classList.remove('rank-match', 'selected', 'rank-miss');
                 wrapper.classList.add('exact-match');
-                lockedCard = cardCode; 
+                
+                if (!lockedCards.includes(cardCode)) {
+                    lockedCards.push(cardCode);
+                }
+                
                 ranksInCurrentGuess.green.add(itemRank);
                  knownYellowRanks.delete(itemRank);
                 break;
@@ -411,7 +464,7 @@ function updateDeductionAid(feedbackResult) {
         const itemRank = normalizeRank(item.card.slice(0, -1));
         const cardCode = item.card;
 
-        const rankIsConfirmedGreen = lockedCard && normalizeRank(lockedCard.slice(0, -1)) === itemRank;
+        const rankIsConfirmedGreen = lockedCards.some(c => normalizeRank(c.slice(0, -1)) === itemRank);
         const rankIsConfirmedYellow = knownYellowRanks.has(itemRank);
 
         if (rankIsConfirmedGreen || rankIsConfirmedYellow) {
@@ -442,19 +495,30 @@ function updateDeductionAid(feedbackResult) {
         }
     });
 
-     if (lockedCard) {
-         const greenRank = normalizeRank(lockedCard.slice(0, -1));
+     // Count how many green cards we have for each rank
+     const lockedRankCounts = {};
+     lockedCards.forEach(card => {
+         const rank = normalizeRank(card.slice(0, -1));
+         lockedRankCounts[rank] = (lockedRankCounts[rank] || 0) + 1;
+     });
+
+     // Find ranks where we have found *both* cards (a confirmed pair)
+     const confirmedPairRanks = Object.keys(lockedRankCounts).filter(rank => lockedRankCounts[rank] === 2);
+
+     // Grey out other cards *only* for confirmed pairs
+     confirmedPairRanks.forEach(rank => {
          document.querySelectorAll(`.card-wrapper .card`).forEach(c => {
              const cardRank = normalizeRank(c.dataset.card.slice(0, -1));
-             if (cardRank === greenRank) {
+             if (cardRank === rank) {
                  const w = c.parentNode;
+                 // Only grey it out if it's not already green
                  if (!w.classList.contains('exact-match')) {
                      w.classList.remove('rank-match', 'selected');
                      w.classList.add('rank-miss');
                  }
              }
          });
-     }
+     });
 }
 
 
@@ -463,13 +527,13 @@ function updateDeductionAid(feedbackResult) {
  */
 function markKnownCards(heroCards, boardCards) {
     const knownCards = [...heroCards, ...boardCards];
-    const normalizedKnownCards = knownCards.map(card => normalizeCard(card)).filter(Boolean); 
+    const normalizedKnownCards = knownCards.map(card => normalizeCard(card)).filter(Boolean);
 
     document.querySelectorAll('.card-wrapper').forEach(wrapper => {
-        const cardElement = wrapper.querySelector('span.card'); 
+        const cardElement = wrapper.querySelector('span.card');
         const cardCode = cardElement ? cardElement.dataset.card : null;
 
-        wrapper.classList.remove('known-card'); 
+        wrapper.classList.remove('known-card');
 
         if (cardCode) {
             const normalizedCardCode = normalizeCard(cardCode);
@@ -487,7 +551,7 @@ function markKnownCards(heroCards, boardCards) {
 function resetSelection() {
     selectedCards.forEach(cardCode => {
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${cardCode}"]`)?.parentNode;
-        if (wrapper && !wrapper.classList.contains('exact-match')) { 
+        if (wrapper && !wrapper.classList.contains('exact-match')) {
              wrapper.classList.remove('selected');
         }
     });
@@ -495,7 +559,7 @@ function resetSelection() {
     selectedCards = [];
     const slot1 = document.getElementById('card-slot-1');
     const slot2 = document.getElementById('card-slot-2');
-    if (!slot1 || !slot2) return; 
+    if (!slot1 || !slot2) return;
 
 
     slot1.innerHTML = 'Card 1';
@@ -503,13 +567,29 @@ function resetSelection() {
     slot2.innerHTML = 'Card 2';
     slot2.dataset.card = '';
 
-    if (lockedCard) {
-        selectedCards.push(lockedCard);
-        slot1.innerHTML = renderCard(lockedCard);
-        slot1.dataset.card = lockedCard;
+    if (lockedCards.length === 1) {
+        const card = lockedCards[0];
+        selectedCards.push(card);
+        slot1.innerHTML = renderCard(card);
+        slot1.dataset.card = card;
 
-        const wrapper = document.querySelector(`.card-wrapper .card[data-card="${lockedCard}"]`)?.parentNode;
+        const wrapper = document.querySelector(`.card-wrapper .card[data-card="${card}"]`)?.parentNode;
         if (wrapper) wrapper.classList.add('selected'); 
+
+    } else if (lockedCards.length === 2) {
+        const card1 = lockedCards[0];
+        const card2 = lockedCards[1];
+        selectedCards.push(card1, card2);
+        
+        slot1.innerHTML = renderCard(card1);
+        slot1.dataset.card = card1;
+        slot2.innerHTML = renderCard(card2);
+        slot2.dataset.card = card2;
+
+        const wrapper1 = document.querySelector(`.card-wrapper .card[data-card="${card1}"]`)?.parentNode;
+        if (wrapper1) wrapper1.classList.add('selected');
+        const wrapper2 = document.querySelector(`.card-wrapper .card[data-card="${card2}"]`)?.parentNode;
+        if (wrapper2) wrapper2.classList.add('selected');
     }
 }
 
@@ -518,13 +598,13 @@ function resetSelection() {
  * Moves the game to the next street (Flop, Turn, River).
  */
 function revealNextStreet() {
-    if (currentStreetIndex >= currentPuzzle.ActionHistory.length - 1) return; 
+    if (currentStreetIndex >= currentPuzzle.ActionHistory.length - 1) return;
 
     currentStreetIndex++;
-    hasGuessedThisStreet = false; 
+    hasGuessedThisStreet = false;
     renderFullActionStatus();
     resetSelection();
-    updateButtonStates(); 
+    updateButtonStates();
 }
 
 
@@ -541,20 +621,20 @@ function endGame(win) {
      }
 
     const villainCardsContainer = document.getElementById('villain-cards');
-    if (!villainCardsContainer || !currentPuzzle || !currentPuzzle.VillainSolution) return; 
+    if (!villainCardsContainer || !currentPuzzle || !currentPuzzle.VillainSolution) return;
 
     const originalSolution = currentPuzzle.VillainSolution;
-    const normalizedLockedCard = lockedCard ? normalizeCard(lockedCard) : null;
+    const normalizedLockedCards = lockedCards.map(c => normalizeCard(c));
     let finalCardsHTML = '';
 
     originalSolution.forEach(card => {
         const normalizedCard = normalizeCard(card);
-        let cardHTML = renderCard(card); 
+        let cardHTML = renderCard(card);
 
         if (win) {
             cardHTML = cardHTML.replace('<span class="card', '<span class="card final-green"');
         } else {
-            if (normalizedLockedCard && normalizedLockedCard === normalizedCard) {
+            if (normalizedLockedCards.includes(normalizedCard)) {
                 cardHTML = cardHTML.replace('<span class="card', '<span class="card final-green"');
             } else {
                 cardHTML = cardHTML.replace('<span class="card', '<span class="card final-red"');
@@ -567,10 +647,10 @@ function endGame(win) {
 
     const resultMessage = win
         ? `CONGRATULATIONS! Solved in ${MAX_ATTEMPTS - attempts} attempts.`
-        : `GAME OVER. Solution: ${originalSolution.map(card => renderCard(card)).join(' ')}`; 
+        : `GAME OVER. Solution: ${originalSolution.map(card => renderCard(card)).join(' ')}`;
 
     const historyZone = document.getElementById('guess-history-zone');
-    if (!historyZone) return; 
+    if (!historyZone) return;
 
      const existingResultHeader = historyZone.querySelector('h3[style*="color"]');
      if (existingResultHeader) {
@@ -582,12 +662,12 @@ function endGame(win) {
     resultHeader.style.color = win ? 'var(--color-green-wordle)' : 'var(--color-error)';
     resultHeader.style.marginTop = '20px';
     resultHeader.style.textAlign = 'center';
-    resultHeader.innerHTML = resultMessage; 
+    resultHeader.innerHTML = resultMessage;
 
     historyZone.appendChild(resultHeader);
 }
 
-// Event Listeners 
+// Event Listeners
 const submitButton = document.getElementById('submit-guess-btn');
 const nextStreetButton = document.getElementById('next-street-btn');
 
@@ -609,8 +689,8 @@ if (dateElement) {
 
 if (playButton && introScreen && gameContainer) {
     playButton.addEventListener('click', () => {
-        introScreen.style.display = 'none'; 
-        gameContainer.style.display = 'flex'; 
+        introScreen.style.display = 'none';
+        gameContainer.style.display = 'flex';
 
         document.body.classList.add('game-active');
         fetchDailyPuzzle();
