@@ -140,8 +140,3 @@ vite.config.ts.timestamp-*
 
 # Python Virtual Environment
 venv/
-
-# Solver files
-tools/output_result.json
-tools/temp_solver_input.txt
-tools/tmp_log.txt
