@@ -7,12 +7,11 @@
     /* --- Light Theme (New Default) --- */
     --color-background: #f3f3f3;
     --color-container-bg: #ffffff;
-    --color-container-bg-inner: #f9f9f9; /* New color for inner boxes */
+    --color-container-bg-inner: #f9f9f9; 
     --color-text-primary: #333;
     --color-text-secondary: #787c7e;
     --color-border: #d3d6da;
     --color-header-green: #4CAF50;
-    /* Keeping the green for branding */
 
     /* --- Dark Theme (Old) --- */
     --color-primary-bg: #1f1f1f;
@@ -32,13 +31,11 @@
     --color-button-next: #555;
     --color-button-next-hover: #666;
     --color-disabled-btn: #a7a7a7;
-    /* Lighter disabled for light theme */
     --color-error: #dc3545;
 }
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    /* Default to light theme for the intro screen */
     background-color: var(--color-background);
     color: var(--color-text-primary);
     display: flex;
@@ -50,9 +47,7 @@ body {
     box-sizing: border-box;
 }
 
-/* This class is added by JS when the game starts */
 body.game-active {
-    /* Game theme is now light by default, just remove centering */
     display: block;
     justify-content: unset;
     align-items: unset;
@@ -63,7 +58,6 @@ body.game-active {
     max-width: 900px;
     margin: 0 auto;
     display: none;
-    /* Hidden by default */
     flex-direction: column;
     gap: 20px;
 }
@@ -86,7 +80,6 @@ header h1 {
     gap: 20px;
 }
 
-/* Updated container styles for light theme */
 .action-history-container,
 .guess-history-container,
 .selection-grid-container {
@@ -94,19 +87,16 @@ header h1 {
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    /* Softer shadow */
     position: relative;
     border: 1px solid var(--color-border);
 }
 
-/* Updated action log for light theme */
 #action-log-zone {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
     background-color: var(--color-container-bg-inner);
-    /* Lighter background */
     padding: 15px;
     border-radius: 8px;
     min-height: 100px;
@@ -137,36 +127,33 @@ header h1 {
 
 #table-felt {
     width: 100%;
-    background-color: var(--color-green-wordle); /* Set to Wordle Green */
-    border-radius: 175px; /* The oval shape */
+    background-color: var(--color-green-wordle);
+    border-radius: 175px; 
     padding: 20px;
     box-sizing: border-box;
     border: none; 
 
-    /* Keep the clean grid layout */
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
-    gap: 20px; 
+    gap: 30px; 
     justify-items: center;
 }
 
 .player-area {
-    /* For Villain and Hero */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 
-/* Wrapper for cards + button */
 .player-hand-area {
-    display: flex; /* This is just to wrap the cards div */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
-    position: relative; /* This is the anchor */
-    /* This width ensures the cards (108px) are centered */
-    /* and provides space for the button (30px) + gap */
-    width: 150px; 
+    gap: 10px;
+    width: 100%;
 }
 
 
@@ -183,18 +170,19 @@ header h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    
-    position: absolute; /* Positioned relative to player-hand-area */
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    
-    /* Position it to the right of the cards */
-    /* Card width (50*2) + gap (8) = 108. Half is 54. */
-    left: calc(50% + 54px + 5px); /* (Half cards width) + (small gap) */
+    flex-shrink: 0; 
+}
+
+.button-spacer {
+    width: 80px;  /* This now matches the .stack-size width */
+    display: flex;
+    justify-content: flex-start; /* This aligns the button to the left */
+    align-items: center;
+    flex-shrink: 0;
 }
 
 .hidden {
-    display: none;
+    visibility: hidden;
 }
 /* --- End Button Styles --- */
 
@@ -215,7 +203,6 @@ header h1 {
     flex-wrap: wrap;
 }
 
-/* Pot Label (Light text for dark table) */
 #pot-size {
     font-size: 1.2em;
     font-weight: bold;
@@ -225,12 +212,21 @@ header h1 {
     border-radius: 0;
 }
 
-/* Player Labels (Light text for dark table) */
 .player-label {
     font-size: 1.1em;
     font-weight: 600;
     color: var(--color-text-light);
     opacity: 1.0;
+}
+
+.stack-size {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: var(--color-text-light);
+    text-align: center;
+    line-height: 1.2;
+    width: 80px; 
+    flex-shrink: 0;
 }
 
 #villain-cards .card,
@@ -259,14 +255,12 @@ header h1 {
 }
 
 .card-placeholder {
-    /* A lighter placeholder for the light table */
     background-color: rgba(255, 255, 255, 0.4); 
     border: 2px dashed var(--color-text-secondary);
     opacity: 0.6;
     border-radius: 6px;
 }
 
-/* Initial state of Villain's cards (hidden) */
 #villain-cards .card {
     background-color: #B22222;
     border-color: #8B0000;
@@ -274,18 +268,16 @@ header h1 {
 
 /* --- Final Card Reveal Styles --- */
 
-/* Final state: Card was correctly identified (Green) */
 #villain-cards .card.final-green {
     background-color: var(--color-green-wordle);
     border-color: var(--color-green-wordle);
     color: var(--color-text-light);
 }
 
-/* Final state: Card was missed (Light Red) */
 #villain-cards .card.final-red {
-    background-color: #f8d7da; /* Light Red */
+    background-color: #f8d7da; 
     border-color: #f5c6cb;
-    color: #721c24; /* Dark red text */
+    color: #721c24; 
 }
 
 /* Normal Card Styles */
@@ -308,7 +300,6 @@ header h1 {
     color: var(--color-card-black);
 }
 
-/* Text colors updated for light theme */
 #guess-history-zone h2,
 #selection-grid-zone h2 {
     margin-top: 0;
@@ -317,7 +308,6 @@ header h1 {
     font-weight: 500;
 }
 
-/* Base style for legend items */
 .legend-item {
     display: flex;
     align-items: center;
@@ -344,7 +334,6 @@ header h1 {
     background-color: var(--color-grey-wordle);
 }
 
-/* Guess grid updated for light theme */
 #guess-history-grid {
     display: flex;
     flex-direction: column;
@@ -361,7 +350,6 @@ header h1 {
 .guess-street-column {
     flex-basis: 32%;
     background-color: var(--color-container-bg-inner);
-    /* Lighter inner bg */
     border: 1px solid var(--color-border);
     border-radius: 8px;
     padding: 10px;
@@ -372,7 +360,6 @@ header h1 {
     margin: 0 0 10px 0;
     text-align: center;
     color: var(--color-text-secondary);
-    /* Lighter text */
     font-weight: 600;
 }
 
@@ -433,7 +420,6 @@ header h1 {
     opacity: 0.8;
 }
 
-/* Selection controls updated for light theme */
 #selection-controls {
     display: flex;
     gap: 10px;
@@ -445,7 +431,6 @@ header h1 {
     flex-grow: 1;
     height: 65px;
     background-color: var(--color-container-bg-inner);
-    /* Lighter bg */
     border: 2px dashed var(--color-border);
     border-radius: 6px;
     display: flex;
@@ -469,7 +454,6 @@ header h1 {
     gap: 8px;
 }
 
-/* Button styles updated for light theme */
 .btn {
     padding: 10px 15px;
     font-size: 1em;
@@ -497,7 +481,6 @@ header h1 {
     cursor: not-allowed;
 }
 
-/* Card grid updated for light theme */
 #card-grid {
     display: grid;
     grid-template-columns: repeat(13, 1fr);
@@ -720,7 +703,6 @@ header h1 {
     margin: 0;
 }
 
-/* Icon button updated for light theme */
 .btn-icon {
     background-color: var(--color-container-bg);
     color: var(--color-text-secondary);
@@ -744,7 +726,6 @@ header h1 {
     border-color: var(--color-text-secondary);
 }
 
-/* Popup style updated for light theme */
 #feedback-legend {
     display: none;
     position: absolute;
@@ -753,7 +734,6 @@ header h1 {
     z-index: 10;
 
     background-color: rgba(255, 255, 255, 0.85);
-    /* Light, semi-transparent */
     border: 1px solid var(--color-border);
     backdrop-filter: blur(4px);
     border-radius: 8px;
@@ -767,7 +747,6 @@ header h1 {
     display: block;
 }
 
-/* Specific styles for the legend popup */
 #feedback-legend p {
     color: var(--color-text-secondary);
     margin: 0;

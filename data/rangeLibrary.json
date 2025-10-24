@@ -3,15 +3,44 @@
         "id": "1",
         "name": "Rivered Pair",
         "HeroPosition": "SB",
+        "StartingStackBBs": 100.0,
         "HeroHand": ["As", "Ks"],
         "VillainSolution": ["Jd", "10d"],
         "Board": ["Qc", "9s", "4h", "7d", "Jh"],
         "StartingPot": 1.5,
         "ActionHistory": [
-            {"Street": "Pre-Flop", "Actions": ["Hero raises to 3.00 BBs", "Villain calls 3.00 BBs"], "PotEnd": 6.0, "CardsShown": []},
-            {"Street": "Flop", "Actions": ["Villain checks", "Hero checks"], "PotEnd": 6.0, "CardsShown": ["Qc", "9s", "4h"]},
-            {"Street": "Turn", "Actions": ["Villain bets 4.00 BBs", "Hero calls 4.00 BBs"], "PotEnd": 14.0, "CardsShown": ["Qc", "9s", "4h", "7d"]},
-            {"Street": "River", "Actions": ["Villain bets 9.00 BBs (into 14.00 BBs pot)"], "PotEnd": 23.0, "CardsShown": ["Qc", "9s", "4h", "7d", "Jh"]}
+            {
+                "Street": "Pre-Flop", 
+                "Actions": ["Hero raises to 3.00 BBs", "Villain calls 3.00 BBs"], 
+                "PotEnd": 6.0, 
+                "HeroStack": 97.0,
+                "VillainStack": 97.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop", 
+                "Actions": ["Villain checks", "Hero checks"], 
+                "PotEnd": 6.0, 
+                "HeroStack": 97.0,
+                "VillainStack": 97.0,
+                "CardsShown": ["Qc", "9s", "4h"]
+            },
+            {
+                "Street": "Turn", 
+                "Actions": ["Villain bets 4.00 BBs", "Hero calls 4.00 BBs"], 
+                "PotEnd": 14.0, 
+                "HeroStack": 93.0,
+                "VillainStack": 93.0,
+                "CardsShown": ["Qc", "9s", "4h", "7d"]
+            },
+            {
+                "Street": "River", 
+                "Actions": ["Villain bets 9.00 BBs (into 14.00 BBs pot)"], 
+                "PotEnd": 23.0, 
+                "HeroStack": 93.0,
+                "VillainStack": 84.0,
+                "CardsShown": ["Qc", "9s", "4h", "7d", "Jh"]
+            }
         ]
     }
 ]

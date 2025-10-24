@@ -7,7 +7,7 @@ let attempts = 6;
 let selectedCards = [];
 let lockedCard = null;
 let hasGuessedThisStreet = false;
-let knownYellowRanks = new Set(); // Stores ranks confirmed YELLOW in previous guesses
+let knownYellowRanks = new Set(); 
 const MAX_ATTEMPTS = 6;
 const BOARD_SIZE = 5;
 
@@ -18,7 +18,6 @@ const BOARD_SIZE = 5;
 function renderCard(cardCode) {
     if (!cardCode) return '';
 
-    // Normalize rank '10' to 'T' for consistency in display
     let displayRank = cardCode.slice(0, -1);
     if (displayRank === "10") displayRank = "T";
     const suitCode = cardCode.slice(-1).toLowerCase();
@@ -52,7 +51,6 @@ async function fetchDailyPuzzle() {
         }
         currentPuzzle = await response.json();
 
-        // Ensure VillainSolution is present before initializing
         if (!currentPuzzle || !currentPuzzle.VillainSolution) {
              throw new Error("Puzzle data is missing VillainSolution.");
         }
@@ -61,7 +59,6 @@ async function fetchDailyPuzzle() {
 
     } catch (error) {
         console.error("Failed to fetch or initialize daily puzzle:", error);
-        // Display a user-friendly error message
         const logZone = document.getElementById('action-log-zone');
         if(logZone){
              logZone.innerHTML = '<p class="error-message">Error loading game. Please check server connection and data files.</p>';
@@ -78,9 +75,9 @@ async function fetchDailyPuzzle() {
 function initializeGame(data) {
     attempts = MAX_ATTEMPTS;
     lockedCard = null;
-    knownYellowRanks = new Set(); // Reset known yellow ranks for a new game
-    currentStreetIndex = 0; // Ensure game starts at pre-flop
-    hasGuessedThisStreet = false; // Reset guess status
+    knownYellowRanks = new Set();
+    currentStreetIndex = 0; 
+    hasGuessedThisStreet = false; 
 
     document.getElementById('attempts-left').textContent = MAX_ATTEMPTS;
 
@@ -88,8 +85,11 @@ function initializeGame(data) {
         data.HeroHand.map(card => renderCard(card)).join('');
 
     document.getElementById('pot-size').textContent = `Pot: ${data.StartingPot.toFixed(2)} BBs`;
+    
+    document.getElementById('hero-stack').innerHTML = `Stack:<br>${data.StartingStackBBs.toFixed(2)} BBs`;
+    document.getElementById('villain-stack').innerHTML = `Stack:<br>${data.StartingStackBBs.toFixed(2)} BBs`;
 
-    // Ensure villain cards start hidden (or show placeholders if needed)
+
     document.getElementById('villain-cards').innerHTML = `
         <span class="card card-back"></span>
         <span class="card card-back"></span>
@@ -100,29 +100,21 @@ function initializeGame(data) {
     boardContainer.innerHTML = Array(BOARD_SIZE).fill('<span class="card-placeholder"></span>').join('');
 
     document.getElementById('action-log-zone').innerHTML = '';
-    
-    // This function will now also handle setting positions
-    renderFullActionStatus(); 
+    renderFullActionStatus();
 
     generateCardGrid();
     markKnownCards(data.HeroHand, []);
 
-    // Clear old guess lists thoroughly
     document.querySelectorAll('.guess-list').forEach(list => list.innerHTML = '');
 
-    // Reset selection slots
     resetSelection();
-
-    // Update buttons for the initial state
     updateButtonStates();
 
-     // Ensure Next Street button is correctly displayed/hidden initially
      const nextBtn = document.getElementById('next-street-btn');
-     nextBtn.style.display = 'inline-block'; // Show initially
-     nextBtn.textContent = 'Show Next Street'; // Reset text
+     nextBtn.style.display = 'inline-block'; 
+     nextBtn.textContent = 'Show Next Street'; 
 
 
-    // Remove any previous win/loss message
     const existingResultHeader = document.querySelector('#guess-history-zone h3[style*="color"]');
     if (existingResultHeader) {
         existingResultHeader.remove();
@@ -131,23 +123,19 @@ function initializeGame(data) {
 
 /**
  * Renders the entire columnar action status display.
- * NOW ALSO UPDATES PLAYER POSITIONS AND DEALER BUTTON.
  */
 function renderFullActionStatus() {
     const logZone = document.getElementById('action-log-zone');
-    if (!logZone || !currentPuzzle || !currentPuzzle.ActionHistory) return; // Add guards
+    if (!logZone || !currentPuzzle || !currentPuzzle.ActionHistory) return; 
 
-    // --- Handle Position Display ---
     const heroLabel = document.getElementById('hero-label');
     const villainLabel = document.getElementById('villain-label');
     const heroButton = document.getElementById('hero-button-marker');
     const villainButton = document.getElementById('villain-button-marker');
 
-    // Set static labels
     heroLabel.textContent = 'Hero';
     villainLabel.textContent = 'Villain';
 
-    // Toggle the button visibility
     if (currentPuzzle.HeroPosition === 'SB') {
         heroButton.classList.remove('hidden');
         villainButton.classList.add('hidden');
@@ -155,8 +143,6 @@ function renderFullActionStatus() {
         heroButton.classList.add('hidden');
         villainButton.classList.remove('hidden');
     }
-    // --- End Position Display ---
-
 
     const allHistory = currentPuzzle.ActionHistory;
     logZone.innerHTML = '';
@@ -174,12 +160,18 @@ function renderFullActionStatus() {
     });
 
     const currentStreetData = allHistory[currentStreetIndex];
-    if (!currentStreetData) return; // Guard
+    if (!currentStreetData) return; 
 
     const boardContainer = document.getElementById('board-cards');
     const potElement = document.getElementById('pot-size');
+    const heroStackEl = document.getElementById('hero-stack');
+    const villainStackEl = document.getElementById('villain-stack');
 
     if (potElement) potElement.textContent = `Pot: ${currentStreetData.PotEnd.toFixed(2)} BBs`;
+    
+    if (heroStackEl) heroStackEl.innerHTML = `Stack:<br>${currentStreetData.HeroStack.toFixed(2)} BBs`;
+    if (villainStackEl) villainStackEl.innerHTML = `Stack:<br>${currentStreetData.VillainStack.toFixed(2)} BBs`;
+
 
     if (boardContainer) {
         const cardsRendered = currentStreetData.CardsShown.map(card => renderCard(card)).join('');
@@ -196,18 +188,17 @@ function renderFullActionStatus() {
  */
 function generateCardGrid() {
     const ranks = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A'];
-    const suits = ['d', 's', 'h', 'c']; // Consistent suit order
+    const suits = ['d', 's', 'h', 'c']; 
     const gridContainer = document.getElementById('card-grid');
     gridContainer.innerHTML = '';
 
     suits.forEach(suit => {
         ranks.forEach(rank => {
             const cardCode = rank + suit;
-            const cardElement = renderCard(cardCode); // Use consistent rendering
+            const cardElement = renderCard(cardCode); 
             const wrapper = document.createElement('div');
             wrapper.classList.add('card-wrapper');
             wrapper.innerHTML = cardElement;
-            // Ensure event listener uses the wrapper element correctly
             wrapper.addEventListener('click', () => handleCardSelection(cardCode, wrapper));
             gridContainer.appendChild(wrapper);
         });
@@ -221,7 +212,7 @@ function generateCardGrid() {
 function updateButtonStates() {
     const submitBtn = document.getElementById('submit-guess-btn');
     const nextBtn = document.getElementById('next-street-btn');
-    if (!submitBtn || !nextBtn || !currentPuzzle || !currentPuzzle.ActionHistory) return; // Add guards
+    if (!submitBtn || !nextBtn || !currentPuzzle || !currentPuzzle.ActionHistory) return; 
 
     const isReadyToSubmit = selectedCards.length === 2;
     const isRiver = currentStreetIndex === currentPuzzle.ActionHistory.length - 1;
@@ -236,7 +227,7 @@ function updateButtonStates() {
     // --- Submit Button Logic ---
     let submitShouldBeEnabled = false;
     if (isRiver) {
-        submitShouldBeEnabled = isReadyToSubmit && attempts > 0; // Can only submit if attempts remain
+        submitShouldBeEnabled = isReadyToSubmit && attempts > 0; 
     } else {
         submitShouldBeEnabled = isReadyToSubmit && !hasGuessedThisStreet && attempts > 0;
     }
@@ -248,7 +239,6 @@ function updateButtonStates() {
     nextBtn.disabled = !nextShouldBeEnabled;
     nextBtn.classList.toggle('btn-primary', nextShouldBeEnabled);
 
-    // Ensure the Next Street button is hidden on the river
     nextBtn.style.display = isRiver ? 'none' : 'inline-block';
 }
 
@@ -257,7 +247,6 @@ function updateButtonStates() {
  * Handles card selection and updates the slots.
  */
 function handleCardSelection(cardCode, element) {
-    // Check the wrapper's classes for lockouts
     if (element.classList.contains('known-card') ||
         element.classList.contains('rank-miss') ||
         element.classList.contains('exact-match')) {
@@ -266,7 +255,6 @@ function handleCardSelection(cardCode, element) {
 
     if (cardCode === lockedCard) return;
 
-    // Prevent card changes if a guess has already been made on this street (pre-river)
     if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1 && hasGuessedThisStreet) {
         return;
     }
@@ -274,13 +262,12 @@ function handleCardSelection(cardCode, element) {
     const isSelected = selectedCards.includes(cardCode);
     const slot1 = document.getElementById('card-slot-1');
     const slot2 = document.getElementById('card-slot-2');
-    if (!slot1 || !slot2) return; // Add guards
+    if (!slot1 || !slot2) return; 
 
     if (isSelected) {
         selectedCards = selectedCards.filter(c => c !== cardCode);
         element.classList.remove('selected');
 
-        // Clear the correct slot
         if (slot1.dataset.card === cardCode) {
             slot1.innerHTML = 'Card 1';
             slot1.dataset.card = '';
@@ -292,8 +279,7 @@ function handleCardSelection(cardCode, element) {
         selectedCards.push(cardCode);
         element.classList.add('selected');
 
-        // Fill the first available slot
-        if (!slot1.dataset.card) { // Check if dataset.card is empty or null
+        if (!slot1.dataset.card) { 
             slot1.innerHTML = renderCard(cardCode);
             slot1.dataset.card = cardCode;
         } else if (!slot2.dataset.card) {
@@ -310,9 +296,8 @@ function handleCardSelection(cardCode, element) {
  * Runs the deduction logic.
  */
 function submitGuess() {
-    if (selectedCards.length !== 2 || !currentPuzzle || !currentPuzzle.VillainSolution) return; // Add guards
+    if (selectedCards.length !== 2 || !currentPuzzle || !currentPuzzle.VillainSolution) return; 
 
-    // Pre-River: prevent multiple guesses on the same street
     if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1 && hasGuessedThisStreet) {
         return;
     }
@@ -320,10 +305,8 @@ function submitGuess() {
     attempts--;
     document.getElementById('attempts-left').textContent = attempts;
 
-    // Pass the knownYellowRanks to the feedback function
     const feedbackResult = generateFeedback(selectedCards, currentPuzzle.VillainSolution, knownYellowRanks);
 
-    // Update knownYellowRanks based on the feedback received
     feedbackResult.forEach(item => {
         if (item.feedback === 'YELLOW') {
             const rank = normalizeRank(item.card.slice(0, -1));
@@ -335,27 +318,21 @@ function submitGuess() {
 
     updateDeductionAid(feedbackResult);
 
-    // Check for win condition
     if (feedbackResult.every(item => item.feedback === 'GREEN')) {
         endGame(true);
-        return; // Stop further execution on win
+        return; 
     }
 
-    // Check for loss condition
     if (attempts <= 0) {
         endGame(false);
-        return; // Stop further execution on loss
+        return; 
     }
 
-    // After a successful guess (pre-river), lock the guessing phase for this street
     if (currentStreetIndex < currentPuzzle.ActionHistory.length - 1) {
         hasGuessedThisStreet = true;
     }
 
-    // Update button states: this will disable Submit and enable Next Street (if pre-river)
     updateButtonStates();
-
-    // Reset selection for the next action (either next street or next guess on river)
     resetSelection();
 }
 
@@ -369,17 +346,16 @@ function renderGuessHistory(feedbackResult, streetIndex) {
         case 1: targetList = document.querySelector('#flop-guesses .guess-list'); break;
         case 2: targetList = document.querySelector('#turn-guesses .guess-list'); break;
         case 3: targetList = document.querySelector('#river-guesses .guess-list'); break;
-        default: targetList = document.querySelector('#preflop-guesses .guess-list'); // Fallback
+        default: targetList = document.querySelector('#preflop-guesses .guess-list'); 
     }
 
-    if (!targetList) return; // Guard
+    if (!targetList) return; 
 
     const guessHTML = `
         <div class="guess-row">
             <div class="guess-cards">
                 ${feedbackResult.map(item => {
                     const cardElementHTML = renderCard(item.card);
-                    // Inject the feedback class directly into the card span
                     return cardElementHTML.replace(
                         '<span class="card',
                         `<span class="card ${item.feedback.toLowerCase()}`
@@ -396,43 +372,36 @@ function renderGuessHistory(feedbackResult, streetIndex) {
  */
 function updateDeductionAid(feedbackResult) {
     const ranksInCurrentGuess = { green: new Set(), yellow: new Set(), grey: new Set() };
-    const specificCardsProcessed = new Set(); // Track cards handled in Pass 1
+    const specificCardsProcessed = new Set(); 
 
-    // --- Pass 1: Apply GREEN and YELLOW feedback & track ranks for THIS guess ---
     feedbackResult.forEach(item => {
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${item.card}"]`)?.parentNode;
         if (!wrapper) return;
 
         const itemRank = normalizeRank(item.card.slice(0, -1));
         const cardCode = item.card;
-        specificCardsProcessed.add(cardCode); // Mark this card as handled
+        specificCardsProcessed.add(cardCode); 
 
         switch (item.feedback) {
             case 'GREEN':
                 wrapper.classList.remove('rank-match', 'selected', 'rank-miss');
                 wrapper.classList.add('exact-match');
-                lockedCard = cardCode; // Update locked card if found
+                lockedCard = cardCode; 
                 ranksInCurrentGuess.green.add(itemRank);
-                 // Ensure global knownYellow is cleared if we find the exact card
                  knownYellowRanks.delete(itemRank);
                 break;
             case 'YELLOW':
-                 // Only mark yellow if not already exactly matched
                 if (!wrapper.classList.contains('exact-match')) {
-                    // Apply the class directly based on the feedback result.
-                    // The cumulative logic check is handled by generateFeedback.
                     wrapper.classList.add('rank-match');
                     ranksInCurrentGuess.yellow.add(itemRank);
                 }
                 break;
             case 'GREY':
-                // Track grey ranks for Pass 2 logic
                 ranksInCurrentGuess.grey.add(itemRank);
                 break;
         }
     });
 
-    // --- Pass 2: Apply GREY feedback intelligently based on global state ---
     feedbackResult.forEach(item => {
         if (item.feedback !== 'GREY') return;
 
@@ -442,29 +411,22 @@ function updateDeductionAid(feedbackResult) {
         const itemRank = normalizeRank(item.card.slice(0, -1));
         const cardCode = item.card;
 
-        // Determine if this rank is already confirmed (Globally GREEN or YELLOW)
         const rankIsConfirmedGreen = lockedCard && normalizeRank(lockedCard.slice(0, -1)) === itemRank;
-        // Use the global knownYellowRanks state here
         const rankIsConfirmedYellow = knownYellowRanks.has(itemRank);
 
         if (rankIsConfirmedGreen || rankIsConfirmedYellow) {
-            // Rank IS known globally. Only grey out THIS specific guessed card.
             if (!wrapper.classList.contains('exact-match') && !wrapper.classList.contains('rank-match')) {
                 wrapper.classList.add('rank-miss');
                 wrapper.classList.remove('selected');
             }
         } else {
-            // Rank is NOT globally confirmed green/yellow.
-            // Grey out the entire rank ONLY if NO card of this rank got green/yellow in THIS guess.
             const onlyGreyInCurrentGuess = !ranksInCurrentGuess.green.has(itemRank) && !ranksInCurrentGuess.yellow.has(itemRank);
 
             if (onlyGreyInCurrentGuess) {
-                 // Grey out the whole rank (excluding any potential locked green card implicitly)
                  document.querySelectorAll(`.card-wrapper .card`).forEach(c => {
                     const cardRank = normalizeRank(c.dataset.card.slice(0, -1));
                     if (cardRank === itemRank) {
                         const w = c.parentNode;
-                        // Final check: don't grey out the globally known green card
                          if (!w.classList.contains('exact-match')) {
                             w.classList.add('rank-miss');
                             w.classList.remove('rank-match', 'selected');
@@ -472,7 +434,6 @@ function updateDeductionAid(feedbackResult) {
                     }
                 });
             } else {
-                 // Rank had green/yellow in *this* guess. Only grey out the specific grey card from this guess.
                   if (!wrapper.classList.contains('exact-match') && !wrapper.classList.contains('rank-match')) {
                       wrapper.classList.add('rank-miss');
                       wrapper.classList.remove('selected');
@@ -481,8 +442,6 @@ function updateDeductionAid(feedbackResult) {
         }
     });
 
-     // --- Pass 3: Final GREEN rank lockout (redundant but safe) ---
-     // If a rank is globally GREEN, ensure all others of that rank are greyed out.
      if (lockedCard) {
          const greenRank = normalizeRank(lockedCard.slice(0, -1));
          document.querySelectorAll(`.card-wrapper .card`).forEach(c => {
@@ -504,18 +463,16 @@ function updateDeductionAid(feedbackResult) {
  */
 function markKnownCards(heroCards, boardCards) {
     const knownCards = [...heroCards, ...boardCards];
-    // Need normalizeCard defined globally or passed in if it's not
-    const normalizedKnownCards = knownCards.map(card => normalizeCard(card)).filter(Boolean); // Filter out nulls
+    const normalizedKnownCards = knownCards.map(card => normalizeCard(card)).filter(Boolean); 
 
     document.querySelectorAll('.card-wrapper').forEach(wrapper => {
-        const cardElement = wrapper.querySelector('span.card'); // Target the span with class card
+        const cardElement = wrapper.querySelector('span.card'); 
         const cardCode = cardElement ? cardElement.dataset.card : null;
 
-        wrapper.classList.remove('known-card'); // Reset first
+        wrapper.classList.remove('known-card'); 
 
         if (cardCode) {
             const normalizedCardCode = normalizeCard(cardCode);
-             // Check against the normalized list
             if (normalizedKnownCards.includes(normalizedCardCode)) {
                 wrapper.classList.add('known-card');
             }
@@ -530,7 +487,7 @@ function markKnownCards(heroCards, boardCards) {
 function resetSelection() {
     selectedCards.forEach(cardCode => {
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${cardCode}"]`)?.parentNode;
-        if (wrapper && !wrapper.classList.contains('exact-match')) { // Don't deselect green cards visually
+        if (wrapper && !wrapper.classList.contains('exact-match')) { 
              wrapper.classList.remove('selected');
         }
     });
@@ -538,7 +495,7 @@ function resetSelection() {
     selectedCards = [];
     const slot1 = document.getElementById('card-slot-1');
     const slot2 = document.getElementById('card-slot-2');
-    if (!slot1 || !slot2) return; // Add guards
+    if (!slot1 || !slot2) return; 
 
 
     slot1.innerHTML = 'Card 1';
@@ -551,9 +508,8 @@ function resetSelection() {
         slot1.innerHTML = renderCard(lockedCard);
         slot1.dataset.card = lockedCard;
 
-        // Ensure the locked card visually stays selected (if needed)
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${lockedCard}"]`)?.parentNode;
-        if (wrapper) wrapper.classList.add('selected'); // Re-add selected if cleared
+        if (wrapper) wrapper.classList.add('selected'); 
     }
 }
 
@@ -562,13 +518,13 @@ function resetSelection() {
  * Moves the game to the next street (Flop, Turn, River).
  */
 function revealNextStreet() {
-    if (currentStreetIndex >= currentPuzzle.ActionHistory.length - 1) return; // Don't advance past river
+    if (currentStreetIndex >= currentPuzzle.ActionHistory.length - 1) return; 
 
     currentStreetIndex++;
-    hasGuessedThisStreet = false; // Allow guessing on the new street
+    hasGuessedThisStreet = false; 
     renderFullActionStatus();
     resetSelection();
-    updateButtonStates(); // Update buttons for the new street state
+    updateButtonStates(); 
 }
 
 
@@ -584,24 +540,20 @@ function endGame(win) {
          nextBtn.style.display = 'none';
      }
 
-    // New logic to style the villain's cards
     const villainCardsContainer = document.getElementById('villain-cards');
-    if (!villainCardsContainer || !currentPuzzle || !currentPuzzle.VillainSolution) return; // Guard
+    if (!villainCardsContainer || !currentPuzzle || !currentPuzzle.VillainSolution) return; 
 
     const originalSolution = currentPuzzle.VillainSolution;
-    // Ensure lockedCard is normalized if it exists
     const normalizedLockedCard = lockedCard ? normalizeCard(lockedCard) : null;
     let finalCardsHTML = '';
 
     originalSolution.forEach(card => {
         const normalizedCard = normalizeCard(card);
-        let cardHTML = renderCard(card); // Use original card for rendering
+        let cardHTML = renderCard(card); 
 
         if (win) {
-            // If they won, both cards are green
             cardHTML = cardHTML.replace('<span class="card', '<span class="card final-green"');
         } else {
-            // If they lost, check if this card matches the locked one
             if (normalizedLockedCard && normalizedLockedCard === normalizedCard) {
                 cardHTML = cardHTML.replace('<span class="card', '<span class="card final-green"');
             } else {
@@ -613,15 +565,13 @@ function endGame(win) {
 
     villainCardsContainer.innerHTML = finalCardsHTML;
 
-    // Display result message
     const resultMessage = win
         ? `CONGRATULATIONS! Solved in ${MAX_ATTEMPTS - attempts} attempts.`
-        : `GAME OVER. Solution: ${originalSolution.map(card => renderCard(card)).join(' ')}`; // Render cards in message
+        : `GAME OVER. Solution: ${originalSolution.map(card => renderCard(card)).join(' ')}`; 
 
     const historyZone = document.getElementById('guess-history-zone');
-    if (!historyZone) return; // Guard
+    if (!historyZone) return; 
 
-     // Remove previous result message if it exists
      const existingResultHeader = historyZone.querySelector('h3[style*="color"]');
      if (existingResultHeader) {
          existingResultHeader.remove();
@@ -632,12 +582,12 @@ function endGame(win) {
     resultHeader.style.color = win ? 'var(--color-green-wordle)' : 'var(--color-error)';
     resultHeader.style.marginTop = '20px';
     resultHeader.style.textAlign = 'center';
-    resultHeader.innerHTML = resultMessage; // Use innerHTML to render card spans
+    resultHeader.innerHTML = resultMessage; 
 
     historyZone.appendChild(resultHeader);
 }
 
-// Event Listeners (ensure elements exist before adding listeners)
+// Event Listeners 
 const submitButton = document.getElementById('submit-guess-btn');
 const nextStreetButton = document.getElementById('next-street-btn');
 
@@ -646,29 +596,23 @@ if (nextStreetButton) nextStreetButton.addEventListener('click', revealNextStree
 
 // --- Intro Screen Logic ---
 
-// Get elements
 const introScreen = document.getElementById('intro-screen');
 const gameContainer = document.querySelector('.game-container');
 const playButton = document.getElementById('play-game-btn');
 const dateElement = document.getElementById('intro-date');
 
-// Set the date on the intro screen
 if (dateElement) {
     const today = new Date();
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
     dateElement.textContent = today.toLocaleDateString('en-US', options);
 }
 
-// Play Button Listener
 if (playButton && introScreen && gameContainer) {
     playButton.addEventListener('click', () => {
-        introScreen.style.display = 'none'; // Hide intro
-        gameContainer.style.display = 'flex'; // Show game
+        introScreen.style.display = 'none'; 
+        gameContainer.style.display = 'flex'; 
 
-        // Add the new class to the body to switch themes/layouts
         document.body.classList.add('game-active');
-
-        // Now that the user wants to play, fetch the puzzle and start the game
         fetchDailyPuzzle();
     });
 } else {
@@ -681,16 +625,11 @@ const showLegendBtn = document.getElementById('show-legend-btn');
 
 if (showLegendBtn && legend) {
     showLegendBtn.addEventListener('click', (e) => {
-        // Toggle the 'show' class on the legend
         legend.classList.toggle('show');
-        // Stop this click from immediately closing the legend if it's open
         e.stopPropagation();
     });
 
-    // Add a global click listener to close the legend
     document.addEventListener('click', (e) => {
-        // If the legend is shown AND the click was *not* inside the legend
-        // AND the click was *not* on the button itself, then hide it.
         if (legend.classList.contains('show') &&
             !legend.contains(e.target) &&
             e.target !== showLegendBtn) {
