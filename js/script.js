@@ -32,7 +32,7 @@ function normalizeCard(card) {
     const rank = card.slice(0, -1);
     const suit = card.slice(-1).toLowerCase();
     if (!/^[2-9TJQKA]$/.test(rank) || !/^[sdhc]$/.test(suit)) {
-       // Allow potentially invalid card strings
+        // Allow potentially invalid card strings
     }
     return card;
 }
@@ -101,7 +101,7 @@ async function fetchDailyPuzzle() {
         currentPuzzle = await response.json();
 
         if (!currentPuzzle || !currentPuzzle.VillainSolution) {
-             throw new Error("Puzzle data is missing VillainSolution.");
+            throw new Error("Puzzle data is missing VillainSolution.");
         }
 
         initializeGame(currentPuzzle);
@@ -109,10 +109,10 @@ async function fetchDailyPuzzle() {
     } catch (error) {
         console.error("Failed to fetch or initialize daily puzzle:", error);
         const logZone = document.getElementById('action-log-zone');
-        if(logZone){
-             logZone.innerHTML = '<p class="error-message">Error loading game. Please check server connection and data files.</p>';
+        if (logZone) {
+            logZone.innerHTML = '<p class="error-message">Error loading game. Please check server connection and data files.</p>';
         } else {
-             document.body.innerHTML = '<p class="error-message">Critical error loading game components.</p>';
+            document.body.innerHTML = '<p class="error-message">Critical error loading game components.</p>';
         }
     }
 }
@@ -134,7 +134,7 @@ function initializeGame(data) {
         data.HeroHand.map(card => renderCard(card)).join('');
 
     document.getElementById('pot-size').textContent = `Pot: ${formatCurrency(data.StartingPot)}`;
-    
+
     document.getElementById('hero-stack').innerHTML = `Stack:<br>${formatCurrency(data.heroStartingStackBBs)}`;
     document.getElementById('villain-stack').innerHTML = `Stack:<br>${formatCurrency(data.villainStartingStackBBs)}`;
 
@@ -159,9 +159,9 @@ function initializeGame(data) {
     resetSelection();
     updateButtonStates();
 
-     const nextBtn = document.getElementById('next-street-btn');
-     nextBtn.style.display = 'inline-block';
-     nextBtn.textContent = 'Show Next Street';
+    const nextBtn = document.getElementById('next-street-btn');
+    nextBtn.style.display = 'inline-block';
+    nextBtn.textContent = 'Show Next Street';
 
 
     const existingResultHeader = document.querySelector('#guess-history-zone h3[style*="color"]');
@@ -217,7 +217,7 @@ function renderFullActionStatus() {
     const villainStackEl = document.getElementById('villain-stack');
 
     if (potElement) potElement.textContent = `Pot: ${formatCurrency(currentStreetData.PotEnd)}`;
-    
+
     if (heroStackEl) heroStackEl.innerHTML = `Stack:<br>${formatCurrency(currentStreetData.HeroStack)}`;
     if (villainStackEl) villainStackEl.innerHTML = `Stack:<br>${formatCurrency(currentStreetData.VillainStack)}`;
 
@@ -404,12 +404,12 @@ function renderGuessHistory(feedbackResult, streetIndex) {
         <div class="guess-row">
             <div class="guess-cards">
                 ${feedbackResult.map(item => {
-                    const cardElementHTML = renderCard(item.card);
-                    return cardElementHTML.replace(
-                        '<span class="card',
-                        `<span class="card ${item.feedback.toLowerCase()}`
-                    );
-                }).join('')}
+        const cardElementHTML = renderCard(item.card);
+        return cardElementHTML.replace(
+            '<span class="card',
+            `<span class="card ${item.feedback.toLowerCase()}`
+        );
+    }).join('')}
             </div>
         </div>
     `;
@@ -435,13 +435,13 @@ function updateDeductionAid(feedbackResult) {
             case 'GREEN':
                 wrapper.classList.remove('rank-match', 'selected', 'rank-miss');
                 wrapper.classList.add('exact-match');
-                
+
                 if (!lockedCards.includes(cardCode)) {
                     lockedCards.push(cardCode);
                 }
-                
+
                 ranksInCurrentGuess.green.add(itemRank);
-                 knownYellowRanks.delete(itemRank);
+                knownYellowRanks.delete(itemRank);
                 break;
             case 'YELLOW':
                 if (!wrapper.classList.contains('exact-match')) {
@@ -476,49 +476,49 @@ function updateDeductionAid(feedbackResult) {
             const onlyGreyInCurrentGuess = !ranksInCurrentGuess.green.has(itemRank) && !ranksInCurrentGuess.yellow.has(itemRank);
 
             if (onlyGreyInCurrentGuess) {
-                 document.querySelectorAll(`.card-wrapper .card`).forEach(c => {
+                document.querySelectorAll(`.card-wrapper .card`).forEach(c => {
                     const cardRank = normalizeRank(c.dataset.card.slice(0, -1));
                     if (cardRank === itemRank) {
                         const w = c.parentNode;
-                         if (!w.classList.contains('exact-match')) {
+                        if (!w.classList.contains('exact-match')) {
                             w.classList.add('rank-miss');
                             w.classList.remove('rank-match', 'selected');
                         }
                     }
                 });
             } else {
-                  if (!wrapper.classList.contains('exact-match') && !wrapper.classList.contains('rank-match')) {
-                      wrapper.classList.add('rank-miss');
-                      wrapper.classList.remove('selected');
-                  }
+                if (!wrapper.classList.contains('exact-match') && !wrapper.classList.contains('rank-match')) {
+                    wrapper.classList.add('rank-miss');
+                    wrapper.classList.remove('selected');
+                }
             }
         }
     });
 
-     // Count how many green cards we have for each rank
-     const lockedRankCounts = {};
-     lockedCards.forEach(card => {
-         const rank = normalizeRank(card.slice(0, -1));
-         lockedRankCounts[rank] = (lockedRankCounts[rank] || 0) + 1;
-     });
+    // Count how many green cards we have for each rank
+    const lockedRankCounts = {};
+    lockedCards.forEach(card => {
+        const rank = normalizeRank(card.slice(0, -1));
+        lockedRankCounts[rank] = (lockedRankCounts[rank] || 0) + 1;
+    });
 
-     // Find ranks where we have found *both* cards (a confirmed pair)
-     const confirmedPairRanks = Object.keys(lockedRankCounts).filter(rank => lockedRankCounts[rank] === 2);
+    // Find ranks where we have found *both* cards (a confirmed pair)
+    const confirmedPairRanks = Object.keys(lockedRankCounts).filter(rank => lockedRankCounts[rank] === 2);
 
-     // Grey out other cards *only* for confirmed pairs
-     confirmedPairRanks.forEach(rank => {
-         document.querySelectorAll(`.card-wrapper .card`).forEach(c => {
-             const cardRank = normalizeRank(c.dataset.card.slice(0, -1));
-             if (cardRank === rank) {
-                 const w = c.parentNode;
-                 // Only grey it out if it's not already green
-                 if (!w.classList.contains('exact-match')) {
-                     w.classList.remove('rank-match', 'selected');
-                     w.classList.add('rank-miss');
-                 }
-             }
-         });
-     });
+    // Grey out other cards *only* for confirmed pairs
+    confirmedPairRanks.forEach(rank => {
+        document.querySelectorAll(`.card-wrapper .card`).forEach(c => {
+            const cardRank = normalizeRank(c.dataset.card.slice(0, -1));
+            if (cardRank === rank) {
+                const w = c.parentNode;
+                // Only grey it out if it's not already green
+                if (!w.classList.contains('exact-match')) {
+                    w.classList.remove('rank-match', 'selected');
+                    w.classList.add('rank-miss');
+                }
+            }
+        });
+    });
 }
 
 
@@ -552,7 +552,7 @@ function resetSelection() {
     selectedCards.forEach(cardCode => {
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${cardCode}"]`)?.parentNode;
         if (wrapper && !wrapper.classList.contains('exact-match')) {
-             wrapper.classList.remove('selected');
+            wrapper.classList.remove('selected');
         }
     });
 
@@ -574,13 +574,13 @@ function resetSelection() {
         slot1.dataset.card = card;
 
         const wrapper = document.querySelector(`.card-wrapper .card[data-card="${card}"]`)?.parentNode;
-        if (wrapper) wrapper.classList.add('selected'); 
+        if (wrapper) wrapper.classList.add('selected');
 
     } else if (lockedCards.length === 2) {
         const card1 = lockedCards[0];
         const card2 = lockedCards[1];
         selectedCards.push(card1, card2);
-        
+
         slot1.innerHTML = renderCard(card1);
         slot1.dataset.card = card1;
         slot2.innerHTML = renderCard(card2);
@@ -609,17 +609,19 @@ function revealNextStreet() {
 
 
 /**
- * Ends the game and displays result.
+ * Ends the game and displays the result modal.
  */
 function endGame(win) {
+    // 1. Disable game buttons
     const submitBtn = document.getElementById('submit-guess-btn');
     const nextBtn = document.getElementById('next-street-btn');
-     if(submitBtn) submitBtn.disabled = true;
-     if(nextBtn) {
-         nextBtn.disabled = true;
-         nextBtn.style.display = 'none';
-     }
+    if (submitBtn) submitBtn.disabled = true;
+    if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.style.display = 'none';
+    }
 
+    // 2. Show the final correct cards on the table
     const villainCardsContainer = document.getElementById('villain-cards');
     if (!villainCardsContainer || !currentPuzzle || !currentPuzzle.VillainSolution) return;
 
@@ -642,80 +644,117 @@ function endGame(win) {
         }
         finalCardsHTML += cardHTML;
     });
-
     villainCardsContainer.innerHTML = finalCardsHTML;
 
-    const resultMessage = win
-        ? `CONGRATULATIONS! Solved in ${MAX_ATTEMPTS - attempts} attempts.`
-        : `GAME OVER. Solution: ${originalSolution.map(card => renderCard(card)).join(' ')}`;
 
-    const historyZone = document.getElementById('guess-history-zone');
-    if (!historyZone) return;
+    // 3. Get all modal elements
+    const modal = document.getElementById('modal-overlay');
+    const modalTitle = document.getElementById('modal-title');
+    const modalCards = document.getElementById('modal-solution-cards');
+    const modalContext = document.getElementById('modal-context');
+    const modalYoutubeBtn = document.getElementById('modal-youtube-btn');
 
-     const existingResultHeader = historyZone.querySelector('h3[style*="color"]');
-     if (existingResultHeader) {
-         existingResultHeader.remove();
-     }
+    if (!modal || !modalTitle || !modalCards || !modalContext || !modalYoutubeBtn) {
+        console.error("Modal elements not found!");
+        return;
+    }
 
+    // 4. Populate modal content
+    if (win) {
+        modalTitle.innerHTML = `CONGRATULATIONS!`;
+        modalTitle.className = 'win';
+    } else {
+        modalTitle.innerHTML = `GAME OVER`;
+        modalTitle.className = 'loss';
+    }
 
-    const resultHeader = document.createElement('h3');
-    resultHeader.style.color = win ? 'var(--color-green-wordle)' : 'var(--color-error)';
-    resultHeader.style.marginTop = '20px';
-    resultHeader.style.textAlign = 'center';
-    resultHeader.innerHTML = resultMessage;
+    // Render the larger solution cards
+    modalCards.innerHTML = originalSolution.map(card => renderCard(card)).join('');
 
-    historyZone.appendChild(resultHeader);
+    // Set context and YouTube link
+    modalContext.textContent = currentPuzzle.context || "No context available for this hand.";
+
+    if (currentPuzzle.youtubeLink) {
+        modalYoutubeBtn.href = currentPuzzle.youtubeLink;
+        modalYoutubeBtn.style.display = 'block';
+    } else {
+        modalYoutubeBtn.style.display = 'none';
+    }
+
+    // 5. Show the modal
+    modal.classList.add('show');
 }
 
-// Event Listeners
-const submitButton = document.getElementById('submit-guess-btn');
-const nextStreetButton = document.getElementById('next-street-btn');
+document.addEventListener('DOMContentLoaded', () => {
+    // Event Listeners
+    const submitButton = document.getElementById('submit-guess-btn');
+    const nextStreetButton = document.getElementById('next-street-btn');
 
-if (submitButton) submitButton.addEventListener('click', submitGuess);
-if (nextStreetButton) nextStreetButton.addEventListener('click', revealNextStreet);
+    if (submitButton) submitButton.addEventListener('click', submitGuess);
+    if (nextStreetButton) nextStreetButton.addEventListener('click', revealNextStreet);
 
-// --- Intro Screen Logic ---
+    // --- ADD THIS BLOCK for Modal ---
+    const modal = document.getElementById('modal-overlay');
+    const closeModalBtn = document.getElementById('modal-close-btn');
 
-const introScreen = document.getElementById('intro-screen');
-const gameContainer = document.querySelector('.game-container');
-const playButton = document.getElementById('play-game-btn');
-const dateElement = document.getElementById('intro-date');
+    if (modal && closeModalBtn) {
+        // Close the modal if the 'x' is clicked
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
 
-if (dateElement) {
-    const today = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    dateElement.textContent = today.toLocaleDateString('en-US', options);
-}
+        // Close the modal if the overlay (background) is clicked
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+    }
 
-if (playButton && introScreen && gameContainer) {
-    playButton.addEventListener('click', () => {
-        introScreen.style.display = 'none';
-        gameContainer.style.display = 'flex';
+    // --- Intro Screen Logic ---
 
-        document.body.classList.add('game-active');
-        fetchDailyPuzzle();
-    });
-} else {
-    console.error("Intro screen elements not found, cannot initialize play button.");
-}
+    const introScreen = document.getElementById('intro-screen');
+    const gameContainer = document.querySelector('.game-container');
+    const playButton = document.getElementById('play-game-btn');
+    const dateElement = document.getElementById('intro-date');
 
-// --- Legend Popup Logic ---
-const legend = document.getElementById('feedback-legend');
-const showLegendBtn = document.getElementById('show-legend-btn');
+    if (dateElement) {
+        const today = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = today.toLocaleDateString('en-US', options);
+    }
 
-if (showLegendBtn && legend) {
-    showLegendBtn.addEventListener('click', (e) => {
-        legend.classList.toggle('show');
-        e.stopPropagation();
-    });
+    if (playButton && introScreen && gameContainer) {
+        playButton.addEventListener('click', () => {
+            introScreen.style.display = 'none';
+            gameContainer.style.display = 'flex';
 
-    document.addEventListener('click', (e) => {
-        if (legend.classList.contains('show') &&
-            !legend.contains(e.target) &&
-            e.target !== showLegendBtn) {
-            legend.classList.remove('show');
-        }
-    });
-} else {
-     console.error("Legend elements not found, cannot initialize legend button.");
-}
+            document.body.classList.add('game-active');
+            fetchDailyPuzzle();
+        });
+    } else {
+        console.error("Intro screen elements not found, cannot initialize play button.");
+    }
+
+    // --- Legend Popup Logic ---
+    const legend = document.getElementById('feedback-legend');
+    const showLegendBtn = document.getElementById('show-legend-btn');
+
+    if (showLegendBtn && legend) {
+        showLegendBtn.addEventListener('click', (e) => {
+            legend.classList.toggle('show');
+            e.stopPropagation();
+        });
+
+        document.addEventListener('click', (e) => {
+            if (legend.classList.contains('show') &&
+                !legend.contains(e.target) &&
+                e.target !== showLegendBtn) {
+                legend.classList.remove('show');
+            }
+        });
+    } else {
+        console.error("Legend elements not found, cannot initialize legend button.");
+    }
+
+});
