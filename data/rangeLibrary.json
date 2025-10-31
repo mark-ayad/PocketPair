@@ -1,197 +1,461 @@
 [
     {
         "id": "1",
-        "name": "Quads vs. Full House",
-        "heroPlayer": "Daniel Negreanu",
-        "villainPlayer": "Gus Hansen",
-        "youtubeLink": "https://www.youtube.com/watch?v=n1FxXwfTx_E",
-        "context": "A legendary $575,700 pot from 'High Stakes Poker'. A brutal 'set over set' flop turns into one of the most memorable coolers in televised poker history when the turn card gives Gus Hansen quads.",
-        "HeroPosition": "MP",
-        "heroStartingStackBBs": 287000.00,
-        "villainStartingStackBBs": 287000.00,
-        "HeroHand": ["6s", "6h"],
-        "VillainSolution": ["5d", "5c"],
-        "Board": ["9c", "6d", "5h", "5s", "8s"],
-        "StartingPot": 1700.00,
+        "name": "Set Over Set",
+        "context": "Villain wins with a top set.",
+        "HeroPosition": "SB",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["5c", "5h"],
+        "VillainSolution": ["Jd", "Js"],
+        "Board": ["Jc", "5s", "2h", "8d", "9c"],
+        "StartingPot": 30.00,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Villain raises to $2,100", "Hero 3-bets to $5,000", "Villain calls $2,900"],
-                "PotEnd": 11700.00,
-                "HeroStack": 282000.00,
-                "VillainStack": 282000.00,
+                "Actions": ["Hero raises to $60", "Villain 3-bets to $200", "Hero calls $140"],
+                "PotEnd": 400.00,
+                "HeroStack": 9800.00,
+                "VillainStack": 9800.00,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Villain checks", "Hero bets $8,000", "Villain check-raises to $26,000", "Hero calls $18,000"],
-                "PotEnd": 63700.00,
-                "HeroStack": 256000.00,
-                "VillainStack": 256000.00,
-                "CardsShown": ["9c", "6d", "5h"]
+                "Actions": ["Hero checks", "Villain bets $300", "Hero check-raises to $900", "Villain calls $600"],
+                "PotEnd": 2200.00,
+                "HeroStack": 8900.00,
+                "VillainStack": 8900.00,
+                "CardsShown": ["Jc", "5s", "2h"]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Villain bets $24,000", "Hero calls $24,000"],
-                "PotEnd": 111700.00,
-                "HeroStack": 232000.00,
-                "VillainStack": 232000.00,
-                "CardsShown": ["9c", "6d", "5h", "5s"]
+                "Actions": ["Hero bets $1500", "Villain calls $1500"],
+                "PotEnd": 5200.00,
+                "HeroStack": 7400.00,
+                "VillainStack": 7400.00,
+                "CardsShown": ["Jc", "5s", "2h", "8d"]
             },
             {
                 "Street": "River",
-                "Actions": ["Villain checks", "Hero bets $65,000", "Villain check-raises All-in ($232,000)", "Hero calls $167,000"],
-                "PotEnd": 575700.00,
-                "HeroStack": 0.00,
-                "VillainStack": 464000.00,
-                "CardsShown": ["9c", "6d", "5h", "5s", "8s"]
+                "Actions": ["Hero bets $4000", "Villain calls $4000"],
+                "PotEnd": 13200.00,
+                "HeroStack": 3400.00,
+                "VillainStack": 3400.00,
+                "CardsShown": ["Jc", "5s", "2h", "8d", "9c"]
             }
         ]
     },
     {
         "id": "2",
-        "name": "Bluff of the Century",
-        "heroPlayer": "Chris Moneymaker",
-        "villainPlayer": "Sammy Farha",
-        "youtubeLink": "https://www.youtube.com/watch?v=EUxk1P172Xc",
-        "context": "The 2003 WSOP Main Event. An unknown amateur (Hero) runs a massive bluff with King-high against a seasoned pro (Villain), changing poker history and igniting the 'poker boom'.",
-        "HeroPosition": "SB",
-        "heroStartingStackBBs": 4600000.00,
-        "villainStartingStackBBs": 3700000.00,
-        "HeroHand": ["Ks", "7h"],
-        "VillainSolution": ["Qs", "9h"],
-        "Board": ["9s", "2d", "6s", "8s", "3h"],
-        "StartingPot": 70000.00,
+        "name": "Flush Over Flush",
+        "context": "Villain wins with a King-high flush.",
+        "HeroPosition": "BTN",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["As", "Ts"],
+        "VillainSolution": ["Ks", "Qs"],
+        "Board": ["8s", "2s", "9d", "4s", "Jh"],
+        "StartingPot": 30.00,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Hero raises to $100,000", "Villain calls $60,000"],
-                "PotEnd": 210000.00,
-                "HeroStack": 4500000.00,
-                "VillainStack": 3600000.00,
+                "Actions": ["Hero raises to $50", "Villain (BB) calls $20"],
+                "PotEnd": 100.00,
+                "HeroStack": 9950.00,
+                "VillainStack": 9950.00,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Villain checks", "Hero checks"],
-                "PotEnd": 210000.00,
-                "HeroStack": 4500000.00,
-                "VillainStack": 3600000.00,
-                "CardsShown": ["9s", "2d", "6s"]
+                "Actions": ["Villain checks", "Hero bets $75", "Villain calls $75"],
+                "PotEnd": 250.00,
+                "HeroStack": 9875.00,
+                "VillainStack": 9875.00,
+                "CardsShown": ["8s", "2s", "9d"]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Villain bets $300,000", "Hero raises to $800,000", "Villain calls $500,000"],
-                "PotEnd": 1810000.00,
-                "HeroStack": 3700000.00,
-                "VillainStack": 2800000.00,
-                "CardsShown": ["9s", "2d", "6s", "8s"]
+                "Actions": ["Villain checks", "Hero bets $200", "Villain check-raises to $700", "Hero calls $500"],
+                "PotEnd": 1650.00,
+                "HeroStack": 9175.00,
+                "VillainStack": 9175.00,
+                "CardsShown": ["8s", "2s", "9d", "4s"]
             },
             {
                 "Street": "River",
-                "Actions": ["Villain checks", "Hero goes All-in ($2,800,000)", "Villain folds"],
-                "PotEnd": 1810000.00,
-                "HeroStack": 5510000.00,
-                "VillainStack": 2800000.00,
-                "CardsShown": ["9s", "2d", "6s", "8s", "3h"]
+                "Actions": ["Villain bets $1200", "Hero raises to $3500", "Villain calls $2300"],
+                "PotEnd": 8650.00,
+                "HeroStack": 5675.00,
+                "VillainStack": 5675.00,
+                "CardsShown": ["8s", "2s", "9d", "4s", "Jh"]
             }
         ]
     },
     {
         "id": "3",
-        "name": "You Call, It's All Over",
-        "heroPlayer": "Kevin McBride",
-        "villainPlayer": "Scotty Nguyen",
-        "youtubeLink": "https://www.youtube.com/watch?v=zIeF6UlSGiw",
-        "context": "The legendary final hand of the 1998 WSOP Main Event. With a full house on the board, Scotty Nguyen (Villain) shoves all-in and delivers the most famous line in poker: 'You call, it's gonna be all over, baby!'",
-        "HeroPosition": "SB",
-        "heroStartingStackBBs": 610000.00,
-        "villainStartingStackBBs": 2890000.00,
-        "HeroHand": ["Qh", "Th"],
-        "VillainSolution": ["Jd", "9c"],
-        "Board": ["9d", "9h", "8c", "8h", "8s"],
-        "StartingPot": 75000.00,
+        "name": "Two Pair vs. Straight",
+        "context": "Villain wins with Two Pair.",
+        "HeroPosition": "MP",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["Jd", "Tc"],
+        "VillainSolution": ["As", "Kh"],
+        "Board": ["Ah", "Kc", "Qs", "9d", "3s"],
+        "StartingPot": 30.00,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Hero raises to $100,000", "Villain calls $50,000"],
-                "PotEnd": 200000.00,
-                "HeroStack": 510000.00,
-                "VillainStack": 2790000.00,
+                "Actions": ["Villain raises to $60", "Hero calls $60"],
+                "PotEnd": 150.00,
+                "HeroStack": 9940.00,
+                "VillainStack": 9940.00,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Villain checks", "Hero bets $100,000", "Villain calls $100,000"],
-                "PotEnd": 400000.00,
-                "HeroStack": 410000.00,
-                "VillainStack": 2690000.00,
-                "CardsShown": ["9d", "9h", "8c"]
+                "Actions": ["Villain bets $100", "Hero calls $100"],
+                "PotEnd": 350.00,
+                "HeroStack": 9840.00,
+                "VillainStack": 9840.00,
+                "CardsShown": ["Ah", "Kc", "Qs"]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Villain checks", "Hero bets $100,000", "Villain calls $100,000"],
-                "PotEnd": 600000.00,
-                "HeroStack": 310000.00,
-                "VillainStack": 2590000.00,
-                "CardsShown": ["9d", "9h", "8c", "8h"]
+                "Actions": ["Villain bets $300", "Hero raises to $1000", "Villain calls $700"],
+                "PotEnd": 2350.00,
+                "HeroStack": 8840.00,
+                "VillainStack": 8840.00,
+                "CardsShown": ["Ah", "Kc", "Qs", "9d"]
             },
             {
                 "Street": "River",
-                "Actions": ["Villain goes All-in", "Hero calls $310,000"],
-                "PotEnd": 1220000.00,
-                "HeroStack": 0.00,
-                "VillainStack": 3200000.00,
-                "CardsShown": ["9d", "9h", "8c", "8h", "8s"]
+                "Actions": ["Villain checks", "Hero bets $1800", "Villain calls $1800"],
+                "PotEnd": 5950.00,
+                "HeroStack": 7040.00,
+                "VillainStack": 7040.00,
+                "CardsShown": ["Ah", "Kc", "Qs", "9d", "3s"]
             }
         ]
     },
     {
         "id": "4",
-        "name": "Chan vs. Seidel (Rounders Hand)",
-        "heroPlayer": "Erik Seidel",
-        "villainPlayer": "Johnny Chan",
-        "youtubeLink": "https://www.youtube.com/watch?v=g65GP3i20sY",
-        "context": "The final hand of the 1988 WSOP Main Event, immortalized in the movie 'Rounders'. Chan (Villain) flops the nut straight and sets a legendary trap for Seidel (Hero) to win his second consecutive Main Event title.",
+        "name": "Missed Draw Bluff",
+        "context": "Villain wins with a missed flush draw (King-high).",
         "HeroPosition": "BB",
-        "heroStartingStackBBs": 280000.00,
-        "villainStartingStackBBs": 700000.00,
-        "HeroHand": ["Qc", "7h"],
-        "VillainSolution": ["Jc", "9c"],
-        "Board": ["Qd", "8d", "Th", "2s", "6d"],
-        "StartingPot": 0.00,
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["Ac", "Jd"],
+        "VillainSolution": ["Kh", "Qh"],
+        "Board": ["Ah", "9h", "2c", "7s", "4d"],
+        "StartingPot": 30.00,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Villain limps", "Hero checks"],
-                "PotEnd": 0.00,
-                "HeroStack": 280000.00,
-                "VillainStack": 700000.00,
+                "Actions": ["Villain (BTN) raises to $50", "Hero calls $20"],
+                "PotEnd": 100.00,
+                "HeroStack": 9950.00,
+                "VillainStack": 9950.00,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Hero checks", "Villain bets $40,000", "Hero raises to $90,000", "Villain calls $50,000"],
-                "PotEnd": 180000.00,
-                "HeroStack": 190000.00,
-                "VillainStack": 610000.00,
-                "CardsShown": ["Qd", "8d", "Th"]
+                "Actions": ["Hero checks", "Villain bets $100", "Hero calls $100"],
+                "PotEnd": 300.00,
+                "HeroStack": 9850.00,
+                "VillainStack": 9850.00,
+                "CardsShown": ["Ah", "9h", "2c"]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Hero checks", "Villain checks"],
-                "PotEnd": 180000.00,
-                "HeroStack": 190000.00,
-                "VillainStack": 610000.00,
-                "CardsShown": ["Qd", "8d", "Th", "2s"]
+                "Actions": ["Hero checks", "Villain bets $250", "Hero calls $250"],
+                "PotEnd": 800.00,
+                "HeroStack": 9600.00,
+                "VillainStack": 9600.00,
+                "CardsShown": ["Ah", "9h", "2c", "7s"]
             },
             {
                 "Street": "River",
-                "Actions": ["Hero goes All-in ($190,000)", "Villain calls $190,000"],
-                "PotEnd": 560000.00,
-                "HeroStack": 0.00,
-                "VillainStack": 420000.00, 
-                "CardsShown": ["Qd", "8d", "Th", "2s", "6d"]
+                "Actions": ["Hero checks", "Villain bets $700", "Hero calls $700"],
+                "PotEnd": 2200.00,
+                "HeroStack": 8900.00,
+                "VillainStack": 8900.00,
+                "CardsShown": ["Ah", "9h", "2c", "7s", "4d"]
+            }
+        ]
+    },
+    {
+        "id": "5",
+        "name": "Straight vs. Full House",
+        "context": "Villain wins with a Ten-high straight.",
+        "HeroPosition": "BTN",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["8c", "8s"],
+        "VillainSolution": ["9h", "Ts"],
+        "Board": ["7h", "8d", "Jc", "Qd", "Jd"],
+        "StartingPot": 30.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Hero raises to $50", "Villain (BB) calls $20"],
+                "PotEnd": 100.00,
+                "HeroStack": 9950.00,
+                "VillainStack": 9950.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Villain checks", "Hero bets $75", "Villain calls $75"],
+                "PotEnd": 250.00,
+                "HeroStack": 9875.00,
+                "VillainStack": 9875.00,
+                "CardsShown": ["7h", "8d", "Jc"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Villain checks", "Hero bets $200", "Villain check-raises to $650", "Hero calls $450"],
+                "PotEnd": 1550.00,
+                "HeroStack": 9225.00,
+                "VillainStack": 9225.00,
+                "CardsShown": ["7h", "8d", "Jc", "Qd"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Villain bets $1000", "Hero raises to $4000", "Villain calls $3000"],
+                "PotEnd": 9550.00,
+                "HeroStack": 5225.00,
+                "VillainStack": 5225.00,
+                "CardsShown": ["7h", "8d", "Jc", "Qd", "Jd"]
+            }
+        ]
+    },
+    {
+        "id": "6",
+        "name": "Top Pair vs. Second Pair",
+        "context": "Villain wins with second pair (Jack-kicker).",
+        "HeroPosition": "CO",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["Ah", "7c"],
+        "VillainSolution": ["Kd", "Jd"],
+        "Board": ["As", "Js", "2c", "4h", "9d"],
+        "StartingPot": 30.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Hero raises to $60", "Villain (BTN) calls $60"],
+                "PotEnd": 150.00,
+                "HeroStack": 9940.00,
+                "VillainStack": 9940.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Hero bets $100", "Villain calls $100"],
+                "PotEnd": 350.00,
+                "HeroStack": 9840.00,
+                "VillainStack": 9840.00,
+                "CardsShown": ["As", "Js", "2c"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Hero bets $250", "Villain calls $250"],
+                "PotEnd": 850.00,
+                "HeroStack": 9590.00,
+                "VillainStack": 9590.00,
+                "CardsShown": ["As", "Js", "2c", "4h"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Hero bets $400", "Villain calls $400"],
+                "PotEnd": 1650.00,
+                "HeroStack": 9190.00,
+                "VillainStack": 9190.00,
+                "CardsShown": ["As", "Js", "2c", "4h", "9d"]
+            }
+        ]
+    },
+    {
+        "id": "7",
+        "name": "Slowplayed Quads",
+        "context": "Villain wins with top pair (Ace-kicker).",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["7c", "7s"],
+        "VillainSolution": ["Ad", "Kc"],
+        "Board": ["7h", "7d", "Ks", "2s", "3h"],
+        "StartingPot": 30.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Villain (BTN) raises to $50", "Hero calls $20"],
+                "PotEnd": 100.00,
+                "HeroStack": 9950.00,
+                "VillainStack": 9950.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Hero checks", "Villain bets $75", "Hero calls $75"],
+                "PotEnd": 250.00,
+                "HeroStack": 9875.00,
+                "VillainStack": 9875.00,
+                "CardsShown": ["7h", "7d", "Ks"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Hero checks", "Villain bets $225", "Hero calls $225"],
+                "PotEnd": 700.00,
+                "HeroStack": 9650.00,
+                "VillainStack": 9650.00,
+                "CardsShown": ["7h", "7d", "Ks", "2s"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Hero checks", "Villain bets $500", "Hero raises to $2000", "Villain calls $1500"],
+                "PotEnd": 4700.00,
+                "HeroStack": 7650.00,
+                "VillainStack": 7650.00,
+                "CardsShown": ["7h", "7d", "Ks", "2s", "3h"]
+            }
+        ]
+    },
+    {
+        "id": "8",
+        "name": "Overpair vs. Top Pair",
+        "context": "Villain wins with top pair (Ace-kicker).",
+        "HeroPosition": "MP",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["Qc", "Qh"],
+        "VillainSolution": ["As", "Kd"],
+        "Board": ["Kh", "8c", "3d", "7s", "2c"],
+        "StartingPot": 30.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Hero raises to $60", "Villain (CO) calls $60"],
+                "PotEnd": 150.00,
+                "HeroStack": 9940.00,
+                "VillainStack": 9940.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Hero bets $100", "Villain calls $100"],
+                "PotEnd": 350.00,
+                "HeroStack": 9840.00,
+                "VillainStack": 9840.00,
+                "CardsShown": ["Kh", "8c", "3d"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Hero bets $300", "Villain calls $300"],
+                "PotEnd": 950.00,
+                "HeroStack": 9540.00,
+                "VillainStack": 9540.00,
+                "CardsShown": ["Kh", "8c", "3d", "7s"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Hero bets $800", "Villain calls $800"],
+                "PotEnd": 2550.00,
+                "HeroStack": 8740.00,
+                "VillainStack": 8740.00,
+                "CardsShown": ["Kh", "8c", "3d", "7s", "2c"]
+            }
+        ]
+    },
+    {
+        "id": "9",
+        "name": "Turned Two Pair",
+        "context": "Villain wins with an underpair (pocket eights).",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["Ks", "Td"],
+        "VillainSolution": ["8c", "8h"],
+        "Board": ["Ts", "5d", "2h", "Kh", "6c"],
+        "StartingPot": 30.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Villain (BTN) raises to $50", "Hero calls $20"],
+                "PotEnd": 100.00,
+                "HeroStack": 9950.00,
+                "VillainStack": 9950.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Hero checks", "Villain bets $75", "Hero calls $75"],
+                "PotEnd": 250.00,
+                "HeroStack": 9875.00,
+                "VillainStack": 9875.00,
+                "CardsShown": ["Ts", "5d", "2h"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Hero checks", "Villain bets $200", "Hero check-raises to $600", "Villain calls $400"],
+                "PotEnd": 1450.00,
+                "HeroStack": 9275.00,
+                "VillainStack": 9275.00,
+                "CardsShown": ["Ts", "5d", "2h", "Kh"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Hero bets $1000", "Villain calls $1000"],
+                "PotEnd": 3450.00,
+                "HeroStack": 8275.00,
+                "VillainStack": 8275.00,
+                "CardsShown": ["Ts", "5d", "2h", "Kh", "6c"]
+            }
+        ]
+    },
+    {
+        "id": "10",
+        "name": "Rivered Boat",
+        "context": "Villain wins with a Full House (Tens full of Kings).",
+        "HeroPosition": "MP",
+        "heroStartingStackBBs": 10000.00,
+        "villainStartingStackBBs": 10000.00,
+        "HeroHand": ["Ad", "Jd"],
+        "VillainSolution": ["Tc", "Ts"],
+        "Board": ["Td", "7d", "2c", "Kd", "Kh"],
+        "StartingPot": 30.00,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": ["Villain raises to $60", "Hero (BTN) 3-bets to $180", "Villain calls $120"],
+                "PotEnd": 390.00,
+                "HeroStack": 9820.00,
+                "VillainStack": 9820.00,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": ["Villain checks", "Hero bets $250", "Villain calls $250"],
+                "PotEnd": 890.00,
+                "HeroStack": 9570.00,
+                "VillainStack": 9570.00,
+                "CardsShown": ["Td", "7d", "2c"]
+            },
+            {
+                "Street": "Turn",
+                "Actions": ["Villain checks", "Hero bets $700", "Villain calls $700"],
+                "PotEnd": 2290.00,
+                "HeroStack": 8870.00,
+                "VillainStack": 8870.00,
+                "CardsShown": ["Td", "7d", "2c", "Kd"]
+            },
+            {
+                "Street": "River",
+                "Actions": ["Villain checks", "Hero bets $1800", "Villain check-raises to $5000", "Hero calls $3200"],
+                "PotEnd": 12290.00,
+                "HeroStack": 3870.00,
+                "VillainStack": 3870.00,
+                "CardsShown": ["Td", "7d", "2c", "Kd", "Kh"]
             }
         ]
     }

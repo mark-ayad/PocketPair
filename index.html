@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PocketPair - Iconic Poker Hand Deduction</title>
+    <title>PocketPair - Daily Poker Hand Deduction</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 
@@ -13,10 +13,10 @@
     <div id="intro-screen">
         <div class="intro-content">
             <h1>PocketPair</h1>
-            <p class="intro-tagline">Get 6 chances to deduce the villain's hand from an iconic game.</p>
+            <p class="intro-tagline">Get 6 chances to deduce the villain's hand from a solved poker scenario.</p>
 
             <p class="intro-description">
-                Use the betting action from a famous, televised poker hand to find their cards.<br>
+                Use the betting action from a standard, solved poker hand to find their cards.<br>
                 One guess each for Pre-Flop, Flop, and Turn. Your remaining 3 guesses are on the River.
             </p>
 
@@ -153,28 +153,24 @@
     <script src="js/gameLogic.js"></script>
     <script src="js/script.js"></script>
 
-    <script src="js/script.js"></script>
-
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal-content">
             <span id="modal-close-btn" class="modal-close-btn">&times;</span>
             <h2 id="modal-title"></h2>
-
+            
             <p>The Villain's hand was:</p>
             <div id="modal-solution-cards" class="modal-solution-cards">
-            </div>
+                </div>
 
             <p id="modal-context" class="modal-context"></p>
-
+            
             <div class="modal-buttons">
                 <a id="modal-youtube-btn" href="#" target="_blank" class="btn btn-youtube">Watch Hand</a>
                 <button id="modal-share-btn" class="btn btn-share">Share</button>
             </div>
         </div>
     </div>
-</body>
 
-</html>
 </body>
 
 </html>

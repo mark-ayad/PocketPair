@@ -562,7 +562,7 @@ header h1 {
     text-align: center;
 }
 
-/* --- Responsive Layout for Wide Screens --- */
+/* --- Responsive Layout for Wide, Landscape Screens --- */
 
 @media (min-width: 1100px) and (orientation: landscape) {
     .game-container {
@@ -768,6 +768,7 @@ header h1 {
 #feedback-legend .legend-color-box {
     border-color: var(--color-border);
 }
+
 
 /* --- End Game Modal Styles --- */
 
