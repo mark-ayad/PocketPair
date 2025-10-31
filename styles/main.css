@@ -564,7 +564,7 @@ header h1 {
 
 /* --- Responsive Layout for Wide Screens --- */
 
-@media (min-width: 1100px) {
+@media (min-width: 1100px) and (orientation: landscape) {
     .game-container {
         max-width: 1600px;
     }
