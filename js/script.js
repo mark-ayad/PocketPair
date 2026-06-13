@@ -1,10 +1,5 @@
 // js/script.js
 
-/**
- * Formats a number into a currency string with K/M abbreviations.
- * @param {number} num - The number to format.
- * @returns {string} - The formatted currency string (e.g., $1.50M).
- */
 function formatCurrency(num) {
     if (num >= 1000000) {
         return '$' + (num / 1000000).toFixed(2) + 'M';
@@ -15,50 +10,32 @@ function formatCurrency(num) {
     return '$' + num.toFixed(2);
 }
 
-/**
- * Normalizes a card string's rank from "10" to "T".
- * e.g., "10d" becomes "Td", "As" remains "As".
- * Returns null if the card format is invalid.
- * @param {string} card - The card string.
- * @returns {string|null} - The normalized card string or null.
- */
 function normalizeCard(card) {
-    if (!card || typeof card !== 'string' || card.length < 2) {
-        return null; // Invalid card format
-    }
-    if (card.startsWith("10")) {
-        return card.replace("10", "T");
-    }
-    const rank = card.slice(0, -1);
-    const suit = card.slice(-1).toLowerCase();
-    if (!/^[2-9TJQKA]$/.test(rank) || !/^[sdhc]$/.test(suit)) {
-       // Allow potentially invalid card strings
-    }
+    if (!card || typeof card !== 'string' || card.length < 2) return null;
+    if (card.startsWith('10')) return card.replace('10', 'T');
     return card;
 }
 
-
-/**
- * Normalizes just the rank part of a card.
- * @param {string} rank - The rank (e.g., "10", "T", "K")
- * @returns {string} - The normalized rank (e.g., "T", "T", "K")
- */
 function normalizeRank(rank) {
     if (!rank) return '';
-    return rank === "10" ? "T" : rank;
+    return rank === '10' ? 'T' : rank;
 }
 
+const API_URL = '/api/daily-puzzle';
+const STORAGE_KEY = 'pocketpair_state';
+const MAX_ATTEMPTS = 6;
+const BOARD_SIZE = 5;
 
-const API_URL = 'http://127.0.0.1:5000/api/daily-puzzle';
 let currentPuzzle = null;
 let currentStreetIndex = 0;
-let attempts = 6;
+let attempts = MAX_ATTEMPTS;
 let selectedCards = [];
 let lockedCards = [];
 let hasGuessedThisStreet = false;
 let knownYellowRanks = new Set();
-const MAX_ATTEMPTS = 6;
-const BOARD_SIZE = 5;
+let guessLog = [];   // [{streetIndex, feedbackResult}] — drives share text and persistence
+let gameOver = false;
+let gameWon = false;
 
 /**
  * Renders a card HTML element with suit color and rank/symbol placement.
@@ -106,6 +83,26 @@ async function fetchDailyPuzzle() {
 
         initializeGame(currentPuzzle);
 
+        // Restore saved progress if it's for today's puzzle
+        let restored = false;
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if (raw) {
+                const saved = JSON.parse(raw);
+                if (saved.puzzleId === currentPuzzle.id) {
+                    restoreGameState(saved);
+                    restored = true;
+                }
+            }
+        } catch (e) {
+            localStorage.removeItem(STORAGE_KEY);
+        }
+
+        // Animate preflop actions on fresh game start (not restore)
+        if (!restored) {
+            setTimeout(() => animateStreetActions(currentPuzzle.ActionHistory[0]), 350);
+        }
+
     } catch (error) {
         console.error("Failed to fetch or initialize daily puzzle:", error);
         const logZone = document.getElementById('action-log-zone');
@@ -127,6 +124,9 @@ function initializeGame(data) {
     knownYellowRanks = new Set();
     currentStreetIndex = 0;
     hasGuessedThisStreet = false;
+    guessLog = [];
+    gameOver = false;
+    gameWon = false;
 
     document.getElementById('attempts-left').textContent = MAX_ATTEMPTS;
 
@@ -182,10 +182,12 @@ function renderFullActionStatus() {
     const heroButton = document.getElementById('hero-button-marker');
     const villainButton = document.getElementById('villain-button-marker');
 
-    heroLabel.textContent = 'Hero';
-    villainLabel.textContent = 'Villain';
+    heroLabel.textContent = currentPuzzle.heroName || 'Hero';
+    villainLabel.textContent = currentPuzzle.villainName || 'Villain';
 
-    if (currentPuzzle.HeroPosition === 'SB') {
+    // In heads-up: BTN = SB = dealer. Show dealer button on whichever player has it.
+    const heroIsDealer = currentPuzzle.HeroPosition === 'SB' || currentPuzzle.HeroPosition === 'BTN';
+    if (heroIsDealer) {
         heroButton.classList.remove('hidden');
         villainButton.classList.add('hidden');
     } else {
@@ -193,20 +195,25 @@ function renderFullActionStatus() {
         villainButton.classList.remove('hidden');
     }
 
+    // Hand timeline — all streets shown; revealed ones display their plays so
+    // the user can review everything, future ones stay dimmed (no spoilers).
     const allHistory = currentPuzzle.ActionHistory;
-    logZone.innerHTML = '';
+    logZone.innerHTML = allHistory.map((streetData, index) => {
+        let state = 'future';
+        if (index < currentStreetIndex) state = 'revealed';
+        else if (index === currentStreetIndex) state = 'current';
 
-    allHistory.forEach((streetData, index) => {
-        if (index > currentStreetIndex) return;
+        const actionsHTML = (index <= currentStreetIndex)
+            ? streetData.Actions.map(action => `<p class="action-line">${action}</p>`).join('')
+            : '<p class="action-line muted">—</p>';
 
-        const streetLogHTML = `
-            <div class="street-column">
-                <h4>${streetData.Street}</h4>
-                ${streetData.Actions.map(action => `<p class="action-line">${action}</p>`).join('')}
+        return `
+            <div class="timeline-street ${state}">
+                <div class="timeline-street-header">${streetData.Street}</div>
+                <div class="timeline-actions">${actionsHTML}</div>
             </div>
         `;
-        logZone.innerHTML += streetLogHTML;
-    });
+    }).join('');
 
     const currentStreetData = allHistory[currentStreetIndex];
     if (!currentStreetData) return;
@@ -217,16 +224,32 @@ function renderFullActionStatus() {
     const villainStackEl = document.getElementById('villain-stack');
 
     if (potElement) potElement.textContent = `Pot: ${formatCurrency(currentStreetData.PotEnd)}`;
-    
+
     if (heroStackEl) heroStackEl.innerHTML = `Stack:<br>${formatCurrency(currentStreetData.HeroStack)}`;
     if (villainStackEl) villainStackEl.innerHTML = `Stack:<br>${formatCurrency(currentStreetData.VillainStack)}`;
 
+    const heroStackChips    = document.getElementById('hero-stack-chips');
+    const villainStackChips = document.getElementById('villain-stack-chips');
+    if (heroStackChips)    renderStackChip(heroStackChips,    currentStreetData.HeroStack);
+    if (villainStackChips) renderStackChip(villainStackChips, currentStreetData.VillainStack);
+
 
     if (boardContainer) {
-        const cardsRendered = currentStreetData.CardsShown.map(card => renderCard(card)).join('');
+        const prevCount = boardContainer.querySelectorAll('.card:not(.card-placeholder)').length;
+        const cardsRendered = currentStreetData.CardsShown.map((card, i) => {
+            const html = renderCard(card);
+            return i >= prevCount
+                ? html.replace('<span class="card', '<span class="board-card-reveal card')
+                : html;
+        }).join('');
         const placeholdersNeeded = BOARD_SIZE - currentStreetData.CardsShown.length;
         const placeholders = Array(placeholdersNeeded > 0 ? placeholdersNeeded : 0).fill('<span class="card-placeholder"></span>').join('');
         boardContainer.innerHTML = cardsRendered + placeholders;
+
+        // Stagger newly revealed board cards
+        boardContainer.querySelectorAll('.board-card-reveal').forEach((el, i) => {
+            el.style.animationDelay = `${i * 120}ms`;
+        });
     }
 
     markKnownCards(currentPuzzle.HeroHand, currentStreetData.CardsShown);
@@ -263,6 +286,12 @@ function updateButtonStates() {
     const nextBtn = document.getElementById('next-street-btn');
     if (!submitBtn || !nextBtn || !currentPuzzle || !currentPuzzle.ActionHistory) return;
 
+    if (gameOver) {
+        submitBtn.disabled = true;
+        nextBtn.disabled = true;
+        return;
+    }
+
     const isReadyToSubmit = selectedCards.length === 2;
     const isRiver = currentStreetIndex === currentPuzzle.ActionHistory.length - 1;
 
@@ -296,6 +325,8 @@ function updateButtonStates() {
  * Handles card selection and updates the slots.
  */
 function handleCardSelection(cardCode, element) {
+    if (gameOver) return;
+
     if (element.classList.contains('known-card') ||
         element.classList.contains('rank-miss') ||
         element.classList.contains('exact-match')) {
@@ -354,7 +385,7 @@ function submitGuess() {
     attempts--;
     document.getElementById('attempts-left').textContent = attempts;
 
-    const feedbackResult = generateFeedback(selectedCards, currentPuzzle.VillainSolution, knownYellowRanks);
+    const feedbackResult = generateFeedback(selectedCards, currentPuzzle.VillainSolution);
 
     feedbackResult.forEach(item => {
         if (item.feedback === 'YELLOW') {
@@ -363,8 +394,8 @@ function submitGuess() {
         }
     });
 
+    guessLog.push({ streetIndex: currentStreetIndex, feedbackResult });
     renderGuessHistory(feedbackResult, currentStreetIndex);
-
     updateDeductionAid(feedbackResult);
 
     if (feedbackResult.every(item => item.feedback === 'GREEN')) {
@@ -381,6 +412,7 @@ function submitGuess() {
         hasGuessedThisStreet = true;
     }
 
+    saveGameState();
     updateButtonStates();
     resetSelection();
 }
@@ -462,12 +494,23 @@ function updateDeductionAid(feedbackResult) {
         if (!wrapper) return;
 
         const itemRank = normalizeRank(item.card.slice(0, -1));
-        const cardCode = item.card;
 
         const rankIsConfirmedGreen = lockedCards.some(c => normalizeRank(c.slice(0, -1)) === itemRank);
         const rankIsConfirmedYellow = knownYellowRanks.has(itemRank);
 
-        if (rankIsConfirmedGreen || rankIsConfirmedYellow) {
+        if (rankIsConfirmedGreen) {
+            // A green for this rank is locked — grey ALL remaining suits (only one King possible in a 2-card hand)
+            document.querySelectorAll('.card-wrapper .card').forEach(c => {
+                const cardRank = normalizeRank(c.dataset.card.slice(0, -1));
+                if (cardRank === itemRank) {
+                    const w = c.parentNode;
+                    if (!w.classList.contains('exact-match')) {
+                        w.classList.add('rank-miss');
+                        w.classList.remove('rank-match', 'selected');
+                    }
+                }
+            });
+        } else if (rankIsConfirmedYellow) {
             if (!wrapper.classList.contains('exact-match') && !wrapper.classList.contains('rank-match')) {
                 wrapper.classList.add('rank-miss');
                 wrapper.classList.remove('selected');
@@ -604,14 +647,21 @@ function revealNextStreet() {
     hasGuessedThisStreet = false;
     renderFullActionStatus();
     resetSelection();
+    saveGameState();
     updateButtonStates();
+    animateStreetActions(currentPuzzle.ActionHistory[currentStreetIndex]);
 }
 
 
 /**
  * Ends the game and displays the result modal.
+ * @param {boolean} win
+ * @param {boolean} showModal - false when restoring from saved state (avoid auto-popping modal)
  */
-function endGame(win) {
+function endGame(win, showModal = true) {
+    gameOver = true;
+    gameWon = win;
+    saveGameState();
     // 1. Disable game buttons
     const submitBtn = document.getElementById('submit-guess-btn');
     const nextBtn = document.getElementById('next-street-btn');
@@ -681,8 +731,79 @@ function endGame(win) {
         modalYoutubeBtn.style.display = 'none';
     }
 
-    // 5. Show the modal
-    modal.classList.add('show');
+    // 5. Show the modal (skipped when restoring saved state)
+    if (showModal) {
+        modal.classList.add('show');
+    }
+}
+
+function saveGameState() {
+    if (!currentPuzzle) return;
+    const state = {
+        puzzleId: currentPuzzle.id,
+        streetIndex: currentStreetIndex,
+        attempts,
+        hasGuessedThisStreet,
+        guessLog,
+        gameOver,
+        gameWon
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function restoreGameState(savedState) {
+    currentStreetIndex = savedState.streetIndex;
+    attempts = savedState.attempts;
+    hasGuessedThisStreet = savedState.hasGuessedThisStreet;
+    guessLog = savedState.guessLog || [];
+    gameOver = savedState.gameOver || false;
+    gameWon = savedState.gameWon || false;
+
+    // Reset derived state — rebuilt by replaying guessLog
+    lockedCards = [];
+    knownYellowRanks = new Set();
+
+    document.getElementById('attempts-left').textContent = attempts;
+    renderFullActionStatus();
+
+    // Suppress slide-in animation during restore (would flash on every refresh)
+    document.body.classList.add('restoring');
+    guessLog.forEach(entry => {
+        entry.feedbackResult.forEach(item => {
+            if (item.feedback === 'YELLOW') {
+                knownYellowRanks.add(normalizeRank(item.card.slice(0, -1)));
+            }
+        });
+        renderGuessHistory(entry.feedbackResult, entry.streetIndex);
+        updateDeductionAid(entry.feedbackResult);
+    });
+    document.body.classList.remove('restoring');
+
+    const currentStreetData = currentPuzzle.ActionHistory[currentStreetIndex];
+    if (currentStreetData) {
+        markKnownCards(currentPuzzle.HeroHand, currentStreetData.CardsShown);
+        // Restore pot chips statically (no animation on page reload)
+        const potChips = document.getElementById('pot-chips');
+        if (potChips) renderChipPile(potChips, currentStreetData.PotEnd, false);
+    }
+
+    resetSelection();
+    updateButtonStates();
+
+    if (gameOver) {
+        endGame(gameWon, false); // restore board state, skip modal
+    }
+}
+
+function generateShareText() {
+    if (!currentPuzzle) return '';
+    const attemptsUsed = MAX_ATTEMPTS - attempts;
+    const result = gameWon ? `${attemptsUsed}/6` : 'X/6';
+    const emojiMap = { GREEN: '🟩', YELLOW: '🟨', GREY: '⬜' };
+    const rows = guessLog.map(entry =>
+        entry.feedbackResult.map(item => emojiMap[item.feedback]).join('')
+    ).join('\n');
+    return `PocketPair #${currentPuzzle.id} ${result}\n\n${rows}`;
 }
 
 // Wait for the DOM to be fully loaded before attaching event listeners
@@ -700,19 +821,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeModalBtn = document.getElementById('modal-close-btn');
 
     if (modal && closeModalBtn) {
-        // Close the modal if the 'x' is clicked
-        closeModalBtn.addEventListener('click', () => {
-            modal.classList.remove('show');
-        });
-
-        // Close the modal if the overlay (background) is clicked
+        closeModalBtn.addEventListener('click', () => modal.classList.remove('show'));
         modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('show');
-            }
+            if (e.target === modal) modal.classList.remove('show');
         });
     }
-    // --- END OF BLOCK TO ADD ---
+
+    // Share button — copy Wordle-style emoji grid to clipboard
+    const shareBtn = document.getElementById('modal-share-btn');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', () => {
+            const text = generateShareText();
+            navigator.clipboard.writeText(text).then(() => {
+                shareBtn.textContent = 'Copied!';
+                setTimeout(() => { shareBtn.textContent = 'Share'; }, 2000);
+            });
+        });
+    }
 
 
     // --- Intro Screen Logic ---

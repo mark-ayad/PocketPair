@@ -4,458 +4,4958 @@
         "name": "Set Over Set",
         "context": "Villain wins with a top set.",
         "HeroPosition": "SB",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["5c", "5h"],
-        "VillainSolution": ["Jd", "Js"],
-        "Board": ["Jc", "5s", "2h", "8d", "9c"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "5c",
+            "5h"
+        ],
+        "VillainSolution": [
+            "Jd",
+            "Js"
+        ],
+        "Board": [
+            "Jc",
+            "5s",
+            "2h",
+            "8d",
+            "9c"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Hero raises to $60", "Villain 3-bets to $200", "Hero calls $140"],
-                "PotEnd": 400.00,
-                "HeroStack": 9800.00,
-                "VillainStack": 9800.00,
+                "Actions": [
+                    "Hero raises to $60",
+                    "Villain 3-bets to $200",
+                    "Hero calls $140"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Hero checks", "Villain bets $300", "Hero check-raises to $900", "Villain calls $600"],
-                "PotEnd": 2200.00,
-                "HeroStack": 8900.00,
-                "VillainStack": 8900.00,
-                "CardsShown": ["Jc", "5s", "2h"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero check-raises to $900",
+                    "Villain calls $600"
+                ],
+                "PotEnd": 2200.0,
+                "HeroStack": 8900.0,
+                "VillainStack": 8900.0,
+                "CardsShown": [
+                    "Jc",
+                    "5s",
+                    "2h"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Hero bets $1500", "Villain calls $1500"],
-                "PotEnd": 5200.00,
-                "HeroStack": 7400.00,
-                "VillainStack": 7400.00,
-                "CardsShown": ["Jc", "5s", "2h", "8d"]
+                "Actions": [
+                    "Hero bets $1500",
+                    "Villain calls $1500"
+                ],
+                "PotEnd": 5200.0,
+                "HeroStack": 7400.0,
+                "VillainStack": 7400.0,
+                "CardsShown": [
+                    "Jc",
+                    "5s",
+                    "2h",
+                    "8d"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Hero bets $4000", "Villain calls $4000"],
-                "PotEnd": 13200.00,
-                "HeroStack": 3400.00,
-                "VillainStack": 3400.00,
-                "CardsShown": ["Jc", "5s", "2h", "8d", "9c"]
+                "Actions": [
+                    "Hero bets $4000",
+                    "Villain calls $4000"
+                ],
+                "PotEnd": 13200.0,
+                "HeroStack": 3400.0,
+                "VillainStack": 3400.0,
+                "CardsShown": [
+                    "Jc",
+                    "5s",
+                    "2h",
+                    "8d",
+                    "9c"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "2",
         "name": "Flush Over Flush",
         "context": "Villain wins with a King-high flush.",
         "HeroPosition": "BTN",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["As", "Ts"],
-        "VillainSolution": ["Ks", "Qs"],
-        "Board": ["8s", "2s", "9d", "4s", "Jh"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "As",
+            "Ts"
+        ],
+        "VillainSolution": [
+            "Ks",
+            "Qs"
+        ],
+        "Board": [
+            "8s",
+            "2s",
+            "9d",
+            "4s",
+            "Jh"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Hero raises to $50", "Villain (BB) calls $20"],
-                "PotEnd": 100.00,
-                "HeroStack": 9950.00,
-                "VillainStack": 9950.00,
+                "Actions": [
+                    "Hero raises to $50",
+                    "Villain (BB) calls $20"
+                ],
+                "PotEnd": 100.0,
+                "HeroStack": 9950.0,
+                "VillainStack": 9950.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Villain checks", "Hero bets $75", "Villain calls $75"],
-                "PotEnd": 250.00,
-                "HeroStack": 9875.00,
-                "VillainStack": 9875.00,
-                "CardsShown": ["8s", "2s", "9d"]
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $75",
+                    "Villain calls $75"
+                ],
+                "PotEnd": 250.0,
+                "HeroStack": 9875.0,
+                "VillainStack": 9875.0,
+                "CardsShown": [
+                    "8s",
+                    "2s",
+                    "9d"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Villain checks", "Hero bets $200", "Villain check-raises to $700", "Hero calls $500"],
-                "PotEnd": 1650.00,
-                "HeroStack": 9175.00,
-                "VillainStack": 9175.00,
-                "CardsShown": ["8s", "2s", "9d", "4s"]
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $200",
+                    "Villain check-raises to $700",
+                    "Hero calls $500"
+                ],
+                "PotEnd": 1650.0,
+                "HeroStack": 9175.0,
+                "VillainStack": 9175.0,
+                "CardsShown": [
+                    "8s",
+                    "2s",
+                    "9d",
+                    "4s"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Villain bets $1200", "Hero raises to $3500", "Villain calls $2300"],
-                "PotEnd": 8650.00,
-                "HeroStack": 5675.00,
-                "VillainStack": 5675.00,
-                "CardsShown": ["8s", "2s", "9d", "4s", "Jh"]
+                "Actions": [
+                    "Villain bets $1200",
+                    "Hero raises to $3500",
+                    "Villain calls $2300"
+                ],
+                "PotEnd": 8650.0,
+                "HeroStack": 5675.0,
+                "VillainStack": 5675.0,
+                "CardsShown": [
+                    "8s",
+                    "2s",
+                    "9d",
+                    "4s",
+                    "Jh"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "3",
         "name": "Two Pair vs. Straight",
         "context": "Villain wins with Two Pair.",
         "HeroPosition": "MP",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["Jd", "Tc"],
-        "VillainSolution": ["As", "Kh"],
-        "Board": ["Ah", "Kc", "Qs", "9d", "3s"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Jd",
+            "Tc"
+        ],
+        "VillainSolution": [
+            "As",
+            "Kh"
+        ],
+        "Board": [
+            "Ah",
+            "Kc",
+            "Qs",
+            "9d",
+            "3s"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Villain raises to $60", "Hero calls $60"],
-                "PotEnd": 150.00,
-                "HeroStack": 9940.00,
-                "VillainStack": 9940.00,
+                "Actions": [
+                    "Villain raises to $60",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 150.0,
+                "HeroStack": 9940.0,
+                "VillainStack": 9940.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Villain bets $100", "Hero calls $100"],
-                "PotEnd": 350.00,
-                "HeroStack": 9840.00,
-                "VillainStack": 9840.00,
-                "CardsShown": ["Ah", "Kc", "Qs"]
+                "Actions": [
+                    "Villain bets $100",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 350.0,
+                "HeroStack": 9840.0,
+                "VillainStack": 9840.0,
+                "CardsShown": [
+                    "Ah",
+                    "Kc",
+                    "Qs"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Villain bets $300", "Hero raises to $1000", "Villain calls $700"],
-                "PotEnd": 2350.00,
-                "HeroStack": 8840.00,
-                "VillainStack": 8840.00,
-                "CardsShown": ["Ah", "Kc", "Qs", "9d"]
+                "Actions": [
+                    "Villain bets $300",
+                    "Hero raises to $1000",
+                    "Villain calls $700"
+                ],
+                "PotEnd": 2350.0,
+                "HeroStack": 8840.0,
+                "VillainStack": 8840.0,
+                "CardsShown": [
+                    "Ah",
+                    "Kc",
+                    "Qs",
+                    "9d"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Villain checks", "Hero bets $1800", "Villain calls $1800"],
-                "PotEnd": 5950.00,
-                "HeroStack": 7040.00,
-                "VillainStack": 7040.00,
-                "CardsShown": ["Ah", "Kc", "Qs", "9d", "3s"]
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $1800",
+                    "Villain calls $1800"
+                ],
+                "PotEnd": 5950.0,
+                "HeroStack": 7040.0,
+                "VillainStack": 7040.0,
+                "CardsShown": [
+                    "Ah",
+                    "Kc",
+                    "Qs",
+                    "9d",
+                    "3s"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "4",
         "name": "Missed Draw Bluff",
         "context": "Villain wins with a missed flush draw (King-high).",
         "HeroPosition": "BB",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["Ac", "Jd"],
-        "VillainSolution": ["Kh", "Qh"],
-        "Board": ["Ah", "9h", "2c", "7s", "4d"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ac",
+            "Jd"
+        ],
+        "VillainSolution": [
+            "Kh",
+            "Qh"
+        ],
+        "Board": [
+            "Ah",
+            "9h",
+            "2c",
+            "7s",
+            "4d"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Villain (BTN) raises to $50", "Hero calls $20"],
-                "PotEnd": 100.00,
-                "HeroStack": 9950.00,
-                "VillainStack": 9950.00,
+                "Actions": [
+                    "Villain (BTN) raises to $50",
+                    "Hero calls $20"
+                ],
+                "PotEnd": 100.0,
+                "HeroStack": 9950.0,
+                "VillainStack": 9950.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Hero checks", "Villain bets $100", "Hero calls $100"],
-                "PotEnd": 300.00,
-                "HeroStack": 9850.00,
-                "VillainStack": 9850.00,
-                "CardsShown": ["Ah", "9h", "2c"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $100",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 300.0,
+                "HeroStack": 9850.0,
+                "VillainStack": 9850.0,
+                "CardsShown": [
+                    "Ah",
+                    "9h",
+                    "2c"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Hero checks", "Villain bets $250", "Hero calls $250"],
-                "PotEnd": 800.00,
-                "HeroStack": 9600.00,
-                "VillainStack": 9600.00,
-                "CardsShown": ["Ah", "9h", "2c", "7s"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $250",
+                    "Hero calls $250"
+                ],
+                "PotEnd": 800.0,
+                "HeroStack": 9600.0,
+                "VillainStack": 9600.0,
+                "CardsShown": [
+                    "Ah",
+                    "9h",
+                    "2c",
+                    "7s"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Hero checks", "Villain bets $700", "Hero calls $700"],
-                "PotEnd": 2200.00,
-                "HeroStack": 8900.00,
-                "VillainStack": 8900.00,
-                "CardsShown": ["Ah", "9h", "2c", "7s", "4d"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $700",
+                    "Hero calls $700"
+                ],
+                "PotEnd": 2200.0,
+                "HeroStack": 8900.0,
+                "VillainStack": 8900.0,
+                "CardsShown": [
+                    "Ah",
+                    "9h",
+                    "2c",
+                    "7s",
+                    "4d"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "5",
         "name": "Straight vs. Full House",
         "context": "Villain wins with a Ten-high straight.",
         "HeroPosition": "BTN",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["8c", "8s"],
-        "VillainSolution": ["9h", "Ts"],
-        "Board": ["7h", "8d", "Jc", "Qd", "Jd"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "8c",
+            "8s"
+        ],
+        "VillainSolution": [
+            "9h",
+            "Ts"
+        ],
+        "Board": [
+            "7h",
+            "8d",
+            "Jc",
+            "Qd",
+            "Jd"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Hero raises to $50", "Villain (BB) calls $20"],
-                "PotEnd": 100.00,
-                "HeroStack": 9950.00,
-                "VillainStack": 9950.00,
+                "Actions": [
+                    "Hero raises to $50",
+                    "Villain (BB) calls $20"
+                ],
+                "PotEnd": 100.0,
+                "HeroStack": 9950.0,
+                "VillainStack": 9950.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Villain checks", "Hero bets $75", "Villain calls $75"],
-                "PotEnd": 250.00,
-                "HeroStack": 9875.00,
-                "VillainStack": 9875.00,
-                "CardsShown": ["7h", "8d", "Jc"]
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $75",
+                    "Villain calls $75"
+                ],
+                "PotEnd": 250.0,
+                "HeroStack": 9875.0,
+                "VillainStack": 9875.0,
+                "CardsShown": [
+                    "7h",
+                    "8d",
+                    "Jc"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Villain checks", "Hero bets $200", "Villain check-raises to $650", "Hero calls $450"],
-                "PotEnd": 1550.00,
-                "HeroStack": 9225.00,
-                "VillainStack": 9225.00,
-                "CardsShown": ["7h", "8d", "Jc", "Qd"]
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $200",
+                    "Villain check-raises to $650",
+                    "Hero calls $450"
+                ],
+                "PotEnd": 1550.0,
+                "HeroStack": 9225.0,
+                "VillainStack": 9225.0,
+                "CardsShown": [
+                    "7h",
+                    "8d",
+                    "Jc",
+                    "Qd"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Villain bets $1000", "Hero raises to $4000", "Villain calls $3000"],
-                "PotEnd": 9550.00,
-                "HeroStack": 5225.00,
-                "VillainStack": 5225.00,
-                "CardsShown": ["7h", "8d", "Jc", "Qd", "Jd"]
+                "Actions": [
+                    "Villain bets $1000",
+                    "Hero raises to $4000",
+                    "Villain calls $3000"
+                ],
+                "PotEnd": 9550.0,
+                "HeroStack": 5225.0,
+                "VillainStack": 5225.0,
+                "CardsShown": [
+                    "7h",
+                    "8d",
+                    "Jc",
+                    "Qd",
+                    "Jd"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "6",
         "name": "Top Pair vs. Second Pair",
         "context": "Villain wins with second pair (Jack-kicker).",
         "HeroPosition": "CO",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["Ah", "7c"],
-        "VillainSolution": ["Kd", "Jd"],
-        "Board": ["As", "Js", "2c", "4h", "9d"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ah",
+            "7c"
+        ],
+        "VillainSolution": [
+            "Kd",
+            "Jd"
+        ],
+        "Board": [
+            "As",
+            "Js",
+            "2c",
+            "4h",
+            "9d"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Hero raises to $60", "Villain (BTN) calls $60"],
-                "PotEnd": 150.00,
-                "HeroStack": 9940.00,
-                "VillainStack": 9940.00,
+                "Actions": [
+                    "Hero raises to $60",
+                    "Villain (BTN) calls $60"
+                ],
+                "PotEnd": 150.0,
+                "HeroStack": 9940.0,
+                "VillainStack": 9940.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Hero bets $100", "Villain calls $100"],
-                "PotEnd": 350.00,
-                "HeroStack": 9840.00,
-                "VillainStack": 9840.00,
-                "CardsShown": ["As", "Js", "2c"]
+                "Actions": [
+                    "Hero bets $100",
+                    "Villain calls $100"
+                ],
+                "PotEnd": 350.0,
+                "HeroStack": 9840.0,
+                "VillainStack": 9840.0,
+                "CardsShown": [
+                    "As",
+                    "Js",
+                    "2c"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Hero bets $250", "Villain calls $250"],
-                "PotEnd": 850.00,
-                "HeroStack": 9590.00,
-                "VillainStack": 9590.00,
-                "CardsShown": ["As", "Js", "2c", "4h"]
+                "Actions": [
+                    "Hero bets $250",
+                    "Villain calls $250"
+                ],
+                "PotEnd": 850.0,
+                "HeroStack": 9590.0,
+                "VillainStack": 9590.0,
+                "CardsShown": [
+                    "As",
+                    "Js",
+                    "2c",
+                    "4h"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Hero bets $400", "Villain calls $400"],
-                "PotEnd": 1650.00,
-                "HeroStack": 9190.00,
-                "VillainStack": 9190.00,
-                "CardsShown": ["As", "Js", "2c", "4h", "9d"]
+                "Actions": [
+                    "Hero bets $400",
+                    "Villain calls $400"
+                ],
+                "PotEnd": 1650.0,
+                "HeroStack": 9190.0,
+                "VillainStack": 9190.0,
+                "CardsShown": [
+                    "As",
+                    "Js",
+                    "2c",
+                    "4h",
+                    "9d"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "7",
         "name": "Slowplayed Quads",
-        "context": "Villain wins with top pair (Ace-kicker).",
+        "context": "Hero slowplays quad 7s on a paired board, letting the villain bet into them with top pair (Ace-King). Hero wins at showdown.",
         "HeroPosition": "BB",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["7c", "7s"],
-        "VillainSolution": ["Ad", "Kc"],
-        "Board": ["7h", "7d", "Ks", "2s", "3h"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "7c",
+            "7s"
+        ],
+        "VillainSolution": [
+            "Ad",
+            "Kc"
+        ],
+        "Board": [
+            "7h",
+            "7d",
+            "Ks",
+            "2s",
+            "3h"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Villain (BTN) raises to $50", "Hero calls $20"],
-                "PotEnd": 100.00,
-                "HeroStack": 9950.00,
-                "VillainStack": 9950.00,
+                "Actions": [
+                    "Villain (BTN) raises to $50",
+                    "Hero calls $20"
+                ],
+                "PotEnd": 100.0,
+                "HeroStack": 9950.0,
+                "VillainStack": 9950.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Hero checks", "Villain bets $75", "Hero calls $75"],
-                "PotEnd": 250.00,
-                "HeroStack": 9875.00,
-                "VillainStack": 9875.00,
-                "CardsShown": ["7h", "7d", "Ks"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $75",
+                    "Hero calls $75"
+                ],
+                "PotEnd": 250.0,
+                "HeroStack": 9875.0,
+                "VillainStack": 9875.0,
+                "CardsShown": [
+                    "7h",
+                    "7d",
+                    "Ks"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Hero checks", "Villain bets $225", "Hero calls $225"],
-                "PotEnd": 700.00,
-                "HeroStack": 9650.00,
-                "VillainStack": 9650.00,
-                "CardsShown": ["7h", "7d", "Ks", "2s"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $225",
+                    "Hero calls $225"
+                ],
+                "PotEnd": 700.0,
+                "HeroStack": 9650.0,
+                "VillainStack": 9650.0,
+                "CardsShown": [
+                    "7h",
+                    "7d",
+                    "Ks",
+                    "2s"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Hero checks", "Villain bets $500", "Hero raises to $2000", "Villain calls $1500"],
-                "PotEnd": 4700.00,
-                "HeroStack": 7650.00,
-                "VillainStack": 7650.00,
-                "CardsShown": ["7h", "7d", "Ks", "2s", "3h"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $500",
+                    "Hero raises to $2000",
+                    "Villain calls $1500"
+                ],
+                "PotEnd": 4700.0,
+                "HeroStack": 7650.0,
+                "VillainStack": 7650.0,
+                "CardsShown": [
+                    "7h",
+                    "7d",
+                    "Ks",
+                    "2s",
+                    "3h"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "8",
         "name": "Overpair vs. Top Pair",
         "context": "Villain wins with top pair (Ace-kicker).",
         "HeroPosition": "MP",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["Qc", "Qh"],
-        "VillainSolution": ["As", "Kd"],
-        "Board": ["Kh", "8c", "3d", "7s", "2c"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Qc",
+            "Qh"
+        ],
+        "VillainSolution": [
+            "As",
+            "Kd"
+        ],
+        "Board": [
+            "Kh",
+            "8c",
+            "3d",
+            "7s",
+            "2c"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Hero raises to $60", "Villain (CO) calls $60"],
-                "PotEnd": 150.00,
-                "HeroStack": 9940.00,
-                "VillainStack": 9940.00,
+                "Actions": [
+                    "Hero raises to $60",
+                    "Villain (CO) calls $60"
+                ],
+                "PotEnd": 150.0,
+                "HeroStack": 9940.0,
+                "VillainStack": 9940.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Hero bets $100", "Villain calls $100"],
-                "PotEnd": 350.00,
-                "HeroStack": 9840.00,
-                "VillainStack": 9840.00,
-                "CardsShown": ["Kh", "8c", "3d"]
+                "Actions": [
+                    "Hero bets $100",
+                    "Villain calls $100"
+                ],
+                "PotEnd": 350.0,
+                "HeroStack": 9840.0,
+                "VillainStack": 9840.0,
+                "CardsShown": [
+                    "Kh",
+                    "8c",
+                    "3d"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Hero bets $300", "Villain calls $300"],
-                "PotEnd": 950.00,
-                "HeroStack": 9540.00,
-                "VillainStack": 9540.00,
-                "CardsShown": ["Kh", "8c", "3d", "7s"]
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 950.0,
+                "HeroStack": 9540.0,
+                "VillainStack": 9540.0,
+                "CardsShown": [
+                    "Kh",
+                    "8c",
+                    "3d",
+                    "7s"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Hero bets $800", "Villain calls $800"],
-                "PotEnd": 2550.00,
-                "HeroStack": 8740.00,
-                "VillainStack": 8740.00,
-                "CardsShown": ["Kh", "8c", "3d", "7s", "2c"]
+                "Actions": [
+                    "Hero bets $800",
+                    "Villain calls $800"
+                ],
+                "PotEnd": 2550.0,
+                "HeroStack": 8740.0,
+                "VillainStack": 8740.0,
+                "CardsShown": [
+                    "Kh",
+                    "8c",
+                    "3d",
+                    "7s",
+                    "2c"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "9",
         "name": "Turned Two Pair",
         "context": "Villain wins with an underpair (pocket eights).",
         "HeroPosition": "BB",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["Ks", "Td"],
-        "VillainSolution": ["8c", "8h"],
-        "Board": ["Ts", "5d", "2h", "Kh", "6c"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ks",
+            "Td"
+        ],
+        "VillainSolution": [
+            "8c",
+            "8h"
+        ],
+        "Board": [
+            "Ts",
+            "5d",
+            "2h",
+            "Kh",
+            "6c"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Villain (BTN) raises to $50", "Hero calls $20"],
-                "PotEnd": 100.00,
-                "HeroStack": 9950.00,
-                "VillainStack": 9950.00,
+                "Actions": [
+                    "Villain (BTN) raises to $50",
+                    "Hero calls $20"
+                ],
+                "PotEnd": 100.0,
+                "HeroStack": 9950.0,
+                "VillainStack": 9950.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Hero checks", "Villain bets $75", "Hero calls $75"],
-                "PotEnd": 250.00,
-                "HeroStack": 9875.00,
-                "VillainStack": 9875.00,
-                "CardsShown": ["Ts", "5d", "2h"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $75",
+                    "Hero calls $75"
+                ],
+                "PotEnd": 250.0,
+                "HeroStack": 9875.0,
+                "VillainStack": 9875.0,
+                "CardsShown": [
+                    "Ts",
+                    "5d",
+                    "2h"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Hero checks", "Villain bets $200", "Hero check-raises to $600", "Villain calls $400"],
-                "PotEnd": 1450.00,
-                "HeroStack": 9275.00,
-                "VillainStack": 9275.00,
-                "CardsShown": ["Ts", "5d", "2h", "Kh"]
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $200",
+                    "Hero check-raises to $600",
+                    "Villain calls $400"
+                ],
+                "PotEnd": 1450.0,
+                "HeroStack": 9275.0,
+                "VillainStack": 9275.0,
+                "CardsShown": [
+                    "Ts",
+                    "5d",
+                    "2h",
+                    "Kh"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Hero bets $1000", "Villain calls $1000"],
-                "PotEnd": 3450.00,
-                "HeroStack": 8275.00,
-                "VillainStack": 8275.00,
-                "CardsShown": ["Ts", "5d", "2h", "Kh", "6c"]
+                "Actions": [
+                    "Hero bets $1000",
+                    "Villain calls $1000"
+                ],
+                "PotEnd": 3450.0,
+                "HeroStack": 8275.0,
+                "VillainStack": 8275.0,
+                "CardsShown": [
+                    "Ts",
+                    "5d",
+                    "2h",
+                    "Kh",
+                    "6c"
+                ]
             }
-        ]
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
     },
     {
         "id": "10",
         "name": "Rivered Boat",
         "context": "Villain wins with a Full House (Tens full of Kings).",
         "HeroPosition": "MP",
-        "heroStartingStackBBs": 10000.00,
-        "villainStartingStackBBs": 10000.00,
-        "HeroHand": ["Ad", "Jd"],
-        "VillainSolution": ["Tc", "Ts"],
-        "Board": ["Td", "7d", "2c", "Kd", "Kh"],
-        "StartingPot": 30.00,
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ad",
+            "Jd"
+        ],
+        "VillainSolution": [
+            "Tc",
+            "Ts"
+        ],
+        "Board": [
+            "Td",
+            "7d",
+            "2c",
+            "Kd",
+            "Kh"
+        ],
+        "StartingPot": 30.0,
         "ActionHistory": [
             {
                 "Street": "Pre-Flop",
-                "Actions": ["Villain raises to $60", "Hero (BTN) 3-bets to $180", "Villain calls $120"],
-                "PotEnd": 390.00,
-                "HeroStack": 9820.00,
-                "VillainStack": 9820.00,
+                "Actions": [
+                    "Villain raises to $60",
+                    "Hero (BTN) 3-bets to $180",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 390.0,
+                "HeroStack": 9820.0,
+                "VillainStack": 9820.0,
                 "CardsShown": []
             },
             {
                 "Street": "Flop",
-                "Actions": ["Villain checks", "Hero bets $250", "Villain calls $250"],
-                "PotEnd": 890.00,
-                "HeroStack": 9570.00,
-                "VillainStack": 9570.00,
-                "CardsShown": ["Td", "7d", "2c"]
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $250",
+                    "Villain calls $250"
+                ],
+                "PotEnd": 890.0,
+                "HeroStack": 9570.0,
+                "VillainStack": 9570.0,
+                "CardsShown": [
+                    "Td",
+                    "7d",
+                    "2c"
+                ]
             },
             {
                 "Street": "Turn",
-                "Actions": ["Villain checks", "Hero bets $700", "Villain calls $700"],
-                "PotEnd": 2290.00,
-                "HeroStack": 8870.00,
-                "VillainStack": 8870.00,
-                "CardsShown": ["Td", "7d", "2c", "Kd"]
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $700",
+                    "Villain calls $700"
+                ],
+                "PotEnd": 2290.0,
+                "HeroStack": 8870.0,
+                "VillainStack": 8870.0,
+                "CardsShown": [
+                    "Td",
+                    "7d",
+                    "2c",
+                    "Kd"
+                ]
             },
             {
                 "Street": "River",
-                "Actions": ["Villain checks", "Hero bets $1800", "Villain check-raises to $5000", "Hero calls $3200"],
-                "PotEnd": 12290.00,
-                "HeroStack": 3870.00,
-                "VillainStack": 3870.00,
-                "CardsShown": ["Td", "7d", "2c", "Kd", "Kh"]
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $1800",
+                    "Villain check-raises to $5000",
+                    "Hero calls $3200"
+                ],
+                "PotEnd": 12290.0,
+                "HeroStack": 3870.0,
+                "VillainStack": 3870.0,
+                "CardsShown": [
+                    "Td",
+                    "7d",
+                    "2c",
+                    "Kd",
+                    "Kh"
+                ]
+            }
+        ],
+        "heroName": "Hero",
+        "villainName": "Villain"
+    },
+    {
+        "id": "11",
+        "name": "Phil Ivey vs Eric Persson",
+        "context": "Hustler Casino Live, 2022. Phil Ivey holds the nut flush draw on the flop while Eric Persson flops top pair with his own flush draw. The river completes Persson's flush to win a massive pot.",
+        "youtubeLink": "",
+        "HeroPosition": "BTN",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "As",
+            "Qs"
+        ],
+        "VillainSolution": [
+            "Jh",
+            "5h"
+        ],
+        "Board": [
+            "Js",
+            "7h",
+            "6c",
+            "4h",
+            "Th"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Hero (BTN) raises to $60",
+                    "Villain (BB) calls $40"
+                ],
+                "PotEnd": 120.0,
+                "HeroStack": 9940.0,
+                "VillainStack": 9940.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $80",
+                    "Villain calls $80"
+                ],
+                "PotEnd": 280.0,
+                "HeroStack": 9860.0,
+                "VillainStack": 9860.0,
+                "CardsShown": [
+                    "Js",
+                    "7h",
+                    "6c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Villain bets $200",
+                    "Hero calls $200"
+                ],
+                "PotEnd": 680.0,
+                "HeroStack": 9660.0,
+                "VillainStack": 9660.0,
+                "CardsShown": [
+                    "Js",
+                    "7h",
+                    "6c",
+                    "4h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Villain bets $500",
+                    "Hero calls $500"
+                ],
+                "PotEnd": 1680.0,
+                "HeroStack": 9160.0,
+                "VillainStack": 9160.0,
+                "CardsShown": [
+                    "Js",
+                    "7h",
+                    "6c",
+                    "4h",
+                    "Th"
+                ]
+            }
+        ],
+        "heroName": "Phil Ivey",
+        "villainName": "Eric Persson"
+    },
+    {
+        "id": "12",
+        "name": "Tom Dwan vs Wesley Fei",
+        "context": "Hustler Casino Live, 2023. The largest pot in televised poker history \u2014 $3.1 million. Tom Dwan's pocket Queens hold as an overpair against Wesley Fei's Ace-King, which completely misses the board.",
+        "youtubeLink": "https://www.youtube.com/shorts/hDFA3vfANN0",
+        "HeroPosition": "BTN",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Qs",
+            "Qc"
+        ],
+        "VillainSolution": [
+            "Ad",
+            "Ks"
+        ],
+        "Board": [
+            "3d",
+            "8s",
+            "8d",
+            "5h",
+            "6c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain raises to $80",
+                    "Hero 3-bets to $280",
+                    "Villain 4-bets to $800",
+                    "Hero calls $520"
+                ],
+                "PotEnd": 1630.0,
+                "HeroStack": 9200.0,
+                "VillainStack": 9200.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $800",
+                    "Villain calls $800"
+                ],
+                "PotEnd": 3230.0,
+                "HeroStack": 8400.0,
+                "VillainStack": 8400.0,
+                "CardsShown": [
+                    "3d",
+                    "8s",
+                    "8d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $1800",
+                    "Villain calls $1800"
+                ],
+                "PotEnd": 6830.0,
+                "HeroStack": 6600.0,
+                "VillainStack": 6600.0,
+                "CardsShown": [
+                    "3d",
+                    "8s",
+                    "8d",
+                    "5h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $3000",
+                    "Villain calls $3000"
+                ],
+                "PotEnd": 12830.0,
+                "HeroStack": 3600.0,
+                "VillainStack": 3600.0,
+                "CardsShown": [
+                    "3d",
+                    "8s",
+                    "8d",
+                    "5h",
+                    "6c"
+                ]
+            }
+        ],
+        "heroName": "Tom Dwan",
+        "villainName": "Wesley Fei"
+    },
+    {
+        "id": "13",
+        "name": "Robbi Lew vs Garrett Adelstein",
+        "context": "Hustler Casino Live, 2022. One of the most controversial hands in poker history. Garrett Adelstein moves all-in with a flush draw on a paired board. Robbi Lew makes a stunning call with just a Jack-high \u2014 and wins with a better kicker on the shared board.",
+        "youtubeLink": "https://www.youtube.com/shorts/4SDXGbKqeXo",
+        "HeroPosition": "BTN",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "8c",
+            "7c"
+        ],
+        "VillainSolution": [
+            "Jc",
+            "4h"
+        ],
+        "Board": [
+            "Th",
+            "Tc",
+            "9c",
+            "3h",
+            "9d"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Hero (BTN) raises to $60",
+                    "Villain (BB) 3-bets to $200",
+                    "Hero calls $140"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $300",
+                    "Villain check-raises to $900",
+                    "Hero calls $600"
+                ],
+                "PotEnd": 2200.0,
+                "HeroStack": 8900.0,
+                "VillainStack": 8900.0,
+                "CardsShown": [
+                    "Th",
+                    "Tc",
+                    "9c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $1500",
+                    "Villain calls $1500"
+                ],
+                "PotEnd": 5200.0,
+                "HeroStack": 7400.0,
+                "VillainStack": 7400.0,
+                "CardsShown": [
+                    "Th",
+                    "Tc",
+                    "9c",
+                    "3h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Villain checks",
+                    "Hero bets $3500",
+                    "Villain calls $3500"
+                ],
+                "PotEnd": 12200.0,
+                "HeroStack": 3900.0,
+                "VillainStack": 3900.0,
+                "CardsShown": [
+                    "Th",
+                    "Tc",
+                    "9c",
+                    "3h",
+                    "9d"
+                ]
+            }
+        ],
+        "heroName": "Garrett Adelstein",
+        "villainName": "Robbi Lew"
+    },
+    {
+        "id": "14",
+        "name": "Johnny Chan vs Erik Seidel",
+        "context": "1988 WSOP Main Event Final Hand. Johnny Chan, defending champion, traps Erik Seidel with a flopped straight on a Queen-high board. Seidel bets his top pair into Chan's disguised nuts. Immortalized in the movie Rounders.",
+        "youtubeLink": "https://www.youtube.com/watch?v=g65GP3i20sY",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Qd",
+            "7d"
+        ],
+        "VillainSolution": [
+            "Jc",
+            "9c"
+        ],
+        "Board": [
+            "Qs",
+            "Th",
+            "8d",
+            "2s",
+            "6d"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) calls $10",
+                    "Hero checks"
+                ],
+                "PotEnd": 40.0,
+                "HeroStack": 9980.0,
+                "VillainStack": 9980.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $40",
+                    "Villain calls $40"
+                ],
+                "PotEnd": 120.0,
+                "HeroStack": 9940.0,
+                "VillainStack": 9940.0,
+                "CardsShown": [
+                    "Qs",
+                    "Th",
+                    "8d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $100",
+                    "Villain calls $100"
+                ],
+                "PotEnd": 320.0,
+                "HeroStack": 9840.0,
+                "VillainStack": 9840.0,
+                "CardsShown": [
+                    "Qs",
+                    "Th",
+                    "8d",
+                    "2s"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain raises to $1200",
+                    "Hero calls $900"
+                ],
+                "PotEnd": 2720.0,
+                "HeroStack": 9540.0,
+                "VillainStack": 9540.0,
+                "CardsShown": [
+                    "Qs",
+                    "Th",
+                    "8d",
+                    "2s",
+                    "6d"
+                ]
+            }
+        ],
+        "heroName": "Erik Seidel",
+        "villainName": "Johnny Chan"
+    },
+    {
+        "id": "15",
+        "name": "Phil Hellmuth vs Johnny Chan",
+        "context": "1989 WSOP Main Event Final Hand. 23-year-old Phil Hellmuth becomes the youngest Main Event champion. Hellmuth's pocket nines hold up against defending champion Johnny Chan's Ace-Seven, which picks up a backdoor spade draw but never catches.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "As",
+            "7s"
+        ],
+        "VillainSolution": [
+            "9s",
+            "9c"
+        ],
+        "Board": [
+            "Kc",
+            "Th",
+            "Kd",
+            "Qs",
+            "6s"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $100",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 360.0,
+                "HeroStack": 9820.0,
+                "VillainStack": 9820.0,
+                "CardsShown": [
+                    "Kc",
+                    "Th",
+                    "Kd"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero calls $300"
+                ],
+                "PotEnd": 960.0,
+                "HeroStack": 9520.0,
+                "VillainStack": 9520.0,
+                "CardsShown": [
+                    "Kc",
+                    "Th",
+                    "Kd",
+                    "Qs"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $700",
+                    "Hero calls $700"
+                ],
+                "PotEnd": 2360.0,
+                "HeroStack": 8820.0,
+                "VillainStack": 8820.0,
+                "CardsShown": [
+                    "Kc",
+                    "Th",
+                    "Kd",
+                    "Qs",
+                    "6s"
+                ]
+            }
+        ],
+        "heroName": "Johnny Chan",
+        "villainName": "Phil Hellmuth"
+    },
+    {
+        "id": "16",
+        "name": "Mansour Matloubi vs Hans Lund",
+        "context": "1990 WSOP Main Event Final Hand. Mansour Matloubi calls with pocket Tens against Hans Lund's Ace-Nine. Lund turns two pair but Matloubi rivers a set to win his championship in dramatic fashion.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ac",
+            "9d"
+        ],
+        "VillainSolution": [
+            "Td",
+            "Tc"
+        ],
+        "Board": [
+            "9s",
+            "2c",
+            "4d",
+            "As",
+            "Ts"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "9s",
+                    "2c",
+                    "4d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "9s",
+                    "2c",
+                    "4d",
+                    "As"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $800",
+                    "Villain raises to $2500",
+                    "Hero calls $1700"
+                ],
+                "PotEnd": 6000.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "9s",
+                    "2c",
+                    "4d",
+                    "As",
+                    "Ts"
+                ]
+            }
+        ],
+        "heroName": "Hans Lund",
+        "villainName": "Mansour Matloubi"
+    },
+    {
+        "id": "17",
+        "name": "Hamid Dastmalchi vs Tom Jacobs",
+        "context": "1992 WSOP Main Event Final Hand. Hamid Dastmalchi holds 8-4 offsuit and spikes a straight on the river against Tom Jacobs' flopped two pair. A classic rags-to-riches champion hand.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Jd",
+            "7s"
+        ],
+        "VillainSolution": [
+            "8h",
+            "4c"
+        ],
+        "Board": [
+            "Jh",
+            "5d",
+            "7d",
+            "6h",
+            "8c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $100",
+                    "Villain calls $100"
+                ],
+                "PotEnd": 360.0,
+                "HeroStack": 9820.0,
+                "VillainStack": 9820.0,
+                "CardsShown": [
+                    "Jh",
+                    "5d",
+                    "7d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $280",
+                    "Villain raises to $800",
+                    "Hero calls $520"
+                ],
+                "PotEnd": 1960.0,
+                "HeroStack": 9000.0,
+                "VillainStack": 9000.0,
+                "CardsShown": [
+                    "Jh",
+                    "5d",
+                    "7d",
+                    "6h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $1200",
+                    "Villain raises to $3500",
+                    "Hero calls $2300"
+                ],
+                "PotEnd": 8960.0,
+                "HeroStack": 7800.0,
+                "VillainStack": 7800.0,
+                "CardsShown": [
+                    "Jh",
+                    "5d",
+                    "7d",
+                    "6h",
+                    "8c"
+                ]
+            }
+        ],
+        "heroName": "Tom Jacobs",
+        "villainName": "Hamid Dastmalchi"
+    },
+    {
+        "id": "18",
+        "name": "Dan Harrington vs Howard Goldfarb",
+        "context": "1995 WSOP Main Event Final Hand. 'Action Dan' Harrington wins with 9-8 against Howard Goldfarb's Ace-Seven. Harrington flops a pair of eights to make two pair on a Queen-high board and never looks back.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ah",
+            "7c"
+        ],
+        "VillainSolution": [
+            "9d",
+            "8d"
+        ],
+        "Board": [
+            "8c",
+            "2c",
+            "6d",
+            "Qs",
+            "Qh"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "8c",
+                    "2c",
+                    "6d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $320",
+                    "Hero calls $320"
+                ],
+                "PotEnd": 1040.0,
+                "HeroStack": 9480.0,
+                "VillainStack": 9480.0,
+                "CardsShown": [
+                    "8c",
+                    "2c",
+                    "6d",
+                    "Qs"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $800",
+                    "Hero calls $800"
+                ],
+                "PotEnd": 2640.0,
+                "HeroStack": 8680.0,
+                "VillainStack": 8680.0,
+                "CardsShown": [
+                    "8c",
+                    "2c",
+                    "6d",
+                    "Qs",
+                    "Qh"
+                ]
+            }
+        ],
+        "heroName": "Howard Goldfarb",
+        "villainName": "Dan Harrington"
+    },
+    {
+        "id": "19",
+        "name": "Huckleberry Seed vs Bruce Van Horn",
+        "context": "1996 WSOP Main Event Final Hand. Huck Seed flops two pair with 9-8 to defeat Bruce Van Horn's King-Eight. Van Horn picks up a flush draw on the turn but the river bricks and Seed takes the bracelet.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Kc",
+            "8c"
+        ],
+        "VillainSolution": [
+            "9d",
+            "8d"
+        ],
+        "Board": [
+            "9h",
+            "8h",
+            "4c",
+            "Ac",
+            "3s"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "9h",
+                    "8h",
+                    "4c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain raises to $900",
+                    "Hero calls $600"
+                ],
+                "PotEnd": 2200.0,
+                "HeroStack": 9200.0,
+                "VillainStack": 9200.0,
+                "CardsShown": [
+                    "9h",
+                    "8h",
+                    "4c",
+                    "Ac"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1500",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5200.0,
+                "HeroStack": 7700.0,
+                "VillainStack": 7700.0,
+                "CardsShown": [
+                    "9h",
+                    "8h",
+                    "4c",
+                    "Ac",
+                    "3s"
+                ]
+            }
+        ],
+        "heroName": "Bruce Van Horn",
+        "villainName": "Huckleberry Seed"
+    },
+    {
+        "id": "20",
+        "name": "Scotty Nguyen vs Kevin McBride",
+        "context": "1998 WSOP Main Event Final Hand. With the board pairing to give both players a full house, Scotty Nguyen holds the better full house with a nine in his hand. Before McBride calls the river, Nguyen says \"You call, it's gonna be all over, baby\" \u2014 and he was right.",
+        "youtubeLink": "https://www.youtube.com/shorts/tr98qbVilbQ",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Qh",
+            "Th"
+        ],
+        "VillainSolution": [
+            "Jd",
+            "9c"
+        ],
+        "Board": [
+            "8c",
+            "9d",
+            "9h",
+            "8h",
+            "8s"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "8c",
+                    "9d",
+                    "9h"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain checks"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "8c",
+                    "9d",
+                    "9h",
+                    "8h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $400",
+                    "Hero calls $400"
+                ],
+                "PotEnd": 1200.0,
+                "HeroStack": 9400.0,
+                "VillainStack": 9400.0,
+                "CardsShown": [
+                    "8c",
+                    "9d",
+                    "9h",
+                    "8h",
+                    "8s"
+                ]
+            }
+        ],
+        "heroName": "Kevin McBride",
+        "villainName": "Scotty Nguyen"
+    },
+    {
+        "id": "21",
+        "name": "Noel Furlong vs Alan Goehring",
+        "context": "1999 WSOP Main Event Final Hand. Noel Furlong flops a set of Fives on a Queen-high board, making a full house against Alan Goehring's pocket Sixes. Furlong traps Goehring's two pair all the way to the river.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "6h",
+            "6c"
+        ],
+        "VillainSolution": [
+            "5c",
+            "5d"
+        ],
+        "Board": [
+            "Qs",
+            "Qc",
+            "5s",
+            "2s",
+            "9h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Qs",
+                    "Qc",
+                    "5s"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "Qs",
+                    "Qc",
+                    "5s",
+                    "2s"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $800",
+                    "Villain raises to $2800",
+                    "Hero calls $2000"
+                ],
+                "PotEnd": 6600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "Qs",
+                    "Qc",
+                    "5s",
+                    "2s",
+                    "9h"
+                ]
+            }
+        ],
+        "heroName": "Alan Goehring",
+        "villainName": "Noel Furlong"
+    },
+    {
+        "id": "22",
+        "name": "Chris Ferguson vs TJ Cloutier",
+        "context": "2000 WSOP Main Event Final Hand. TJ Cloutier holds Ace-Queen and flops top pair, but Chris 'Jesus' Ferguson rivers a nine to make two pair Kings and Nines \u2014 cracking Cloutier's pair of Kings and denying him a second bracelet.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ad",
+            "Qc"
+        ],
+        "VillainSolution": [
+            "As",
+            "9c"
+        ],
+        "Board": [
+            "2h",
+            "Kc",
+            "4h",
+            "Kh",
+            "9h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "2h",
+                    "Kc",
+                    "4h"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $320",
+                    "Villain calls $320"
+                ],
+                "PotEnd": 1040.0,
+                "HeroStack": 9480.0,
+                "VillainStack": 9480.0,
+                "CardsShown": [
+                    "2h",
+                    "Kc",
+                    "4h",
+                    "Kh"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1000",
+                    "Hero calls $1000"
+                ],
+                "PotEnd": 3040.0,
+                "HeroStack": 8480.0,
+                "VillainStack": 8480.0,
+                "CardsShown": [
+                    "2h",
+                    "Kc",
+                    "4h",
+                    "Kh",
+                    "9h"
+                ]
+            }
+        ],
+        "heroName": "TJ Cloutier",
+        "villainName": "Chris Ferguson"
+    },
+    {
+        "id": "23",
+        "name": "Carlos Mortensen vs Dewey Tomko",
+        "context": "2001 WSOP Main Event Final Hand. Carlos Mortensen holds King-Queen and rivers a King-high straight to beat Dewey Tomko's pocket Aces. One of the greatest bad-beat finishes in WSOP championship history.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "As",
+            "Ah"
+        ],
+        "VillainSolution": [
+            "Kc",
+            "Qc"
+        ],
+        "Board": [
+            "Jd",
+            "Tc",
+            "3c",
+            "2s",
+            "9d"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Jd",
+                    "Tc",
+                    "3c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $320",
+                    "Villain raises to $900",
+                    "Hero calls $580"
+                ],
+                "PotEnd": 2200.0,
+                "HeroStack": 9480.0,
+                "VillainStack": 9480.0,
+                "CardsShown": [
+                    "Jd",
+                    "Tc",
+                    "3c",
+                    "2s"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $1500",
+                    "Villain raises to $4500",
+                    "Hero calls $3000"
+                ],
+                "PotEnd": 11200.0,
+                "HeroStack": 7980.0,
+                "VillainStack": 7980.0,
+                "CardsShown": [
+                    "Jd",
+                    "Tc",
+                    "3c",
+                    "2s",
+                    "9d"
+                ]
+            }
+        ],
+        "heroName": "Dewey Tomko",
+        "villainName": "Carlos Mortensen"
+    },
+    {
+        "id": "24",
+        "name": "Robert Varkonyi vs Julian Gardner",
+        "context": "2002 WSOP Main Event Final Hand. Robert Varkonyi flops top pair with Queen-Ten and makes two pair on the river, holding off Julian Gardner's flush draw that never completes. Varkonyi had famously predicted his own victory.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Jc",
+            "8c"
+        ],
+        "VillainSolution": [
+            "Qd",
+            "Th"
+        ],
+        "Board": [
+            "Qc",
+            "4c",
+            "4s",
+            "7h",
+            "Ts"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Qc",
+                    "4c",
+                    "4s"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "Qc",
+                    "4c",
+                    "4s",
+                    "7h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $700",
+                    "Villain raises to $2200",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5400.0,
+                "HeroStack": 8800.0,
+                "VillainStack": 8800.0,
+                "CardsShown": [
+                    "Qc",
+                    "4c",
+                    "4s",
+                    "7h",
+                    "Ts"
+                ]
+            }
+        ],
+        "heroName": "Julian Gardner",
+        "villainName": "Robert Varkonyi"
+    },
+    {
+        "id": "25",
+        "name": "John Cynn vs Tony Miles",
+        "context": "2018 WSOP Main Event Final Hand. John Cynn holds King-Jack and flops trip Kings to defeat Tony Miles' Queen-Eight. Miles turns two pair but Cynn's three-of-a-kind is dominant. Cynn wins a 12-hour heads-up battle.",
+        "youtubeLink": "",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Qd",
+            "8h"
+        ],
+        "VillainSolution": [
+            "Ks",
+            "Jd"
+        ],
+        "Board": [
+            "Kh",
+            "Kd",
+            "Qc",
+            "8s",
+            "4c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $100",
+                    "Villain raises to $350",
+                    "Hero calls $250"
+                ],
+                "PotEnd": 860.0,
+                "HeroStack": 9570.0,
+                "VillainStack": 9570.0,
+                "CardsShown": [
+                    "Kh",
+                    "Kd",
+                    "Qc"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $600",
+                    "Villain calls $600"
+                ],
+                "PotEnd": 2060.0,
+                "HeroStack": 8970.0,
+                "VillainStack": 8970.0,
+                "CardsShown": [
+                    "Kh",
+                    "Kd",
+                    "Qc",
+                    "8s"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1500",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5060.0,
+                "HeroStack": 7470.0,
+                "VillainStack": 7470.0,
+                "CardsShown": [
+                    "Kh",
+                    "Kd",
+                    "Qc",
+                    "8s",
+                    "4c"
+                ]
+            }
+        ],
+        "heroName": "Tony Miles",
+        "villainName": "John Cynn"
+    },
+    {
+        "id": "26",
+        "name": "Stu Ungar vs Mel Judah",
+        "context": "1997 WSOP Main Event. Three-time champion Stu Ungar returns after a long absence to win his final championship. Ungar flops top pair of Jacks against Mel Judah's ten-nine, and his pair holds through the river.",
+        "youtubeLink": "",
+        "heroName": "Mel Judah",
+        "villainName": "Stu Ungar",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Th",
+            "9c"
+        ],
+        "VillainSolution": [
+            "Qd",
+            "Jc"
+        ],
+        "Board": [
+            "Jh",
+            "3h",
+            "Td",
+            "2c",
+            "Kc"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Jh",
+                    "3h",
+                    "Td"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "Jh",
+                    "3h",
+                    "Td",
+                    "2c"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $800",
+                    "Hero calls $800"
+                ],
+                "PotEnd": 2600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "Jh",
+                    "3h",
+                    "Td",
+                    "2c",
+                    "Kc"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "27",
+        "name": "Stu Ungar vs John Strzemp",
+        "context": "1997 WSOP Main Event, earlier heads-up play. Stu Ungar holds Ace-Four and makes a wheel straight on the river against Strzemp's Ace-Eight. Both flop top pair but Ungar's straight is the decisive blow.",
+        "youtubeLink": "",
+        "heroName": "John Strzemp",
+        "villainName": "Stu Ungar",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "As",
+            "8c"
+        ],
+        "VillainSolution": [
+            "Ah",
+            "4c"
+        ],
+        "Board": [
+            "Ac",
+            "5d",
+            "3h",
+            "3d",
+            "2s"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Ac",
+                    "5d",
+                    "3h"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "Ac",
+                    "5d",
+                    "3h",
+                    "3d"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $700",
+                    "Villain raises to $2200",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5400.0,
+                "HeroStack": 8800.0,
+                "VillainStack": 8800.0,
+                "CardsShown": [
+                    "Ac",
+                    "5d",
+                    "3h",
+                    "3d",
+                    "2s"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "28",
+        "name": "Brad Daugherty vs Don Holt",
+        "context": "1991 WSOP Main Event Final Hand. Brad Daugherty wins with a flopped pair of Jacks against Don Holt's seven-three. Daugherty rivers two pair to seal the championship.",
+        "youtubeLink": "",
+        "heroName": "Don Holt",
+        "villainName": "Brad Daugherty",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "7h",
+            "3h"
+        ],
+        "VillainSolution": [
+            "Ks",
+            "Js"
+        ],
+        "Board": [
+            "8d",
+            "9h",
+            "Jc",
+            "5c",
+            "8s"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "8d",
+                    "9h",
+                    "Jc"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "8d",
+                    "9h",
+                    "Jc",
+                    "5c"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $800",
+                    "Hero calls $800"
+                ],
+                "PotEnd": 2600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "8d",
+                    "9h",
+                    "Jc",
+                    "5c",
+                    "8s"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "29",
+        "name": "Jim Bechtel vs Glen Cozen",
+        "context": "1993 WSOP Main Event Final Hand. Jim Bechtel wins with Jack-high in one of the most underwhelming final hands in championship history. Both players completely miss the board, and Bechtel's Jack edges out Cozen's Ten.",
+        "youtubeLink": "",
+        "heroName": "Glen Cozen",
+        "villainName": "Jim Bechtel",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "7s",
+            "4d"
+        ],
+        "VillainSolution": [
+            "Jc",
+            "6h"
+        ],
+        "Board": [
+            "Td",
+            "8s",
+            "3c",
+            "2c",
+            "5d"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $100",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 360.0,
+                "HeroStack": 9820.0,
+                "VillainStack": 9820.0,
+                "CardsShown": [
+                    "Td",
+                    "8s",
+                    "3c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $280",
+                    "Hero calls $280"
+                ],
+                "PotEnd": 920.0,
+                "HeroStack": 9540.0,
+                "VillainStack": 9540.0,
+                "CardsShown": [
+                    "Td",
+                    "8s",
+                    "3c",
+                    "2c"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $700",
+                    "Hero calls $700"
+                ],
+                "PotEnd": 2320.0,
+                "HeroStack": 8840.0,
+                "VillainStack": 8840.0,
+                "CardsShown": [
+                    "Td",
+                    "8s",
+                    "3c",
+                    "2c",
+                    "5d"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "30",
+        "name": "Russ Hamilton vs Hugh Vincent",
+        "context": "1994 WSOP Main Event Final Hand. Russ Hamilton holds 8-5 and flops top pair of Eights. He rivers two pair Eights and Fives to beat Hugh Vincent's King-Eight, which only makes a single pair.",
+        "youtubeLink": "",
+        "heroName": "Hugh Vincent",
+        "villainName": "Russ Hamilton",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ks",
+            "8h"
+        ],
+        "VillainSolution": [
+            "8c",
+            "5h"
+        ],
+        "Board": [
+            "8s",
+            "2s",
+            "6d",
+            "5d",
+            "3h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain raises to $400",
+                    "Hero calls $280"
+                ],
+                "PotEnd": 960.0,
+                "HeroStack": 9520.0,
+                "VillainStack": 9520.0,
+                "CardsShown": [
+                    "8s",
+                    "2s",
+                    "6d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $600",
+                    "Villain calls $600"
+                ],
+                "PotEnd": 2160.0,
+                "HeroStack": 8920.0,
+                "VillainStack": 8920.0,
+                "CardsShown": [
+                    "8s",
+                    "2s",
+                    "6d",
+                    "5d"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1500",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5160.0,
+                "HeroStack": 7420.0,
+                "VillainStack": 7420.0,
+                "CardsShown": [
+                    "8s",
+                    "2s",
+                    "6d",
+                    "5d",
+                    "3h"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "31",
+        "name": "Bill Smith vs TJ Cloutier",
+        "context": "1985 WSOP Main Event Final Hand. Bill Smith wins his first and only bracelet, defeating TJ Cloutier with a pair of Threes against Cloutier's Ace-high. Smith's made hand holds as Cloutier bricks the river.",
+        "youtubeLink": "",
+        "heroName": "TJ Cloutier",
+        "villainName": "Bill Smith",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ac",
+            "3d"
+        ],
+        "VillainSolution": [
+            "3s",
+            "3c"
+        ],
+        "Board": [
+            "4d",
+            "5d",
+            "Th",
+            "8h",
+            "Qc"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "4d",
+                    "5d",
+                    "Th"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "4d",
+                    "5d",
+                    "Th",
+                    "8h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $800",
+                    "Hero calls $800"
+                ],
+                "PotEnd": 2600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "4d",
+                    "5d",
+                    "Th",
+                    "8h",
+                    "Qc"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "32",
+        "name": "Johnny Chan vs Bob Ciaffone",
+        "context": "1987 WSOP Main Event. Johnny Chan wins back-to-back Main Event championships. Here he flops top pair of Kings against Ciaffone's Ace-Four, and holds through the river to take a commanding chip lead.",
+        "youtubeLink": "",
+        "heroName": "Bob Ciaffone",
+        "villainName": "Johnny Chan",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ad",
+            "4d"
+        ],
+        "VillainSolution": [
+            "Kh",
+            "Qh"
+        ],
+        "Board": [
+            "Kc",
+            "Jh",
+            "4c",
+            "2h",
+            "7s"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain raises to $400",
+                    "Hero calls $280"
+                ],
+                "PotEnd": 960.0,
+                "HeroStack": 9520.0,
+                "VillainStack": 9520.0,
+                "CardsShown": [
+                    "Kc",
+                    "Jh",
+                    "4c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $600",
+                    "Hero calls $600"
+                ],
+                "PotEnd": 2160.0,
+                "HeroStack": 8920.0,
+                "VillainStack": 8920.0,
+                "CardsShown": [
+                    "Kc",
+                    "Jh",
+                    "4c",
+                    "2h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1500",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5160.0,
+                "HeroStack": 7420.0,
+                "VillainStack": 7420.0,
+                "CardsShown": [
+                    "Kc",
+                    "Jh",
+                    "4c",
+                    "2h",
+                    "7s"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "33",
+        "name": "Johnny Chan vs Frank Henderson",
+        "context": "1987 WSOP Main Event. Johnny Chan holds Ace-Nine against Henderson's pocket Fours. Chan rivers a pair of Nines to outdraw Henderson's pair and clinch the hand on his way to the championship.",
+        "youtubeLink": "",
+        "heroName": "Frank Henderson",
+        "villainName": "Johnny Chan",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "4d",
+            "4c"
+        ],
+        "VillainSolution": [
+            "As",
+            "9c"
+        ],
+        "Board": [
+            "5c",
+            "8h",
+            "Kd",
+            "Tc",
+            "9h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "5c",
+                    "8h",
+                    "Kd"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "5c",
+                    "8h",
+                    "Kd",
+                    "Tc"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $700",
+                    "Villain raises to $2200",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5400.0,
+                "HeroStack": 8800.0,
+                "VillainStack": 8800.0,
+                "CardsShown": [
+                    "5c",
+                    "8h",
+                    "Kd",
+                    "Tc",
+                    "9h"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "34",
+        "name": "Greg Raymer vs David Williams",
+        "context": "2004 WSOP Main Event Final Hand. Greg 'Fossilman' Raymer holds pocket Eights and flops a set on a board that pairs twice more, giving him a full house by the river. Williams' Ace-Four never finds a hand.",
+        "youtubeLink": "",
+        "heroName": "David Williams",
+        "villainName": "Greg Raymer",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ah",
+            "4s"
+        ],
+        "VillainSolution": [
+            "8s",
+            "8d"
+        ],
+        "Board": [
+            "4d",
+            "2d",
+            "5s",
+            "2h",
+            "2c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $100",
+                    "Villain raises to $350",
+                    "Hero calls $250"
+                ],
+                "PotEnd": 860.0,
+                "HeroStack": 9570.0,
+                "VillainStack": 9570.0,
+                "CardsShown": [
+                    "4d",
+                    "2d",
+                    "5s"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $600",
+                    "Hero calls $600"
+                ],
+                "PotEnd": 2060.0,
+                "HeroStack": 8970.0,
+                "VillainStack": 8970.0,
+                "CardsShown": [
+                    "4d",
+                    "2d",
+                    "5s",
+                    "2h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1500",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5060.0,
+                "HeroStack": 7470.0,
+                "VillainStack": 7470.0,
+                "CardsShown": [
+                    "4d",
+                    "2d",
+                    "5s",
+                    "2h",
+                    "2c"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "35",
+        "name": "Joe Hachem vs Steve Dannenmann",
+        "context": "2005 WSOP Main Event Final Hand. Joe Hachem holds 7-3 and flops an open-ended straight draw on a 4-5-6 board. The Ace on the turn gives Dannenmann two pair but Hachem's straight is the winner.",
+        "youtubeLink": "",
+        "heroName": "Steve Dannenmann",
+        "villainName": "Joe Hachem",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ad",
+            "3c"
+        ],
+        "VillainSolution": [
+            "7c",
+            "3s"
+        ],
+        "Board": [
+            "4h",
+            "5d",
+            "6h",
+            "As",
+            "4c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "4h",
+                    "5d",
+                    "6h"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "4h",
+                    "5d",
+                    "6h",
+                    "As"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $800",
+                    "Villain raises to $2500",
+                    "Hero calls $1700"
+                ],
+                "PotEnd": 6000.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "4h",
+                    "5d",
+                    "6h",
+                    "As",
+                    "4c"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "36",
+        "name": "Jamie Gold vs Paul Wasicka",
+        "context": "2006 WSOP Main Event Final Hand. Jamie Gold wins the largest first-place prize in poker history at $12 million. Gold's Queen-Nine flops top pair and holds through the river against Wasicka's pocket Tens.",
+        "youtubeLink": "",
+        "heroName": "Paul Wasicka",
+        "villainName": "Jamie Gold",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Th",
+            "Ts"
+        ],
+        "VillainSolution": [
+            "Qs",
+            "9c"
+        ],
+        "Board": [
+            "Qc",
+            "8h",
+            "5h",
+            "Ad",
+            "4c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Qc",
+                    "8h",
+                    "5h"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "Qc",
+                    "8h",
+                    "5h",
+                    "Ad"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $800",
+                    "Villain calls $800"
+                ],
+                "PotEnd": 2600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "Qc",
+                    "8h",
+                    "5h",
+                    "Ad",
+                    "4c"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "37",
+        "name": "Jerry Yang vs Tuan Lam",
+        "context": "2007 WSOP Main Event Final Hand. Jerry Yang's pocket Eights catch running cards to make a 5-6-7-8-9 straight against Tuan Lam's Ace-Queen, which had flopped top pair. Yang wins against the odds.",
+        "youtubeLink": "",
+        "heroName": "Tuan Lam",
+        "villainName": "Jerry Yang",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ad",
+            "Qd"
+        ],
+        "VillainSolution": [
+            "8d",
+            "8c"
+        ],
+        "Board": [
+            "5s",
+            "Qc",
+            "9c",
+            "7d",
+            "6h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "5s",
+                    "Qc",
+                    "9c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "5s",
+                    "Qc",
+                    "9c",
+                    "7d"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $800",
+                    "Villain raises to $2500",
+                    "Hero calls $1700"
+                ],
+                "PotEnd": 6000.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "5s",
+                    "Qc",
+                    "9c",
+                    "7d",
+                    "6h"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "38",
+        "name": "Peter Eastgate vs Ivan Demidov",
+        "context": "2008 WSOP Main Event Final Hand. Peter Eastgate becomes the youngest Main Event champion. His Ace-Five makes a wheel straight (A-2-3-4-5) on the river against Demidov's four-deuce, which had turned two pair.",
+        "youtubeLink": "",
+        "heroName": "Ivan Demidov",
+        "villainName": "Peter Eastgate",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "4c",
+            "2d"
+        ],
+        "VillainSolution": [
+            "As",
+            "5d"
+        ],
+        "Board": [
+            "Kc",
+            "3d",
+            "2s",
+            "4h",
+            "7c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Kc",
+                    "3d",
+                    "2s"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "Kc",
+                    "3d",
+                    "2s",
+                    "4h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $800",
+                    "Villain raises to $2500",
+                    "Hero calls $1700"
+                ],
+                "PotEnd": 6000.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "Kc",
+                    "3d",
+                    "2s",
+                    "4h",
+                    "7c"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "39",
+        "name": "Joe Cada vs Darvin Moon",
+        "context": "2009 WSOP Main Event Final Hand. Joe Cada, the youngest Main Event champion, holds pocket Nines against Darvin Moon's King-Queen. Cada rivers a set of Nines to win when Moon's overcards never pair.",
+        "youtubeLink": "",
+        "heroName": "Darvin Moon",
+        "villainName": "Joe Cada",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Kc",
+            "Qc"
+        ],
+        "VillainSolution": [
+            "9s",
+            "9c"
+        ],
+        "Board": [
+            "Jc",
+            "4h",
+            "2d",
+            "3s",
+            "9d"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $120",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 240.0,
+                "HeroStack": 9880.0,
+                "VillainStack": 9880.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $180",
+                    "Hero calls $180"
+                ],
+                "PotEnd": 600.0,
+                "HeroStack": 9700.0,
+                "VillainStack": 9700.0,
+                "CardsShown": [
+                    "Jc",
+                    "4h",
+                    "2d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $450",
+                    "Hero calls $450"
+                ],
+                "PotEnd": 1500.0,
+                "HeroStack": 9250.0,
+                "VillainStack": 9250.0,
+                "CardsShown": [
+                    "Jc",
+                    "4h",
+                    "2d",
+                    "3s"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1200",
+                    "Hero calls $1200"
+                ],
+                "PotEnd": 3900.0,
+                "HeroStack": 8050.0,
+                "VillainStack": 8050.0,
+                "CardsShown": [
+                    "Jc",
+                    "4h",
+                    "2d",
+                    "3s",
+                    "9d"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "40",
+        "name": "Jonathan Duhamel vs John Racener",
+        "context": "2010 WSOP Main Event Final Hand. Jonathan Duhamel holds Ace-Jack and flops a pair of Jacks, then rivers two pair to beat John Racener's King-Eight, which never connects with the board.",
+        "youtubeLink": "",
+        "heroName": "John Racener",
+        "villainName": "Jonathan Duhamel",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Kd",
+            "8d"
+        ],
+        "VillainSolution": [
+            "As",
+            "Jh"
+        ],
+        "Board": [
+            "7c",
+            "Jd",
+            "3s",
+            "Qh",
+            "Ac"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "7c",
+                    "Jd",
+                    "3s"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "7c",
+                    "Jd",
+                    "3s",
+                    "Qh"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $800",
+                    "Hero calls $800"
+                ],
+                "PotEnd": 2600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "7c",
+                    "Jd",
+                    "3s",
+                    "Qh",
+                    "Ac"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "41",
+        "name": "Pius Heinz vs Martin Staszko",
+        "context": "2011 WSOP Main Event Final Hand. Pius Heinz holds Ace-King against Staszko's Ten-Seven. Both players completely miss the board and the hand is decided by Heinz's Ace-high over Staszko's Ten-high in a fitting anticlimactic end.",
+        "youtubeLink": "",
+        "heroName": "Martin Staszko",
+        "villainName": "Pius Heinz",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Tc",
+            "7c"
+        ],
+        "VillainSolution": [
+            "As",
+            "Kc"
+        ],
+        "Board": [
+            "9s",
+            "5c",
+            "2d",
+            "Jh",
+            "4d"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $100",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 360.0,
+                "HeroStack": 9820.0,
+                "VillainStack": 9820.0,
+                "CardsShown": [
+                    "9s",
+                    "5c",
+                    "2d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $280",
+                    "Hero calls $280"
+                ],
+                "PotEnd": 920.0,
+                "HeroStack": 9540.0,
+                "VillainStack": 9540.0,
+                "CardsShown": [
+                    "9s",
+                    "5c",
+                    "2d",
+                    "Jh"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $700",
+                    "Hero calls $700"
+                ],
+                "PotEnd": 2320.0,
+                "HeroStack": 8840.0,
+                "VillainStack": 8840.0,
+                "CardsShown": [
+                    "9s",
+                    "5c",
+                    "2d",
+                    "Jh",
+                    "4d"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "42",
+        "name": "Greg Merson vs Jesse Sylvia",
+        "context": "2012 WSOP Main Event Final Hand. Greg Merson holds King-Five and wins with a pair of Sixes from the board and a King kicker, edging out Jesse Sylvia's Queen kicker in a battle decided by a single card.",
+        "youtubeLink": "",
+        "heroName": "Jesse Sylvia",
+        "villainName": "Greg Merson",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Qs",
+            "Js"
+        ],
+        "VillainSolution": [
+            "Kd",
+            "5d"
+        ],
+        "Board": [
+            "6c",
+            "3h",
+            "9d",
+            "6s",
+            "7c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $100",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 360.0,
+                "HeroStack": 9820.0,
+                "VillainStack": 9820.0,
+                "CardsShown": [
+                    "6c",
+                    "3h",
+                    "9d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $280",
+                    "Hero calls $280"
+                ],
+                "PotEnd": 920.0,
+                "HeroStack": 9540.0,
+                "VillainStack": 9540.0,
+                "CardsShown": [
+                    "6c",
+                    "3h",
+                    "9d",
+                    "6s"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $700",
+                    "Hero calls $700"
+                ],
+                "PotEnd": 2320.0,
+                "HeroStack": 8840.0,
+                "VillainStack": 8840.0,
+                "CardsShown": [
+                    "6c",
+                    "3h",
+                    "9d",
+                    "6s",
+                    "7c"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "43",
+        "name": "Ryan Riess vs Jay Farber",
+        "context": "2013 WSOP Main Event Final Hand. Ryan Riess holds Ace-King and wins with a pair of Fours from the board plus an Ace kicker against Jay Farber's Queen-Five. Riess's commanding chip lead proves too much.",
+        "youtubeLink": "",
+        "heroName": "Jay Farber",
+        "villainName": "Ryan Riess",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Qs",
+            "5s"
+        ],
+        "VillainSolution": [
+            "Ah",
+            "Kh"
+        ],
+        "Board": [
+            "Jd",
+            "Td",
+            "4c",
+            "3c",
+            "4d"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $120",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 240.0,
+                "HeroStack": 9880.0,
+                "VillainStack": 9880.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $180",
+                    "Hero calls $180"
+                ],
+                "PotEnd": 600.0,
+                "HeroStack": 9700.0,
+                "VillainStack": 9700.0,
+                "CardsShown": [
+                    "Jd",
+                    "Td",
+                    "4c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $450",
+                    "Hero calls $450"
+                ],
+                "PotEnd": 1500.0,
+                "HeroStack": 9250.0,
+                "VillainStack": 9250.0,
+                "CardsShown": [
+                    "Jd",
+                    "Td",
+                    "4c",
+                    "3c"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1200",
+                    "Hero calls $1200"
+                ],
+                "PotEnd": 3900.0,
+                "HeroStack": 8050.0,
+                "VillainStack": 8050.0,
+                "CardsShown": [
+                    "Jd",
+                    "Td",
+                    "4c",
+                    "3c",
+                    "4d"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "44",
+        "name": "Martin Jacobson vs Felix Stephensen",
+        "context": "2014 WSOP Main Event Final Hand. Martin Jacobson flops a set of Tens to clinch his championship against Felix Stephensen's Ace-Nine. Stephensen turns two pair but Jacobson's trips dominate throughout.",
+        "youtubeLink": "",
+        "heroName": "Felix Stephensen",
+        "villainName": "Martin Jacobson",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ah",
+            "9h"
+        ],
+        "VillainSolution": [
+            "Td",
+            "Ts"
+        ],
+        "Board": [
+            "Tc",
+            "9c",
+            "3s",
+            "Kd",
+            "4c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain raises to $400",
+                    "Hero calls $280"
+                ],
+                "PotEnd": 960.0,
+                "HeroStack": 9520.0,
+                "VillainStack": 9520.0,
+                "CardsShown": [
+                    "Tc",
+                    "9c",
+                    "3s"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $600",
+                    "Villain calls $600"
+                ],
+                "PotEnd": 2160.0,
+                "HeroStack": 8920.0,
+                "VillainStack": 8920.0,
+                "CardsShown": [
+                    "Tc",
+                    "9c",
+                    "3s",
+                    "Kd"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $1500",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5160.0,
+                "HeroStack": 7420.0,
+                "VillainStack": 7420.0,
+                "CardsShown": [
+                    "Tc",
+                    "9c",
+                    "3s",
+                    "Kd",
+                    "4c"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "45",
+        "name": "Joe McKeehen vs Joshua Beckley",
+        "context": "2015 WSOP Main Event Final Hand. Joe McKeehen holds Ace-Ten and flops top pair, then turns two pair Aces and Tens to completely dominate Beckley's pocket Fours. McKeehen's chip lead was commanding.",
+        "youtubeLink": "",
+        "heroName": "Joshua Beckley",
+        "villainName": "Joe McKeehen",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "4d",
+            "4c"
+        ],
+        "VillainSolution": [
+            "Ah",
+            "Td"
+        ],
+        "Board": [
+            "Tc",
+            "3d",
+            "5s",
+            "As",
+            "2c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Tc",
+                    "3d",
+                    "5s"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "Tc",
+                    "3d",
+                    "5s",
+                    "As"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $800",
+                    "Hero calls $800"
+                ],
+                "PotEnd": 2600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "Tc",
+                    "3d",
+                    "5s",
+                    "As",
+                    "2c"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "46",
+        "name": "Qui Nguyen vs Gordon Vayo",
+        "context": "2016 WSOP Main Event Final Hand. Qui Nguyen holds King-Ten and flops top pair of Kings, holding off Gordon Vayo's Jack-Ten which never improves. Nguyen's aggressive style powered him to the championship.",
+        "youtubeLink": "",
+        "heroName": "Gordon Vayo",
+        "villainName": "Qui Nguyen",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Js",
+            "Ts"
+        ],
+        "VillainSolution": [
+            "Kc",
+            "Tc"
+        ],
+        "Board": [
+            "Kd",
+            "9c",
+            "7d",
+            "2s",
+            "3h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Kd",
+                    "9c",
+                    "7d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $300",
+                    "Hero calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "Kd",
+                    "9c",
+                    "7d",
+                    "2s"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $800",
+                    "Hero calls $800"
+                ],
+                "PotEnd": 2600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "Kd",
+                    "9c",
+                    "7d",
+                    "2s",
+                    "3h"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "47",
+        "name": "Scott Blumstein vs Dan Ott",
+        "context": "2017 WSOP Main Event Final Hand. Scott Blumstein rivers a pair of Deuces to defeat Dan Ott's Ace-Eight. Ott's ace-high leads to the river but Blumstein's deuce spikes to give him the bracelet in a dramatic finish.",
+        "youtubeLink": "",
+        "heroName": "Dan Ott",
+        "villainName": "Scott Blumstein",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ad",
+            "8d"
+        ],
+        "VillainSolution": [
+            "Ah",
+            "2d"
+        ],
+        "Board": [
+            "Js",
+            "6s",
+            "5h",
+            "7h",
+            "2h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $100",
+                    "Hero calls $100"
+                ],
+                "PotEnd": 360.0,
+                "HeroStack": 9820.0,
+                "VillainStack": 9820.0,
+                "CardsShown": [
+                    "Js",
+                    "6s",
+                    "5h"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $280",
+                    "Villain calls $280"
+                ],
+                "PotEnd": 920.0,
+                "HeroStack": 9540.0,
+                "VillainStack": 9540.0,
+                "CardsShown": [
+                    "Js",
+                    "6s",
+                    "5h",
+                    "7h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $700",
+                    "Villain raises to $2200",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5320.0,
+                "HeroStack": 8840.0,
+                "VillainStack": 8840.0,
+                "CardsShown": [
+                    "Js",
+                    "6s",
+                    "5h",
+                    "7h",
+                    "2h"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "48",
+        "name": "Doyle Brunson vs Jesse Alto",
+        "context": "1976 WSOP Main Event Final Hand. Doyle Brunson holds 10-2 and falls behind badly \u2014 Alto flops two pair with Ace-Jack and leads on every street. But Brunson spikes runner-runner tens on the turn and river to make Tens full of Twos, winning his first championship bracelet.",
+        "youtubeLink": "",
+        "heroName": "Jesse Alto",
+        "villainName": "Doyle Brunson",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "As",
+            "Jd"
+        ],
+        "VillainSolution": [
+            "Ts",
+            "2s"
+        ],
+        "Board": [
+            "Ah",
+            "Js",
+            "Th",
+            "2d",
+            "Tc"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $150",
+                    "Villain calls $150"
+                ],
+                "PotEnd": 460.0,
+                "HeroStack": 9770.0,
+                "VillainStack": 9770.0,
+                "CardsShown": [
+                    "Ah",
+                    "Js",
+                    "Th"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $400",
+                    "Villain calls $400"
+                ],
+                "PotEnd": 1260.0,
+                "HeroStack": 9370.0,
+                "VillainStack": 9370.0,
+                "CardsShown": [
+                    "Ah",
+                    "Js",
+                    "Th",
+                    "2d"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $1000",
+                    "Villain raises to $3500",
+                    "Hero calls $2500"
+                ],
+                "PotEnd": 8260.0,
+                "HeroStack": 8370.0,
+                "VillainStack": 8370.0,
+                "CardsShown": [
+                    "Ah",
+                    "Js",
+                    "Th",
+                    "2d",
+                    "Tc"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "49",
+        "name": "Doyle Brunson vs Gary Berland",
+        "context": "1977 WSOP Main Event Final Hand. Impossibly, Doyle Brunson holds 10-2 again and repeats his miracle from the prior year. Berland flops two pair with 8-5 but Brunson hits runner-runner Tens on turn and river to make another Tens full of Twos \u2014 back-to-back champions with the same hand.",
+        "youtubeLink": "",
+        "heroName": "Gary Berland",
+        "villainName": "Doyle Brunson",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "8h",
+            "5c"
+        ],
+        "VillainSolution": [
+            "Ts",
+            "2h"
+        ],
+        "Board": [
+            "Tc",
+            "8d",
+            "5h",
+            "2d",
+            "Td"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain checks"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": [
+                    "Tc",
+                    "8d",
+                    "5h"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain raises to $400",
+                    "Hero calls $280"
+                ],
+                "PotEnd": 960.0,
+                "HeroStack": 9520.0,
+                "VillainStack": 9520.0,
+                "CardsShown": [
+                    "Tc",
+                    "8d",
+                    "5h",
+                    "2d"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $700",
+                    "Villain raises to $2500",
+                    "Hero calls $1800"
+                ],
+                "PotEnd": 5960.0,
+                "HeroStack": 8820.0,
+                "VillainStack": 8820.0,
+                "CardsShown": [
+                    "Tc",
+                    "8d",
+                    "5h",
+                    "2d",
+                    "Td"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "50",
+        "name": "Chris Moneymaker vs Sam Farha",
+        "context": "2003 WSOP Main Event Final Hand. The hand that started the poker boom. Amateur Chris Moneymaker holds 5-4 and flops two pair against Sam Farha's Jack-Ten. Farha takes the lead with top pair, but Moneymaker rivers a full house \u2014 Fives full of Fours \u2014 to become the unlikely world champion.",
+        "youtubeLink": "https://www.youtube.com/shorts/EjfKC3AhAkc",
+        "heroName": "Sam Farha",
+        "villainName": "Chris Moneymaker",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Jh",
+            "Td"
+        ],
+        "VillainSolution": [
+            "5d",
+            "4c"
+        ],
+        "Board": [
+            "5s",
+            "4h",
+            "Jc",
+            "8d",
+            "5h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "5s",
+                    "4h",
+                    "Jc"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1000.0,
+                "HeroStack": 9500.0,
+                "VillainStack": 9500.0,
+                "CardsShown": [
+                    "5s",
+                    "4h",
+                    "Jc",
+                    "8d"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $800",
+                    "Hero calls $800"
+                ],
+                "PotEnd": 2600.0,
+                "HeroStack": 8700.0,
+                "VillainStack": 8700.0,
+                "CardsShown": [
+                    "5s",
+                    "4h",
+                    "Jc",
+                    "8d",
+                    "5h"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "51",
+        "name": "Hossein Ensan vs Dario Sammartino",
+        "context": "2019 WSOP Main Event Final Hand, the 50th anniversary WSOP. Hossein Ensan holds pocket Kings and stays in control throughout. Sammartino check-raises all-in with a spade flush draw on the turn, but the draw bricks on the river and Ensan wins his $10 million prize.",
+        "youtubeLink": "",
+        "heroName": "Dario Sammartino",
+        "villainName": "Hossein Ensan",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "8s",
+            "4s"
+        ],
+        "VillainSolution": [
+            "Kh",
+            "Kc"
+        ],
+        "Board": [
+            "Ts",
+            "6s",
+            "2d",
+            "9c",
+            "Qc"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Ts",
+                    "6s",
+                    "2d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero check-raises to $1500",
+                    "Villain calls $1500"
+                ],
+                "PotEnd": 3400.0,
+                "HeroStack": 8300.0,
+                "VillainStack": 8300.0,
+                "CardsShown": [
+                    "Ts",
+                    "6s",
+                    "2d",
+                    "9c"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $2000",
+                    "Hero calls $2000"
+                ],
+                "PotEnd": 7400.0,
+                "HeroStack": 6300.0,
+                "VillainStack": 6300.0,
+                "CardsShown": [
+                    "Ts",
+                    "6s",
+                    "2d",
+                    "9c",
+                    "Qc"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "52",
+        "name": "Koray Aldemir vs George Holmes",
+        "context": "2021 WSOP Main Event Final Hand. Koray Aldemir flops top two pair with Ten-Seven and slow plays it to the river. George Holmes, with top pair Kings, moves all-in on the river and Aldemir snap-calls to win the $8 million first prize.",
+        "youtubeLink": "",
+        "heroName": "George Holmes",
+        "villainName": "Koray Aldemir",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Kc",
+            "Qs"
+        ],
+        "VillainSolution": [
+            "Td",
+            "7d"
+        ],
+        "Board": [
+            "Th",
+            "7s",
+            "2h",
+            "Ks",
+            "9c"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain checks"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": [
+                    "Th",
+                    "7s",
+                    "2h"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $120",
+                    "Villain calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Th",
+                    "7s",
+                    "2h",
+                    "Ks"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $1500",
+                    "Villain raises to $5000",
+                    "Hero calls $3500"
+                ],
+                "PotEnd": 10400.0,
+                "HeroStack": 8300.0,
+                "VillainStack": 8300.0,
+                "CardsShown": [
+                    "Th",
+                    "7s",
+                    "2h",
+                    "Ks",
+                    "9c"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "53",
+        "name": "Espen Jorstad vs Adrian Attenborough",
+        "context": "2022 WSOP Main Event Final Hand. Espen Jorstad limps with Queen-Deuce and flops trip Twos on a 4-2-2 board. He traps Attenborough's pair of Fours all the way to the river, where a Queen gives Jorstad a full house. Attenborough tanks for nearly 10 minutes before making the losing call.",
+        "youtubeLink": "",
+        "heroName": "Adrian Attenborough",
+        "villainName": "Espen Jorstad",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Jc",
+            "4s"
+        ],
+        "VillainSolution": [
+            "Qd",
+            "2s"
+        ],
+        "Board": [
+            "4h",
+            "2h",
+            "2c",
+            "8d",
+            "Qc"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) limps $20",
+                    "Hero checks"
+                ],
+                "PotEnd": 40.0,
+                "HeroStack": 9980.0,
+                "VillainStack": 9980.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $30",
+                    "Hero check-raises to $200",
+                    "Villain calls $170"
+                ],
+                "PotEnd": 440.0,
+                "HeroStack": 9780.0,
+                "VillainStack": 9780.0,
+                "CardsShown": [
+                    "4h",
+                    "2h",
+                    "2c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $300",
+                    "Villain calls $300"
+                ],
+                "PotEnd": 1040.0,
+                "HeroStack": 9480.0,
+                "VillainStack": 9480.0,
+                "CardsShown": [
+                    "4h",
+                    "2h",
+                    "2c",
+                    "8d"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $1500",
+                    "Villain raises to $5000",
+                    "Hero calls $3500"
+                ],
+                "PotEnd": 11040.0,
+                "HeroStack": 7980.0,
+                "VillainStack": 7980.0,
+                "CardsShown": [
+                    "4h",
+                    "2h",
+                    "2c",
+                    "8d",
+                    "Qc"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "54",
+        "name": "Chanracy Khun vs Doug Polk",
+        "context": "2023 WSOP $25,000 Heads-Up Championship Final. Chanracy Khun defeats two-time champion Doug Polk to claim his first WSOP gold bracelet. Khun calls down with Ten-Four and rivers a flush to beat Polk's Ace-Ten, which was ahead the entire way until the final card.",
+        "youtubeLink": "",
+        "heroName": "Doug Polk",
+        "villainName": "Chanracy Khun",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Ac",
+            "Td"
+        ],
+        "VillainSolution": [
+            "Th",
+            "4h"
+        ],
+        "Board": [
+            "Qh",
+            "6d",
+            "Ks",
+            "8h",
+            "3h"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero bets $100",
+                    "Villain calls $100"
+                ],
+                "PotEnd": 360.0,
+                "HeroStack": 9820.0,
+                "VillainStack": 9820.0,
+                "CardsShown": [
+                    "Qh",
+                    "6d",
+                    "Ks"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $280",
+                    "Villain calls $280"
+                ],
+                "PotEnd": 920.0,
+                "HeroStack": 9540.0,
+                "VillainStack": 9540.0,
+                "CardsShown": [
+                    "Qh",
+                    "6d",
+                    "Ks",
+                    "8h"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero bets $700",
+                    "Villain raises to $2200",
+                    "Hero calls $1500"
+                ],
+                "PotEnd": 5320.0,
+                "HeroStack": 8840.0,
+                "VillainStack": 8840.0,
+                "CardsShown": [
+                    "Qh",
+                    "6d",
+                    "Ks",
+                    "8h",
+                    "3h"
+                ]
+            }
+        ]
+    },
+    {
+        "id": "55",
+        "name": "Daniel Weinman vs Steven Jones",
+        "context": "2023 WSOP Main Event Final Hand. Daniel Weinman holds King-Jack and flops top pair with the superior kicker over Steven Jones's Jack-Eight. Jones shoves all-in with top pair on the turn but Weinman's King kicker dominates to win the record $12.1 million prize.",
+        "youtubeLink": "",
+        "heroName": "Steven Jones",
+        "villainName": "Daniel Weinman",
+        "HeroPosition": "BB",
+        "heroStartingStackBBs": 10000.0,
+        "villainStartingStackBBs": 10000.0,
+        "HeroHand": [
+            "Jc",
+            "8d"
+        ],
+        "VillainSolution": [
+            "Kc",
+            "Jd"
+        ],
+        "Board": [
+            "Js",
+            "5s",
+            "2d",
+            "4c",
+            "Ah"
+        ],
+        "StartingPot": 30.0,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Villain (SB) raises to $80",
+                    "Hero calls $60"
+                ],
+                "PotEnd": 160.0,
+                "HeroStack": 9920.0,
+                "VillainStack": 9920.0,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $120",
+                    "Hero calls $120"
+                ],
+                "PotEnd": 400.0,
+                "HeroStack": 9800.0,
+                "VillainStack": 9800.0,
+                "CardsShown": [
+                    "Js",
+                    "5s",
+                    "2d"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Hero bets $600",
+                    "Villain raises to $2500",
+                    "Hero calls $1900"
+                ],
+                "PotEnd": 5400.0,
+                "HeroStack": 9200.0,
+                "VillainStack": 9200.0,
+                "CardsShown": [
+                    "Js",
+                    "5s",
+                    "2d",
+                    "4c"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Hero checks",
+                    "Villain bets $3000",
+                    "Hero calls $3000"
+                ],
+                "PotEnd": 11400.0,
+                "HeroStack": 6200.0,
+                "VillainStack": 6200.0,
+                "CardsShown": [
+                    "Js",
+                    "5s",
+                    "2d",
+                    "4c",
+                    "Ah"
+                ]
             }
         ]
     }

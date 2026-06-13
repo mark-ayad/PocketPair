@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PocketPair - Daily Poker Hand Deduction</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
@@ -56,7 +56,10 @@
                 <div id="villain-area" class="player-area">
                     <span id="villain-label" class="player-label">Villain</span>
                     <div class="player-hand-area">
-                        <span id="villain-stack" class="stack-size"></span>
+                        <div class="stack-info">
+                            <span id="villain-stack" class="stack-size"></span>
+                            <div id="villain-stack-chips"></div>
+                        </div>
                         <div id="villain-cards">
                             <span class="card"></span>
                             <span class="card"></span>
@@ -67,16 +70,26 @@
                     </div>
                 </div>
 
+                <div id="villain-bet-zone" class="bet-zone"></div>
+
                 <div id="board-area">
                     <div id="board-cards">
                     </div>
-                    <span id="pot-size">Pot: $0.00</span>
+                    <div id="pot-area">
+                        <div id="pot-chips"></div>
+                        <span id="pot-size">Pot: $0.00</span>
+                    </div>
                 </div>
+
+                <div id="hero-bet-zone" class="bet-zone"></div>
 
                 <div id="hero-area" class="player-area">
                     <span id="hero-label" class="player-label">Hero</span>
                     <div class="player-hand-area">
-                        <span id="hero-stack" class="stack-size"></span>
+                        <div class="stack-info">
+                            <span id="hero-stack" class="stack-size"></span>
+                            <div id="hero-stack-chips"></div>
+                        </div>
                         <div id="hero-cards">
                         </div>
                         <div class="button-spacer">
@@ -143,7 +156,9 @@
                         <button id="next-street-btn" class="btn" disabled>Show Next Street</button>
                     </div>
                 </div>
-                <div id="card-grid">
+                <div id="card-grid-wrapper">
+                    <div id="card-grid">
+                    </div>
                 </div>
             </section>
 
@@ -151,6 +166,7 @@
     </div>
 
     <script src="js/gameLogic.js"></script>
+    <script src="js/chips.js"></script>
     <script src="js/script.js"></script>
 
     <div id="modal-overlay" class="modal-overlay">

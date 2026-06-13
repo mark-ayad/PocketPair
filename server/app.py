@@ -54,8 +54,14 @@ def select_daily_puzzle():
     # 2. Check if the puzzle for today has already been selected (for server restarts)
     for entry in history:
         if entry.get("date") == today_id:
-            # Found today's puzzle, return it from the library
-            return next((p for p in range_library if p['id'] == entry['puzzle_id']), None)
+            # Found today's puzzle — return it only if it still exists in the library
+            puzzle = next((p for p in range_library if p['id'] == entry['puzzle_id']), None)
+            if puzzle:
+                return puzzle
+            # Puzzle was deleted from library — remove stale entry and pick a new one
+            history.remove(entry)
+            save_json(HISTORY_PATH, history)
+            break
     
     # 3. Get the list of IDs already used
     used_ids = [entry["puzzle_id"] for entry in history]
@@ -95,13 +101,22 @@ def get_daily_puzzle():
         
     return jsonify(puzzle_data)
 
-# Optional: Serve the static files (index.html, CSS, JS) from Flask
+ROOT_DIR = os.path.abspath(os.path.join(app.root_path, '..'))
+
 @app.route('/')
 def serve_index():
-    return send_from_directory(os.path.abspath(os.path.join(app.root_path, '..')), 'index.html')
+    return send_from_directory(ROOT_DIR, 'index.html')
+
+@app.route('/js/<path:filename>')
+def serve_js(filename):
+    return send_from_directory(os.path.join(ROOT_DIR, 'js'), filename)
+
+@app.route('/styles/<path:filename>')
+def serve_styles(filename):
+    return send_from_directory(os.path.join(ROOT_DIR, 'styles'), filename)
 
 
 if __name__ == '__main__':
     # Running in debug mode for development
     # When deployed, the port might be different (e.g., 80 or 8080)
-    app.run(debug=True, port=5000)
+    app.run(debug=False, port=5000)

@@ -44,7 +44,7 @@ function normalizeRank(rank) {
  * @returns {Array<object>} An array of feedback objects, e.g.,
  * [{card: "Td", feedback: "GREEN"}, {card: "Jd", feedback: "GREEN"}]
  */
-function generateFeedback(guess, solution, knownYellowRanks) {
+function generateFeedback(guess, solution) {
     // Initialize feedback array with original guess cards
     const feedback = [
         { card: guess[0], feedback: 'GREY' },
@@ -94,17 +94,14 @@ function generateFeedback(guess, solution, knownYellowRanks) {
         const rankMatchIndex = solutionRanksAvailable.indexOf(guessRank);
 
         if (rankMatchIndex !== -1) {
-             // If this rank is *already known* yellow, this specific guess must be GREY
-             if (knownYellowRanks.has(guessRank)) {
-                 feedback[i].feedback = 'GREY';
-             } else {
-                // Otherwise, it's a valid YELLOW
-                feedback[i].feedback = 'YELLOW';
-                // Consume the rank so it cannot be matched YELLOW again in this guess
-                solutionRanksAvailable.splice(rankMatchIndex, 1);
-            }
+            // Rank is in hand but wrong suit — YELLOW.
+            // solutionRanksAvailable consumption handles same-guess duplicates:
+            // if villain has one J and you guess J♣ J♠, J♣ consumes the slot,
+            // leaving J♠ with no match → correctly GREY, no extra logic needed.
+            feedback[i].feedback = 'YELLOW';
+            solutionRanksAvailable.splice(rankMatchIndex, 1);
         }
-        // If not GREEN or YELLOW (or forced GREY), it remains GREY (default)
+        // If not GREEN or YELLOW, it remains GREY (default)
     }
 
     // Return the feedback using the original guess card strings
