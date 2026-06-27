@@ -53,11 +53,12 @@ function makeChange(amount) {
     return out;
 }
 
-// Build one single-denomination stack (chips overlapping vertically).
+// Build one single-color stack (chips overlapping vertically). Tighter overlap
+// + a higher cap lets the stack height read as the chip "weight".
 function buildStack(d, count, size) {
     const dim  = size === 'sm' ? 22 : 30;
-    const step = size === 'sm' ? 5  : 6;
-    const n = Math.min(count, 6);
+    const step = 4;
+    const n = Math.min(count, 8);
 
     const stack = document.createElement('div');
     stack.className = 'chip-stack';
@@ -103,38 +104,44 @@ function renderChips(el, amount, { size = 'lg', showLabel = true, maxDenoms = In
     el.appendChild(wrap);
 }
 
-// Back-compat wrappers used by script.js
-function renderChipPile(el, amount, showLabel = true) {
-    renderChips(el, amount, { size: 'lg', showLabel });
+// One tasteful chip color per context — the exact value lives in the bubble,
+// so chips just convey "whose chips" + relative weight (stack height).
+const CHIP_COLORS = {
+    pot:   { face: '#d99a2b', edge: '#9c6b14', light: '#ffce73' }, // amber/gold
+    bet:   { face: '#3f7fd0', edge: '#244f8a', light: '#7db0f0' }, // blue
+    stack: { face: '#3a9182', edge: '#205a4f', light: '#74c4b4' }, // teal
+};
+
+// How many discs to show for an amount — grows smoothly (log) with big-blind
+// depth so a bigger pot/bet reads as a taller stack without exploding.
+function _cleanStackCount(amount) {
+    const bb = Math.max(1, amount / _bigBlind);
+    return Math.max(2, Math.min(8, Math.round(1 + 2.5 * Math.log10(bb + 1))));
 }
 
-// Pick a single chip color for a player stack based on its depth in big blinds,
-// so the tier is comparable across games of any stakes.
-function _stackTier(bb) {
-    if (bb < 25)   return { face: '#2e7d32', edge: '#1b5e20', light: '#66bb6a' }; // green
-    if (bb < 75)   return { face: '#37474f', edge: '#0d1b22', light: '#78909c' }; // charcoal
-    if (bb < 150)  return { face: '#8e24aa', edge: '#4a148c', light: '#ce93d8' }; // purple
-    if (bb < 300)  return { face: '#f9a825', edge: '#e65100', light: '#ffd54f' }; // gold
-    return { face: '#ef6c00', edge: '#bf360c', light: '#ffa726' };                // orange
-}
-
-// Player stack: one tidy vertical pile in a single tier color. Taller = deeper
-// stack (in BB). The exact amount still shows in the "Stack: $X" text above it.
-function renderStackChip(el, amount) {
+// A single neat single-color stack whose HEIGHT reflects the amount.
+function renderCleanStack(el, amount, colorKey = 'pot', size = 'lg') {
     el.innerHTML = '';
     if (!amount || amount <= 0) return;
 
-    const bb = amount / _bigBlind;
-    const tier = _stackTier(bb);
-    const count = Math.max(2, Math.min(6, Math.round(1 + bb / 50)));
-
+    const color = CHIP_COLORS[colorKey] || CHIP_COLORS.pot;
     const wrap = document.createElement('div');
     wrap.className = 'chip-wrap';
     const pile = document.createElement('div');
     pile.className = 'chip-pile';
-    pile.appendChild(buildStack(tier, count, 'sm'));
+    pile.appendChild(buildStack(color, _cleanStackCount(amount), size));
     wrap.appendChild(pile);
     el.appendChild(wrap);
+}
+
+// Pot uses the warm/gold clean stack.
+function renderChipPile(el, amount) {
+    renderCleanStack(el, amount, 'pot', 'lg');
+}
+
+// Player stack: a single teal clean stack; amount shows in the pill beside it.
+function renderStackChip(el, amount) {
+    renderCleanStack(el, amount, 'stack', 'sm');
 }
 
 /**
@@ -206,7 +213,15 @@ function _blindInfo(streetData) {
     };
 }
 
-// Render a posted-blind badge (SB/BB) + its chips into a bet zone.
+// A small money pill showing the committed amount next to a zone's chips.
+function _amountPill(amount) {
+    const pill = document.createElement('span');
+    pill.className = 'bet-amount';
+    pill.textContent = formatCurrency(amount);
+    return pill;
+}
+
+// Render a posted-blind badge (SB/BB) + its chips + amount into a bet zone.
 function _renderBlindZone(zone, label, total) {
     zone.innerHTML = '';
     const badge = document.createElement('div');
@@ -215,15 +230,64 @@ function _renderBlindZone(zone, label, total) {
     zone.appendChild(badge);
     if (total > 0) {
         const holder = document.createElement('div');
-        renderChipPile(holder, total, false);
+        renderCleanStack(holder, total, 'bet', 'lg');
         if (holder.firstChild) zone.appendChild(holder.firstChild);
+        zone.appendChild(_amountPill(total));
     }
 }
 
-// Clear a bet zone's chips/badge and any lingering animation classes.
+// Show/hide the Replay button — it should only appear once a street's action
+// has finished animating.
+function _setReplayVisible(visible) {
+    const btn = document.getElementById('replay-animation-btn');
+    if (btn) btn.classList.toggle('replay-ready', visible);
+}
+
+// Update the pot bubble to a given amount; hide it entirely when the pot is
+// empty (no point showing "$0" before any chips arrive).
+function setPotDisplay(amount) {
+    const el = document.getElementById('pot-size');
+    if (!el) return;
+    if (!amount || amount <= 0) {
+        el.style.visibility = 'hidden';
+    } else {
+        el.style.visibility = 'visible';
+        el.textContent = formatCurrency(amount);
+    }
+}
+
+// Clear a bet zone's chips/badge and any lingering animation classes/styles.
 function _clearZone(zone) {
     zone.innerHTML = '';
-    zone.classList.remove('chip-slide-down', 'chip-slide-up', 'chip-sweep-up', 'chip-sweep-down');
+    zone.classList.remove('chip-slide-down', 'chip-slide-up');
+    zone.style.transition = '';
+    zone.style.transform = '';
+    zone.style.opacity = '';
+}
+
+// Slide a bet zone diagonally into the pot, wherever the pot currently sits
+// (it may be left of / below the board). Measured at runtime so it's correct
+// across desktop and mobile layouts. Returns when the motion finishes.
+function _sweepZoneToPot(zone, potEl, ms) {
+    return new Promise(resolve => {
+        if (!zone || !potEl || !zone.firstChild) { resolve(); return; }
+
+        // Drop any slide-in animation so our inline transform takes effect.
+        zone.classList.remove('chip-slide-down', 'chip-slide-up');
+        zone.style.transition = 'none';
+        zone.style.transform = 'translate(0, 0)';
+        void zone.offsetWidth; // reflow at natural position before measuring
+
+        const zr = zone.getBoundingClientRect();
+        const pr = potEl.getBoundingClientRect();
+        const dx = (pr.left + pr.width / 2) - (zr.left + zr.width / 2);
+        const dy = (pr.top + pr.height / 2) - (zr.top + zr.height / 2);
+
+        zone.style.transition = `transform ${ms}ms ease-in, opacity ${ms}ms ease-in`;
+        zone.style.transform = `translate(${dx}px, ${dy}px) scale(0.4)`;
+        zone.style.opacity = '0';
+        setTimeout(resolve, ms);
+    });
 }
 
 // Render an action badge (+ chips for the committed total) into a bet zone.
@@ -244,8 +308,9 @@ function _renderZone(zone, ev, total) {
 
     if (total > 0) {
         const holder = document.createElement('div');
-        renderChipPile(holder, total, false); // amount already shown in the timeline
+        renderCleanStack(holder, total, 'bet', 'lg');
         if (holder.firstChild) zone.appendChild(holder.firstChild);
+        zone.appendChild(_amountPill(total));
     }
 }
 
@@ -266,6 +331,18 @@ async function animateStreetActions(streetData) {
 
     _clearZone(villainZone);
     _clearZone(heroZone);
+    _setReplayVisible(false); // hide replay while the action animates
+
+    // Reset the pot to where it stood BEFORE this street's action, so the
+    // chips visibly build it up (and a replay starts from the same place).
+    if (potChips && !prefersReduced) {
+        const hist = (typeof currentPuzzle !== 'undefined' && currentPuzzle)
+            ? currentPuzzle.ActionHistory : null;
+        const idx = hist ? hist.indexOf(streetData) : -1;
+        const startPot = idx > 0 ? hist[idx - 1].PotEnd : 0;
+        renderChipPile(potChips, startPot);
+        setPotDisplay(startPot); // bubble tracks the chips (hidden when empty)
+    }
 
     // Pre-flop carries posted blinds; seed each player's committed total with
     // them so raise deltas and the running pot reconcile.
@@ -284,7 +361,9 @@ async function animateStreetActions(streetData) {
         });
         if (lastV) _renderZone(villainZone, lastV, vShown);
         if (lastH) _renderZone(heroZone, lastH, hShown);
-        if (potChips) renderChipPile(potChips, streetData.PotEnd, false);
+        if (potChips) renderChipPile(potChips, streetData.PotEnd);
+        setPotDisplay(streetData.PotEnd);
+        _setReplayVisible(true);
         return;
     }
 
@@ -344,19 +423,22 @@ async function animateStreetActions(streetData) {
     if (!alive()) return;
 
     if (vShown > 0 || hShown > 0) {
-        villainZone.classList.add('chip-sweep-up');
-        heroZone.classList.add('chip-sweep-down');
-
-        await pause(650);
+        // Chips fly diagonally to wherever the pot is (left of / below board).
+        const potTarget = potChips || document.getElementById('pot-area');
+        await Promise.all([
+            _sweepZoneToPot(villainZone, potTarget, 650),
+            _sweepZoneToPot(heroZone, potTarget, 650),
+        ]);
         if (!alive()) return;
 
         _clearZone(villainZone);
         _clearZone(heroZone);
 
-        // Pot chips pop in at the new total
+        // Pot chips + bubble pop in at the new total
+        setPotDisplay(streetData.PotEnd);
         if (potChips) {
             potChips.innerHTML = '';
-            renderChipPile(potChips, streetData.PotEnd, false);
+            renderChipPile(potChips, streetData.PotEnd);
             potChips.classList.remove('chip-pop');
             void potChips.offsetWidth;
             potChips.classList.add('chip-pop');
@@ -369,4 +451,6 @@ async function animateStreetActions(streetData) {
         _clearZone(villainZone);
         _clearZone(heroZone);
     }
+
+    if (alive()) _setReplayVisible(true); // action settled — allow replay
 }

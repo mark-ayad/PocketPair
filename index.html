@@ -48,11 +48,6 @@
         <main class="game-zone">
 
             <section class="action-history-container">
-                <div class="action-history-header">
-                    <button id="replay-animation-btn" class="replay-btn" title="Replay this street's action" aria-label="Replay this street's action">
-                        <span class="replay-icon" aria-hidden="true">&#x21bb;</span> Replay
-                    </button>
-                </div>
                 <div id="action-log-zone">
                 </div>
             </section>
@@ -62,8 +57,8 @@
                     <span id="villain-label" class="player-label">Villain</span>
                     <div class="player-hand-area">
                         <div class="stack-info">
-                            <span id="villain-stack" class="stack-size"></span>
-                            <div id="villain-stack-chips"></div>
+                            <div id="villain-stack-chips" class="stack-chips"></div>
+                            <span id="villain-stack" class="stack-pill"></span>
                         </div>
                         <div id="villain-cards">
                             <span class="card"></span>
@@ -78,12 +73,15 @@
                 <div id="villain-bet-zone" class="bet-zone"></div>
 
                 <div id="board-area">
-                    <div id="board-cards">
-                    </div>
                     <div id="pot-area">
                         <div id="pot-chips"></div>
                         <span id="pot-size">Pot: $0.00</span>
                     </div>
+                    <div id="board-cards">
+                    </div>
+                    <button id="replay-animation-btn" class="replay-btn" title="Replay this street's action" aria-label="Replay this street's action">
+                        <span class="replay-icon" aria-hidden="true">&#x21bb;</span> <span class="replay-text">Replay</span>
+                    </button>
                 </div>
 
                 <div id="hero-bet-zone" class="bet-zone"></div>
@@ -92,8 +90,8 @@
                     <span id="hero-label" class="player-label">Hero</span>
                     <div class="player-hand-area">
                         <div class="stack-info">
-                            <span id="hero-stack" class="stack-size"></span>
-                            <div id="hero-stack-chips"></div>
+                            <div id="hero-stack-chips" class="stack-chips"></div>
+                            <span id="hero-stack" class="stack-pill"></span>
                         </div>
                         <div id="hero-cards">
                         </div>
@@ -154,7 +152,7 @@
             <section class="selection-grid-container" id="selection-grid-zone">
                 <div class="sheet-handle" aria-hidden="true"></div>
                 <button id="sheet-close" class="sheet-close" aria-label="Close picker">&times;</button>
-                <h2>Make Your Guess</h2>
+                <h2 id="picker-heading">Make Your Guess</h2>
                 <div id="selection-controls">
                     <div id="card-slot-1" class="card-slot" data-card="">Card 1</div>
                     <div id="card-slot-2" class="card-slot" data-card="">Card 2</div>
@@ -166,6 +164,13 @@
                 <div id="card-grid-wrapper">
                     <div id="card-grid">
                     </div>
+                </div>
+                <div id="post-game-panel" class="post-game-panel">
+                    <p class="post-game-eyebrow">Hand Complete</p>
+                    <p id="post-game-result" class="post-game-result"></p>
+                    <p class="post-game-sub">The villain held</p>
+                    <div id="post-game-cards" class="post-game-cards"></div>
+                    <button id="view-results-btn" class="btn">View Results</button>
                 </div>
             </section>
 

@@ -1,13 +1,14 @@
 // js/script.js
 
+// Money shown in the on-table bubbles — no "$" (the context makes it obvious).
 function formatCurrency(num) {
     if (num >= 1000000) {
-        return '$' + (num / 1000000).toFixed(2) + 'M';
+        return (num / 1000000).toFixed(2) + 'M';
     }
     if (num >= 1000) {
-        return '$' + (num / 1000).toFixed(2) + 'K';
+        return (num / 1000).toFixed(2) + 'K';
     }
-    return '$' + num.toFixed(2);
+    return num.toFixed(2);
 }
 
 function normalizeCard(card) {
@@ -152,10 +153,11 @@ function initializeGame(data) {
     document.getElementById('hero-cards').innerHTML =
         data.HeroHand.map(card => renderCard(card)).join('');
 
-    document.getElementById('pot-size').textContent = `Pot: ${formatCurrency(data.StartingPot)}`;
-    
-    document.getElementById('hero-stack').innerHTML = `Stack:<br>${formatCurrency(data.heroStartingStackBBs)}`;
-    document.getElementById('villain-stack').innerHTML = `Stack:<br>${formatCurrency(data.villainStartingStackBBs)}`;
+    // Pot starts empty — the pre-flop animation builds it from the blinds.
+    setPotDisplay(0);
+
+    document.getElementById('hero-stack').textContent = formatCurrency(data.heroStartingStackBBs);
+    document.getElementById('villain-stack').textContent = formatCurrency(data.villainStartingStackBBs);
 
 
     document.getElementById('villain-cards').innerHTML = `
@@ -175,6 +177,7 @@ function initializeGame(data) {
 
     document.querySelectorAll('.guess-list').forEach(list => list.innerHTML = '');
 
+    setPickerActive();
     resetSelection();
     updateButtonStates();
 
@@ -238,14 +241,15 @@ function renderFullActionStatus() {
     if (!currentStreetData) return;
 
     const boardContainer = document.getElementById('board-cards');
-    const potElement = document.getElementById('pot-size');
     const heroStackEl = document.getElementById('hero-stack');
     const villainStackEl = document.getElementById('villain-stack');
 
-    if (potElement) potElement.textContent = `Pot: ${formatCurrency(currentStreetData.PotEnd)}`;
+    // The pot bubble is driven by the chip animation (and by restore), so it
+    // isn't set here — that avoids briefly flashing the final pot before the
+    // chips build it up.
 
-    if (heroStackEl) heroStackEl.innerHTML = `Stack:<br>${formatCurrency(currentStreetData.HeroStack)}`;
-    if (villainStackEl) villainStackEl.innerHTML = `Stack:<br>${formatCurrency(currentStreetData.VillainStack)}`;
+    if (heroStackEl) heroStackEl.textContent = formatCurrency(currentStreetData.HeroStack);
+    if (villainStackEl) villainStackEl.textContent = formatCurrency(currentStreetData.VillainStack);
 
     const heroStackChips    = document.getElementById('hero-stack-chips');
     const villainStackChips = document.getElementById('villain-stack-chips');
@@ -309,11 +313,14 @@ function updateMobileBar() {
     const trigger = document.getElementById('mobile-guess-trigger');
     if (!bar || !trigger || !currentPuzzle || !currentPuzzle.ActionHistory) return;
 
+    bar.classList.remove('bar-hidden');
+
     if (gameOver) {
-        bar.classList.add('bar-hidden');
+        // Game finished — the bar reopens the results instead of the picker.
+        trigger.textContent = 'View Results';
+        trigger.dataset.mode = 'results';
         return;
     }
-    bar.classList.remove('bar-hidden');
 
     const isRiver = currentStreetIndex === currentPuzzle.ActionHistory.length - 1;
     if (!isRiver && hasGuessedThisStreet) {
@@ -705,6 +712,43 @@ function revealNextStreet() {
 }
 
 
+// Restore the picker to its active (guessing) state for a fresh game.
+function setPickerActive() {
+    const heading = document.getElementById('picker-heading');
+    const controls = document.getElementById('selection-controls');
+    const grid = document.getElementById('card-grid-wrapper');
+    const panel = document.getElementById('post-game-panel');
+    if (heading) { heading.textContent = 'Make Your Guess'; heading.style.display = ''; }
+    if (controls) controls.style.display = '';
+    if (grid) grid.style.display = '';
+    if (panel) panel.classList.remove('show');
+}
+
+// Swap the picker for a "hand complete" summary once the game is over — the
+// card grid serves no purpose anymore, and the leftover locked card in a slot
+// looked like an unfinished guess.
+function setPickerGameOver(win) {
+    const heading = document.getElementById('picker-heading');
+    const controls = document.getElementById('selection-controls');
+    const grid = document.getElementById('card-grid-wrapper');
+    const panel = document.getElementById('post-game-panel');
+    const resultEl = document.getElementById('post-game-result');
+    const cardsEl = document.getElementById('post-game-cards');
+    if (!panel) return;
+
+    if (heading) heading.style.display = 'none'; // panel carries its own title
+    if (controls) controls.style.display = 'none';
+    if (grid) grid.style.display = 'none';
+    if (resultEl) {
+        resultEl.textContent = win ? 'You got it!' : 'Not this time.';
+        resultEl.className = 'post-game-result ' + (win ? 'win' : 'loss');
+    }
+    if (cardsEl && currentPuzzle && currentPuzzle.VillainSolution) {
+        cardsEl.innerHTML = currentPuzzle.VillainSolution.map(c => renderCard(c)).join('');
+    }
+    panel.classList.add('show');
+}
+
 /**
  * Ends the game and displays the result modal.
  * @param {boolean} win
@@ -749,6 +793,9 @@ function endGame(win, showModal = true) {
     });
     villainCardsContainer.innerHTML = finalCardsHTML;
 
+    // Replace the guessing picker with the finished-hand summary.
+    setPickerGameOver(win);
+    updateMobileBar();
 
     // 3. Get all modal elements
     const modal = document.getElementById('modal-overlay');
@@ -838,10 +885,14 @@ function restoreGameState(savedState) {
     const currentStreetData = currentPuzzle.ActionHistory[currentStreetIndex];
     if (currentStreetData) {
         markKnownCards(currentPuzzle.HeroHand, currentStreetData.CardsShown);
-        // Restore pot chips statically (no animation on page reload)
+        // Restore pot chips + bubble statically (no animation on page reload)
         const potChips = document.getElementById('pot-chips');
-        if (potChips) renderChipPile(potChips, currentStreetData.PotEnd, false);
+        if (potChips) renderChipPile(potChips, currentStreetData.PotEnd);
+        setPotDisplay(currentStreetData.PotEnd);
     }
+
+    // No animation runs on restore, so the street is already settled — allow replay.
+    document.getElementById('replay-animation-btn')?.classList.add('replay-ready');
 
     resetSelection();
     updateButtonStates();
@@ -889,12 +940,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (guessTrigger) {
         guessTrigger.addEventListener('click', () => {
-            if (guessTrigger.dataset.mode === 'next') {
+            const mode = guessTrigger.dataset.mode;
+            if (mode === 'results') {
+                document.getElementById('modal-overlay')?.classList.add('show');
+            } else if (mode === 'next') {
                 closeSheet();
                 revealNextStreet();
             } else {
                 openSheet();
             }
+        });
+    }
+
+    // Desktop: reopen the results modal from the finished-hand panel.
+    const viewResultsBtn = document.getElementById('view-results-btn');
+    if (viewResultsBtn) {
+        viewResultsBtn.addEventListener('click', () => {
+            document.getElementById('modal-overlay')?.classList.add('show');
         });
     }
     if (sheetCloseBtn) sheetCloseBtn.addEventListener('click', closeSheet);
