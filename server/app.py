@@ -5,11 +5,34 @@ from flask_cors import CORS
 import json
 import os
 import random
+import fcntl
 from datetime import date
 
 app = Flask(__name__)
-# Allow the frontend (running on a different port) to access the API
-CORS(app) 
+
+# In production the frontend is served by this same app (same origin), so no
+# cross-origin access is needed. Cross-origin is only enabled for explicitly
+# listed domains via POCKETPAIR_CORS_ORIGINS (comma-separated) — e.g. during
+# local dev with a separate frontend port.
+_cors_origins = os.environ.get('POCKETPAIR_CORS_ORIGINS', '').strip()
+if _cors_origins:
+    CORS(app, resources={r"/api/*": {
+        "origins": [o.strip() for o in _cors_origins.split(',') if o.strip()]
+    }})
+
+
+@app.after_request
+def set_security_headers(response):
+    """Conservative security headers for all responses."""
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    response.headers['Content-Security-Policy'] = (
+        "default-src 'self'; img-src 'self' data:; "
+        "style-src 'self' 'unsafe-inline'; script-src 'self'; "
+        "frame-ancestors 'none'"
+    )
+    return response
 
 # Define paths to our data files, relative to the app.py location
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
@@ -72,55 +95,54 @@ def normalize_puzzle(puzzle):
 
 def select_daily_puzzle():
     """
-    Selects a random, unused puzzle from the library, 
-    based on the current date, and updates the history.
+    Selects the puzzle for today and records it, so every visitor gets the same
+    hand for the day and a finished game stays consistent across reloads.
+
+    The whole read-modify-write of the history is serialized with a file lock,
+    and the pick is seeded by the date — so concurrent first-of-day requests
+    (e.g. multiple gunicorn workers) can never double-write the history or hand
+    out different puzzles.
     """
     today_id = date.today().strftime("%Y%m%d")
-    
-    # 1. Load all content and history
+
     range_library = load_json(RANGE_LIBRARY_PATH)
-    history = load_json(HISTORY_PATH)
-    
     if not range_library:
         return {"error": "Range library is empty or missing."}, 500
 
-    # 2. Check if the puzzle for today has already been selected (for server restarts)
-    for entry in history:
-        if entry.get("date") == today_id:
-            # Found today's puzzle — return it only if it still exists in the library
-            puzzle = next((p for p in range_library if p['id'] == entry['puzzle_id']), None)
-            if puzzle:
-                return puzzle
-            # Puzzle was deleted from library — remove stale entry and pick a new one
-            history.remove(entry)
+    lock_path = HISTORY_PATH + '.lock'
+    with open(lock_path, 'w') as lock_file:
+        fcntl.flock(lock_file, fcntl.LOCK_EX)
+        try:
+            history = load_json(HISTORY_PATH) or []
+
+            # Already chosen today? (server restarts, later visitors)
+            for entry in history:
+                if entry.get("date") == today_id:
+                    puzzle = next((p for p in range_library if p['id'] == entry['puzzle_id']), None)
+                    if puzzle:
+                        return puzzle
+                    # Puzzle was removed from the library — drop the stale entry.
+                    history.remove(entry)
+                    break
+
+            used_ids = [entry["puzzle_id"] for entry in history]
+            available_puzzles = [p for p in range_library if p['id'] not in used_ids]
+
+            if not available_puzzles:
+                # Every puzzle has been used — start a fresh cycle.
+                history = []
+                available_puzzles = list(range_library)
+
+            # Deterministic per-day pick: identical regardless of which worker
+            # wins the race.
+            rng = random.Random(today_id)
+            selected_puzzle = rng.choice(available_puzzles)
+
+            history.append({"date": today_id, "puzzle_id": selected_puzzle['id']})
             save_json(HISTORY_PATH, history)
-            break
-    
-    # 3. Get the list of IDs already used
-    used_ids = [entry["puzzle_id"] for entry in history]
-    
-    # 4. Find all available (unused) puzzles
-    available_puzzles = [p for p in range_library if p['id'] not in used_ids]
-
-    if not available_puzzles:
-        # Handle the case where all puzzles have been used (e.g., reset the history)
-        history.clear()
-        save_json(HISTORY_PATH, history)
-        # Recurse to select from the newly reset history
-        return select_daily_puzzle()
-
-    # 5. Select a random available puzzle
-    selected_puzzle = random.choice(available_puzzles)
-    
-    # 6. Update history
-    new_entry = {
-        "date": today_id,
-        "puzzle_id": selected_puzzle['id']
-    }
-    history.append(new_entry)
-    save_json(HISTORY_PATH, history)
-    
-    return selected_puzzle
+            return selected_puzzle
+        finally:
+            fcntl.flock(lock_file, fcntl.LOCK_UN)
 
 # --- API Endpoint ---
 
@@ -154,6 +176,7 @@ def serve_styles(filename):
 
 
 if __name__ == '__main__':
-    # Running in debug mode for development
-    # When deployed, the port might be different (e.g., 80 or 8080)
-    app.run(debug=False, port=5000)
+    # Local development server only. In production run under gunicorn
+    # (see deploy/), which imports `app` directly and ignores this block.
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=False, port=port)

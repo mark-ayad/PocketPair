@@ -777,10 +777,13 @@ function endGame(win, showModal = true) {
     // Set context and YouTube link
     modalContext.textContent = currentPuzzle.context || "No context available for this hand.";
     
-    if (currentPuzzle.youtubeLink) {
-        modalYoutubeBtn.href = currentPuzzle.youtubeLink;
+    // Only surface the "Watch Hand" button for a real http(s) link.
+    const videoLink = (currentPuzzle.youtubeLink || '').trim();
+    if (/^https?:\/\//i.test(videoLink)) {
+        modalYoutubeBtn.href = videoLink;
         modalYoutubeBtn.style.display = 'block';
     } else {
+        modalYoutubeBtn.removeAttribute('href');
         modalYoutubeBtn.style.display = 'none';
     }
 
