@@ -1,0 +1,67 @@
+{
+    "id": "REPLACE_WITH_UNIQUE_ID",
+    "name": "Short hand title (e.g. Player A vs Player B)",
+    "context": "One or two sentences shown after the game ends.",
+    "youtubeLink": "https://www.youtube.com/watch?v=XXXXXXXXXXX",
+    "heroName": "Hero",
+    "villainName": "Villain",
+    "HeroPosition": "SB",
+    "smallBlind": 10.0,
+    "bigBlind": 20.0,
+    "ante": 0,
+    "heroStartingStackBBs": 10000.0,
+    "villainStartingStackBBs": 10000.0,
+    "HeroHand": ["5c", "5h"],
+    "VillainSolution": ["Jd", "Js"],
+    "Board": ["Jc", "5s", "2h", "8d", "9c"],
+    "StartingPot": 30.0,
+    "ActionHistory": [
+        {
+            "Street": "Pre-Flop",
+            "Actions": [
+                "Hero raises to $60",
+                "Villain 3-bets to $200",
+                "Hero calls $140"
+            ],
+            "PotEnd": 400.0,
+            "HeroStack": 9800.0,
+            "VillainStack": 9800.0,
+            "CardsShown": []
+        },
+        {
+            "Street": "Flop",
+            "Actions": [
+                "Hero checks",
+                "Villain bets $300",
+                "Hero check-raises to $900",
+                "Villain calls $600"
+            ],
+            "PotEnd": 2200.0,
+            "HeroStack": 8900.0,
+            "VillainStack": 8900.0,
+            "CardsShown": ["Jc", "5s", "2h"]
+        },
+        {
+            "Street": "Turn",
+            "Actions": [
+                "Hero bets $1500",
+                "Villain calls $1500"
+            ],
+            "PotEnd": 5200.0,
+            "HeroStack": 7400.0,
+            "VillainStack": 7400.0,
+            "CardsShown": ["Jc", "5s", "2h", "8d"]
+        },
+        {
+            "Street": "River",
+            "Actions": [
+                "Hero bets $4000",
+                "Villain calls $4000"
+            ],
+            "PotEnd": 13200.0,
+            "HeroStack": 3400.0,
+            "VillainStack": 3400.0,
+            "CardsShown": ["Jc", "5s", "2h", "8d", "9c"]
+        }
+    ]
+}

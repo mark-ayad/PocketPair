@@ -157,22 +157,24 @@ function parseStreetActions(actions, heroBetInit = 0, villainBetInit = 0) {
         let type = 'check';
         let delta = 0;
 
+        // Order matters: "raise" is checked before "check" so a check-raise
+        // ("Hero check-raises to $900") is treated as a raise, not a check.
         if (lower.includes('fold')) {
             type = 'fold';
-        } else if (lower.includes('check')) {
-            type = 'check';
-        } else if (lower.includes('call')) {
-            type = 'call';
-            delta = amount;
-            if (isHero) heroBet += delta; else villainBet += delta;
         } else if (lower.includes('raise')) {
             type = 'raise';
             if (isHero) { delta = amount - heroBet; heroBet = amount; }
             else        { delta = amount - villainBet; villainBet = amount; }
+        } else if (lower.includes('call')) {
+            type = 'call';
+            delta = amount;
+            if (isHero) heroBet += delta; else villainBet += delta;
         } else if (lower.includes('bet') || amount > 0) {
             type = 'bet';
             if (isHero) { delta = amount - heroBet; heroBet = amount; }
             else        { delta = amount - villainBet; villainBet = amount; }
+        } else if (lower.includes('check')) {
+            type = 'check';
         }
 
         if (allIn) type = 'allin';
