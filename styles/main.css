@@ -91,6 +91,40 @@ header h1 {
     border: 1px solid var(--color-border);
 }
 
+/* --- Replay control --- */
+.action-history-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
+.replay-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8em;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    background-color: var(--color-container-bg-inner);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.replay-btn:hover {
+    color: var(--color-text-primary);
+    border-color: #43a047;
+}
+.replay-btn:active .replay-icon {
+    transform: rotate(-180deg);
+}
+.replay-icon {
+    display: inline-block;
+    font-size: 1.1em;
+    line-height: 1;
+    transition: transform 0.3s ease;
+}
+
 /* --- Hand timeline (horizontal play log) --- */
 #action-log-zone {
     display: flex;
@@ -310,6 +344,7 @@ header h1 {
 .action-raise { background: #43a047; }
 .action-fold  { background: #9e9e9e; }
 .action-allin { background: #e53935; }
+.action-blind { background: #6d4c41; }
 
 /* Red triangle marker for all-in */
 .allin-tri {
@@ -1417,5 +1452,141 @@ body.restoring .guess-row {
     /* Intro */
     #intro-screen h1 {
         font-size: 3em;
+    }
+}
+
+/* ============================================================
+   Mobile bottom-sheet guess picker
+   Desktop (> 900px) keeps the picker inline; these elements stay hidden.
+   ============================================================ */
+#mobile-action-bar,
+#sheet-backdrop,
+.sheet-handle,
+.sheet-close {
+    display: none;
+}
+
+.bar-hidden {
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+
+    /* Picker becomes a bottom sheet, lifting it out of the page flow so the
+       table is no longer pushed off-screen by the 13×4 card grid. */
+    #selection-grid-zone {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1100;
+        height: 74vh;
+        max-height: 74vh;
+        margin: 0;
+        padding-top: 26px;
+        border-radius: 18px 18px 0 0;
+        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.25);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        transform: translateY(100%);
+        transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    #selection-grid-zone.open {
+        transform: translateY(0);
+    }
+
+    /* Grab handle + close affordances */
+    .sheet-handle {
+        display: block;
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 40px;
+        height: 4px;
+        border-radius: 2px;
+        background: var(--color-border);
+    }
+
+    .sheet-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        top: 6px;
+        right: 12px;
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: none;
+        background: none;
+        font-size: 1.9em;
+        line-height: 1;
+        color: var(--color-text-secondary);
+        cursor: pointer;
+    }
+
+    /* Backdrop dims the table while the sheet is open */
+    #sheet-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1050;
+        background: rgba(0, 0, 0, 0.45);
+        backdrop-filter: blur(2px);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    #sheet-backdrop.open {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    body.sheet-open {
+        overflow: hidden;
+    }
+
+    /* Sticky bottom trigger bar */
+    #mobile-action-bar {
+        display: flex;
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        padding: 10px 14px max(10px, env(safe-area-inset-bottom));
+        background: var(--color-container-bg);
+        border-top: 1px solid var(--color-border);
+        box-shadow: 0 -2px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    #mobile-guess-trigger {
+        flex: 1;
+        min-height: 50px;
+        height: auto;
+        font-size: 1.05em;
+        border-radius: 10px;
+    }
+
+    /* Reserve room so the fixed bar never covers page content */
+    .game-container {
+        padding-bottom: 78px;
+    }
+
+    /* The bar advances the street on mobile, so hide the inline button */
+    #next-street-btn {
+        display: none;
+    }
+}
+
+/* Scale down chip piles a touch on the smallest screens so wide
+   multi-denomination pots/bets don't overflow the felt. */
+@media (max-width: 480px) {
+    #pot-chips .chip-pile,
+    .bet-zone .chip-pile {
+        transform: scale(0.85);
     }
 }

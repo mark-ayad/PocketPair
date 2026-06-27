@@ -2,16 +2,26 @@
 
 let _animGen = 0;
 
-// Standard casino denominations, high → low. Greedy change-making maps any
-// amount onto stacks of these so a pile reads like real chips on a table.
-const DENOMS = [
-    { v: 5000, face: '#ef6c00', edge: '#bf360c', light: '#ffa726' },
-    { v: 1000, face: '#f9a825', edge: '#e65100', light: '#ffd54f' },
-    { v: 500,  face: '#8e24aa', edge: '#4a148c', light: '#ce93d8' },
-    { v: 100,  face: '#37474f', edge: '#0d1b22', light: '#78909c' },
-    { v: 25,   face: '#2e7d32', edge: '#1b5e20', light: '#66bb6a' },
-    { v: 5,    face: '#c62828', edge: '#8e0000', light: '#ef5350' },
-    { v: 1,    face: '#cfd8dc', edge: '#90a4ae', light: '#eceff1' },
+// Big-blind unit used to convert absolute dollar amounts into BB-relative chip
+// magnitudes. Set per-puzzle via setBigBlind() so a 20BB pot reads the same
+// size whether the game is $1/$2 or $500/$1000 ("dynamic pots, relative
+// regardless of game"). Dollar labels still show the true absolute amount.
+let _bigBlind = 20;
+function setBigBlind(bb) {
+    _bigBlind = (typeof bb === 'number' && bb > 0) ? bb : 20;
+}
+
+// Chip denominations expressed in BIG BLINDS, high → low. Greedy change-making
+// maps any amount (after /bigBlind) onto stacks of these, so a pile reads like
+// real chips and scales by relative pot size rather than raw dollar magnitude.
+const BB_DENOMS = [
+    { v: 100, face: '#ef6c00', edge: '#bf360c', light: '#ffa726' }, // orange
+    { v: 50,  face: '#f9a825', edge: '#e65100', light: '#ffd54f' }, // gold
+    { v: 25,  face: '#8e24aa', edge: '#4a148c', light: '#ce93d8' }, // purple
+    { v: 10,  face: '#37474f', edge: '#0d1b22', light: '#78909c' }, // charcoal
+    { v: 5,   face: '#2e7d32', edge: '#1b5e20', light: '#66bb6a' }, // green
+    { v: 2,   face: '#1565c0', edge: '#0d47a1', light: '#42a5f5' }, // blue
+    { v: 1,   face: '#cfd8dc', edge: '#90a4ae', light: '#eceff1' }, // white
 ];
 
 const ACTION_TEXT = {
@@ -23,16 +33,22 @@ const ACTION_TEXT = {
     allin: 'All In',
 };
 
-// Break an amount into denomination counts (greedy, largest first).
+// Break an amount into denomination counts (greedy, largest first). The amount
+// is first converted to whole big blinds, so chip piles are sized relative to
+// the blinds rather than the raw dollar figure.
 function makeChange(amount) {
-    let rem = Math.round(amount);
+    let rem = Math.round(amount / _bigBlind);
     const out = [];
-    for (const d of DENOMS) {
+    for (const d of BB_DENOMS) {
         if (rem >= d.v) {
             const count = Math.floor(rem / d.v);
             rem -= count * d.v;
             out.push({ d, count });
         }
+    }
+    // Sub-1BB but non-zero (e.g. a posted small blind) still shows one chip.
+    if (out.length === 0 && amount > 0) {
+        out.push({ d: BB_DENOMS[BB_DENOMS.length - 1], count: 1 });
     }
     return out;
 }
@@ -41,7 +57,7 @@ function makeChange(amount) {
 function buildStack(d, count, size) {
     const dim  = size === 'sm' ? 22 : 30;
     const step = size === 'sm' ? 5  : 6;
-    const n = Math.min(count, 5);
+    const n = Math.min(count, 6);
 
     const stack = document.createElement('div');
     stack.className = 'chip-stack';
@@ -92,23 +108,25 @@ function renderChipPile(el, amount, showLabel = true) {
     renderChips(el, amount, { size: 'lg', showLabel });
 }
 
-// Pick a single chip color for a player stack based on its magnitude.
-function _stackTier(amount) {
-    if (amount < 1000)   return { face: '#2e7d32', edge: '#1b5e20', light: '#66bb6a' }; // green
-    if (amount < 3000)   return { face: '#37474f', edge: '#0d1b22', light: '#78909c' }; // charcoal
-    if (amount < 10000)  return { face: '#8e24aa', edge: '#4a148c', light: '#ce93d8' }; // purple
-    if (amount < 30000)  return { face: '#f9a825', edge: '#e65100', light: '#ffd54f' }; // gold
-    return { face: '#ef6c00', edge: '#bf360c', light: '#ffa726' };                       // orange
+// Pick a single chip color for a player stack based on its depth in big blinds,
+// so the tier is comparable across games of any stakes.
+function _stackTier(bb) {
+    if (bb < 25)   return { face: '#2e7d32', edge: '#1b5e20', light: '#66bb6a' }; // green
+    if (bb < 75)   return { face: '#37474f', edge: '#0d1b22', light: '#78909c' }; // charcoal
+    if (bb < 150)  return { face: '#8e24aa', edge: '#4a148c', light: '#ce93d8' }; // purple
+    if (bb < 300)  return { face: '#f9a825', edge: '#e65100', light: '#ffd54f' }; // gold
+    return { face: '#ef6c00', edge: '#bf360c', light: '#ffa726' };                // orange
 }
 
-// Player stack: one tidy vertical pile in a single tier color. Taller = more
-// chips. The exact amount still shows in the "Stack: $X" text above it.
+// Player stack: one tidy vertical pile in a single tier color. Taller = deeper
+// stack (in BB). The exact amount still shows in the "Stack: $X" text above it.
 function renderStackChip(el, amount) {
     el.innerHTML = '';
     if (!amount || amount <= 0) return;
 
-    const tier = _stackTier(amount);
-    const count = Math.max(3, Math.min(5, Math.round(2 + amount / 3000)));
+    const bb = amount / _bigBlind;
+    const tier = _stackTier(bb);
+    const count = Math.max(2, Math.min(6, Math.round(1 + bb / 50)));
 
     const wrap = document.createElement('div');
     wrap.className = 'chip-wrap';
@@ -122,9 +140,12 @@ function renderStackChip(el, amount) {
 /**
  * Parses action strings into chip events.
  * Returns [{actor, type, delta, amount}] where delta = newly committed chips.
+ * `heroBetInit`/`villainBetInit` seed each player's already-committed amount —
+ * used pre-flop so a "raise to $X" after posting a blind commits X minus the
+ * blind already in front of that player.
  */
-function parseStreetActions(actions) {
-    let heroBet = 0, villainBet = 0;
+function parseStreetActions(actions, heroBetInit = 0, villainBetInit = 0) {
+    let heroBet = heroBetInit, villainBet = villainBetInit;
 
     return actions.map(action => {
         const lower = action.toLowerCase();
@@ -158,6 +179,43 @@ function parseStreetActions(actions) {
 
         return { actor: isHero ? 'hero' : 'villain', type, delta, amount };
     });
+}
+
+// Work out the forced blinds in front of each player for a given street.
+// Only pre-flop carries posted blinds. Heads-up: the dealer (BTN/SB) posts the
+// small blind, the other player posts the big blind. Reads the current puzzle's
+// blind structure (filled in by the backend's normalize_puzzle).
+function _blindInfo(streetData) {
+    const street = (streetData && streetData.Street || '').toLowerCase();
+    const isPreflop = street.includes('pre');
+    const p = (typeof currentPuzzle !== 'undefined') ? currentPuzzle : null;
+    if (!isPreflop || !p) {
+        return { isPreflop: false, hero: 0, villain: 0 };
+    }
+    const sb = p.smallBlind || 0;
+    const bb = p.bigBlind || 0;
+    const heroIsSB = p.HeroPosition === 'SB' || p.HeroPosition === 'BTN';
+    return {
+        isPreflop: true,
+        hero: heroIsSB ? sb : bb,
+        villain: heroIsSB ? bb : sb,
+        heroLabel: heroIsSB ? 'SB' : 'BB',
+        villainLabel: heroIsSB ? 'BB' : 'SB',
+    };
+}
+
+// Render a posted-blind badge (SB/BB) + its chips into a bet zone.
+function _renderBlindZone(zone, label, total) {
+    zone.innerHTML = '';
+    const badge = document.createElement('div');
+    badge.className = 'action-badge action-blind';
+    badge.textContent = label;
+    zone.appendChild(badge);
+    if (total > 0) {
+        const holder = document.createElement('div');
+        renderChipPile(holder, total, false);
+        if (holder.firstChild) zone.appendChild(holder.firstChild);
+    }
 }
 
 // Clear a bet zone's chips/badge and any lingering animation classes.
@@ -207,10 +265,16 @@ async function animateStreetActions(streetData) {
     _clearZone(villainZone);
     _clearZone(heroZone);
 
-    const parsed = parseStreetActions(streetData.Actions);
-    let vShown = 0, hShown = 0;
+    // Pre-flop carries posted blinds; seed each player's committed total with
+    // them so raise deltas and the running pot reconcile.
+    const blinds = _blindInfo(streetData);
+    const parsed = parseStreetActions(streetData.Actions, blinds.hero, blinds.villain);
+    let vShown = blinds.villain, hShown = blinds.hero;
 
     if (prefersReduced) {
+        // Place blinds + final committed totals statically, then the pot.
+        if (blinds.villain > 0) _renderBlindZone(villainZone, blinds.villainLabel, blinds.villain);
+        if (blinds.hero > 0)    _renderBlindZone(heroZone, blinds.heroLabel, blinds.hero);
         const lastV = [...parsed].reverse().find(e => e.actor === 'villain');
         const lastH = [...parsed].reverse().find(e => e.actor === 'hero');
         parsed.forEach(ev => {
@@ -225,6 +289,24 @@ async function animateStreetActions(streetData) {
     // Let the board reveal settle first
     await pause(450);
     if (!alive()) return;
+
+    // Post the blinds before any voluntary action, so the pot builds from them.
+    if (blinds.villain > 0) {
+        villainZone.classList.remove('chip-slide-down');
+        void villainZone.offsetWidth;
+        _renderBlindZone(villainZone, blinds.villainLabel, blinds.villain);
+        villainZone.classList.add('chip-slide-down');
+    }
+    if (blinds.hero > 0) {
+        heroZone.classList.remove('chip-slide-up');
+        void heroZone.offsetWidth;
+        _renderBlindZone(heroZone, blinds.heroLabel, blinds.hero);
+        heroZone.classList.add('chip-slide-up');
+    }
+    if (blinds.villain > 0 || blinds.hero > 0) {
+        await pause(900);
+        if (!alive()) return;
+    }
 
     for (const ev of parsed) {
         if (!alive()) return;

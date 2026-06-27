@@ -37,6 +37,21 @@ let guessLog = [];   // [{streetIndex, feedbackResult}] — drives share text an
 let gameOver = false;
 let gameWon = false;
 
+// --- Mobile bottom-sheet picker helpers ---
+function isMobile() {
+    return window.matchMedia('(max-width: 900px)').matches;
+}
+function openSheet() {
+    document.getElementById('selection-grid-zone')?.classList.add('open');
+    document.getElementById('sheet-backdrop')?.classList.add('open');
+    document.body.classList.add('sheet-open');
+}
+function closeSheet() {
+    document.getElementById('selection-grid-zone')?.classList.remove('open');
+    document.getElementById('sheet-backdrop')?.classList.remove('open');
+    document.body.classList.remove('sheet-open');
+}
+
 /**
  * Renders a card HTML element with suit color and rank/symbol placement.
  * @param {string} cardCode - e.g., "As"
@@ -129,6 +144,10 @@ function initializeGame(data) {
     gameWon = false;
 
     document.getElementById('attempts-left').textContent = MAX_ATTEMPTS;
+
+    // Tell the chip renderer this hand's big blind so pots/stacks scale by BB
+    // (relative size) rather than raw dollars.
+    setBigBlind(data.bigBlind);
 
     document.getElementById('hero-cards').innerHTML =
         data.HeroHand.map(card => renderCard(card)).join('');
@@ -281,10 +300,37 @@ function generateCardGrid() {
  * Updates the disabled state and styling of the action buttons,
  * and controls the Submit button text.
  */
+/**
+ * Drives the mobile bottom action bar: either opens the picker ("Make Your
+ * Guess") or, once a non-river street has been guessed, advances the street.
+ */
+function updateMobileBar() {
+    const bar = document.getElementById('mobile-action-bar');
+    const trigger = document.getElementById('mobile-guess-trigger');
+    if (!bar || !trigger || !currentPuzzle || !currentPuzzle.ActionHistory) return;
+
+    if (gameOver) {
+        bar.classList.add('bar-hidden');
+        return;
+    }
+    bar.classList.remove('bar-hidden');
+
+    const isRiver = currentStreetIndex === currentPuzzle.ActionHistory.length - 1;
+    if (!isRiver && hasGuessedThisStreet) {
+        trigger.textContent = 'Show Next Street';
+        trigger.dataset.mode = 'next';
+    } else {
+        trigger.textContent = 'Make Your Guess';
+        trigger.dataset.mode = 'guess';
+    }
+}
+
 function updateButtonStates() {
     const submitBtn = document.getElementById('submit-guess-btn');
     const nextBtn = document.getElementById('next-street-btn');
     if (!submitBtn || !nextBtn || !currentPuzzle || !currentPuzzle.ActionHistory) return;
+
+    updateMobileBar();
 
     if (gameOver) {
         submitBtn.disabled = true;
@@ -415,6 +461,12 @@ function submitGuess() {
     saveGameState();
     updateButtonStates();
     resetSelection();
+
+    // On mobile, drop back to the table after a non-river guess so the player
+    // sees the board and feedback. On the river they keep guessing in the sheet.
+    if (isMobile() && currentStreetIndex < currentPuzzle.ActionHistory.length - 1) {
+        closeSheet();
+    }
 }
 
 /**
@@ -661,6 +713,7 @@ function revealNextStreet() {
 function endGame(win, showModal = true) {
     gameOver = true;
     gameWon = win;
+    closeSheet();
     saveGameState();
     // 1. Disable game buttons
     const submitBtn = document.getElementById('submit-guess-btn');
@@ -815,6 +868,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (submitButton) submitButton.addEventListener('click', submitGuess);
     if (nextStreetButton) nextStreetButton.addEventListener('click', revealNextStreet);
+
+    // Replay the chip animation for the currently revealed street on demand.
+    const replayBtn = document.getElementById('replay-animation-btn');
+    if (replayBtn) {
+        replayBtn.addEventListener('click', () => {
+            if (!currentPuzzle || !currentPuzzle.ActionHistory) return;
+            const street = currentPuzzle.ActionHistory[currentStreetIndex];
+            if (street) animateStreetActions(street);
+        });
+    }
+
+    // --- Mobile bottom-sheet picker wiring ---
+    const guessTrigger = document.getElementById('mobile-guess-trigger');
+    const sheetCloseBtn = document.getElementById('sheet-close');
+    const sheetBackdrop = document.getElementById('sheet-backdrop');
+
+    if (guessTrigger) {
+        guessTrigger.addEventListener('click', () => {
+            if (guessTrigger.dataset.mode === 'next') {
+                closeSheet();
+                revealNextStreet();
+            } else {
+                openSheet();
+            }
+        });
+    }
+    if (sheetCloseBtn) sheetCloseBtn.addEventListener('click', closeSheet);
+    if (sheetBackdrop) sheetBackdrop.addEventListener('click', closeSheet);
 
     // --- ADD THIS BLOCK for Modal ---
     const modal = document.getElementById('modal-overlay');

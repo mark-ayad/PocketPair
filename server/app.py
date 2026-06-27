@@ -37,6 +37,39 @@ def save_json(file_path, data):
     with open(file_path, 'w') as f:
         json.dump(data, f, indent=4)
 
+def normalize_puzzle(puzzle):
+    """Backfill blind structure so the frontend can always rely on it.
+
+    Older hands only carry `StartingPot` (= SB + BB in heads-up). When the
+    blind fields are absent we infer them from the pot assuming a standard
+    heads-up structure (SB = BB / 2, so StartingPot = 1.5 * BB). This keeps the
+    existing library working while giving the client real blind values to drive
+    blind-posting animation and big-blind-relative chip scaling.
+    """
+    if not isinstance(puzzle, dict):
+        return puzzle
+
+    starting_pot = puzzle.get('StartingPot')
+
+    big_blind = puzzle.get('bigBlind')
+    if not big_blind:
+        big_blind = round(starting_pot / 1.5, 2) if starting_pot else 20
+    small_blind = puzzle.get('smallBlind') or round(big_blind / 2, 2)
+    ante = puzzle.get('ante', 0)
+
+    puzzle['bigBlind'] = big_blind
+    puzzle['smallBlind'] = small_blind
+    puzzle['ante'] = ante
+
+    # Heads-up: each player posts the ante. Warn (don't mutate) on mismatch so
+    # content authoring surfaces bad data without breaking playable hands.
+    expected_pot = small_blind + big_blind + ante * 2
+    if starting_pot is not None and abs(starting_pot - expected_pot) > 0.01:
+        print(f"[warn] puzzle {puzzle.get('id')}: StartingPot {starting_pot} "
+              f"!= SB+BB+antes {expected_pot}")
+
+    return puzzle
+
 def select_daily_puzzle():
     """
     Selects a random, unused puzzle from the library, 
@@ -95,11 +128,15 @@ def select_daily_puzzle():
 def get_daily_puzzle():
     """Endpoint for the front-end to fetch the unique daily puzzle data."""
     puzzle_data = select_daily_puzzle()
-    
-    if "error" in puzzle_data:
+
+    # select_daily_puzzle may return a (body, status) tuple on error
+    if isinstance(puzzle_data, tuple):
+        body, status = puzzle_data
+        return jsonify(body), status
+    if isinstance(puzzle_data, dict) and "error" in puzzle_data:
         return jsonify(puzzle_data), 500
-        
-    return jsonify(puzzle_data)
+
+    return jsonify(normalize_puzzle(puzzle_data))
 
 ROOT_DIR = os.path.abspath(os.path.join(app.root_path, '..'))
 

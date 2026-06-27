@@ -48,6 +48,11 @@
         <main class="game-zone">
 
             <section class="action-history-container">
+                <div class="action-history-header">
+                    <button id="replay-animation-btn" class="replay-btn" title="Replay this street's action" aria-label="Replay this street's action">
+                        <span class="replay-icon" aria-hidden="true">&#x21bb;</span> Replay
+                    </button>
+                </div>
                 <div id="action-log-zone">
                 </div>
             </section>
@@ -147,6 +152,8 @@
             </section>
 
             <section class="selection-grid-container" id="selection-grid-zone">
+                <div class="sheet-handle" aria-hidden="true"></div>
+                <button id="sheet-close" class="sheet-close" aria-label="Close picker">&times;</button>
                 <h2>Make Your Guess</h2>
                 <div id="selection-controls">
                     <div id="card-slot-1" class="card-slot" data-card="">Card 1</div>
@@ -163,6 +170,14 @@
             </section>
 
         </main>
+
+        <!-- Mobile-only: dims the table while the picker sheet is open -->
+        <div id="sheet-backdrop"></div>
+
+        <!-- Mobile-only: sticky bar that opens the picker / advances the street -->
+        <div id="mobile-action-bar">
+            <button id="mobile-guess-trigger" class="btn btn-primary">Make Your Guess</button>
+        </div>
     </div>
 
     <script src="js/gameLogic.js"></script>
