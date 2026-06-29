@@ -13,7 +13,7 @@
     <div id="intro-screen">
         <div class="intro-content">
             <h1>PocketPair</h1>
-            <p class="intro-tagline">Get 6 chances to deduce the villain's hand from a solved poker scenario.</p>
+            <p class="intro-tagline">Get 6 chances to deduce your opponent's hand from a solved poker scenario.</p>
 
             <p class="intro-description">
                 Use the betting action from a standard, solved poker hand to find their cards.<br>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="legend-item">
                     <span class="legend-color-box grey"></span>
-                    <p><strong>Grey:</strong> Rank not in Villain's hand</p>
+                    <p><strong>Grey:</strong> Rank not in your opponent's hand</p>
                 </div>
             </div>
 
@@ -82,6 +82,7 @@
                     <button id="replay-animation-btn" class="replay-btn" title="Replay this street's action" aria-label="Replay this street's action">
                         <span class="replay-icon" aria-hidden="true">&#x21bb;</span> <span class="replay-text">Replay</span>
                     </button>
+                    <button id="next-street-btn" class="next-street-btn">Show Next Street</button>
                 </div>
 
                 <div id="hero-bet-zone" class="bet-zone"></div>
@@ -121,7 +122,7 @@
                     </div>
                     <div class="legend-item">
                         <span class="legend-color-box grey"></span>
-                        <p><strong>Grey:</strong> Rank not in Villain's hand</p>
+                        <p><strong>Grey:</strong> Rank not in your opponent's hand</p>
                     </div>
                 </div>
 
@@ -158,7 +159,6 @@
                     <div id="card-slot-2" class="card-slot" data-card="">Card 2</div>
                     <div id="selection-buttons">
                         <button id="submit-guess-btn" class="btn" disabled>Submit Guess</button>
-                        <button id="next-street-btn" class="btn" disabled>Show Next Street</button>
                     </div>
                 </div>
                 <div id="card-grid-wrapper">
@@ -168,7 +168,7 @@
                 <div id="post-game-panel" class="post-game-panel">
                     <p class="post-game-eyebrow">Hand Complete</p>
                     <p id="post-game-result" class="post-game-result"></p>
-                    <p class="post-game-sub">The villain held</p>
+                    <p id="post-game-sub" class="post-game-sub">Their hand</p>
                     <div id="post-game-cards" class="post-game-cards"></div>
                     <button id="view-results-btn" class="btn">View Results</button>
                 </div>
@@ -191,15 +191,27 @@
 
     <div id="modal-overlay" class="modal-overlay">
         <div class="modal-content">
-            <span id="modal-close-btn" class="modal-close-btn">&times;</span>
+            <button id="modal-close-btn" class="modal-close-btn"><span class="back-text">Back to puzzle</span> <span class="back-x" aria-hidden="true">&times;</span></button>
             <h2 id="modal-title"></h2>
             
-            <p>The Villain's hand was:</p>
+            <p id="modal-solution-label">Their hand was:</p>
             <div id="modal-solution-cards" class="modal-solution-cards">
                 </div>
 
             <p id="modal-context" class="modal-context"></p>
-            
+
+            <div id="modal-stats" class="modal-stats">
+                <p class="stats-heading">Statistics</p>
+                <div class="stats-summary">
+                    <div class="stat"><span class="stat-num" id="stat-played">0</span><span class="stat-label">Played</span></div>
+                    <div class="stat"><span class="stat-num" id="stat-winpct">0</span><span class="stat-label">Win %</span></div>
+                    <div class="stat"><span class="stat-num" id="stat-streak">0</span><span class="stat-label">Current Streak</span></div>
+                    <div class="stat"><span class="stat-num" id="stat-maxstreak">0</span><span class="stat-label">Max Streak</span></div>
+                </div>
+                <p class="stats-dist-title">Solved on</p>
+                <div id="stats-distribution" class="stats-distribution"></div>
+            </div>
+
             <div class="modal-buttons">
                 <a id="modal-youtube-btn" href="#" target="_blank" class="btn btn-youtube">Watch Hand</a>
                 <button id="modal-share-btn" class="btn btn-share">Share</button>

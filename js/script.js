@@ -24,6 +24,8 @@ function normalizeRank(rank) {
 
 const API_URL = '/api/daily-puzzle';
 const STORAGE_KEY = 'pocketpair_state';
+const STATS_KEY = 'pocketpair_stats';
+const STREET_NAMES = ['Pre-Flop', 'Flop', 'Turn', 'River'];
 const MAX_ATTEMPTS = 6;
 const BOARD_SIZE = 5;
 
@@ -37,6 +39,24 @@ let knownYellowRanks = new Set();
 let guessLog = [];   // [{streetIndex, feedbackResult}] — drives share text and persistence
 let gameOver = false;
 let gameWon = false;
+let animationSettled = true;   // false while a street's chip animation is playing
+
+// Show the "Show Next Street" button (now under the board) only once the
+// street's animation has settled AND the player has guessed this street —
+// and never on the river or after the game ends. A replay hides it again.
+function updateNextStreetBtn() {
+    const btn = document.getElementById('next-street-btn');
+    if (!btn || !currentPuzzle || !currentPuzzle.ActionHistory) return;
+    const hasNext = currentStreetIndex < currentPuzzle.ActionHistory.length - 1;
+    const show = animationSettled && hasGuessedThisStreet && hasNext && !gameOver;
+    btn.classList.toggle('next-ready', show);
+}
+
+// Called by the chip animation (chips.js) when it starts/finishes.
+function onAnimationSettled(settled) {
+    animationSettled = settled;
+    updateNextStreetBtn();
+}
 
 // --- Mobile bottom-sheet picker helpers ---
 function isMobile() {
@@ -179,11 +199,8 @@ function initializeGame(data) {
 
     setPickerActive();
     resetSelection();
+    animationSettled = true;
     updateButtonStates();
-
-     const nextBtn = document.getElementById('next-street-btn');
-     nextBtn.style.display = 'inline-block';
-     nextBtn.textContent = 'Show Next Street';
 
 
     const existingResultHeader = document.querySelector('#guess-history-zone h3[style*="color"]');
@@ -205,7 +222,7 @@ function renderFullActionStatus() {
     const villainButton = document.getElementById('villain-button-marker');
 
     heroLabel.textContent = currentPuzzle.heroName || 'Hero';
-    villainLabel.textContent = currentPuzzle.villainName || 'Villain';
+    villainLabel.textContent = currentPuzzle.villainName || 'Opponent';
 
     // In heads-up: BTN = SB = dealer. Show dealer button on whichever player has it.
     const heroIsDealer = currentPuzzle.HeroPosition === 'SB' || currentPuzzle.HeroPosition === 'BTN';
@@ -338,10 +355,10 @@ function updateButtonStates() {
     if (!submitBtn || !nextBtn || !currentPuzzle || !currentPuzzle.ActionHistory) return;
 
     updateMobileBar();
+    updateNextStreetBtn();
 
     if (gameOver) {
         submitBtn.disabled = true;
-        nextBtn.disabled = true;
         return;
     }
 
@@ -365,12 +382,8 @@ function updateButtonStates() {
     submitBtn.disabled = !submitShouldBeEnabled;
     submitBtn.classList.toggle('btn-primary', submitShouldBeEnabled);
 
-    // --- Next Street Button Logic ---
-    let nextShouldBeEnabled = !isRiver && hasGuessedThisStreet;
-    nextBtn.disabled = !nextShouldBeEnabled;
-    nextBtn.classList.toggle('btn-primary', nextShouldBeEnabled);
-
-    nextBtn.style.display = isRiver ? 'none' : 'inline-block';
+    // The "Show Next Street" button (under the board) is handled by
+    // updateNextStreetBtn() above — gated on the animation + having guessed.
 }
 
 
@@ -743,10 +756,76 @@ function setPickerGameOver(win) {
         resultEl.textContent = win ? 'You got it!' : 'Not this time.';
         resultEl.className = 'post-game-result ' + (win ? 'win' : 'loss');
     }
+
+    const opponent = (currentPuzzle && currentPuzzle.villainName) || 'Your opponent';
+    const subEl = document.getElementById('post-game-sub');
+    if (subEl) subEl.textContent = `${opponent}'s hand`;
+
     if (cardsEl && currentPuzzle && currentPuzzle.VillainSolution) {
         cardsEl.innerHTML = currentPuzzle.VillainSolution.map(c => renderCard(c)).join('');
     }
     panel.classList.add('show');
+}
+
+// --- Progressive stats (Wordle-style, stored locally) ---
+function defaultStats() {
+    return { played: 0, wins: 0, currentStreak: 0, maxStreak: 0,
+             byStreet: [0, 0, 0, 0], lastId: null };
+}
+function loadStats() {
+    try {
+        const s = JSON.parse(localStorage.getItem(STATS_KEY));
+        return (s && Array.isArray(s.byStreet)) ? { ...defaultStats(), ...s } : defaultStats();
+    } catch (e) {
+        return defaultStats();
+    }
+}
+// Record a finished game exactly once per puzzle (guarded by lastId).
+function recordResult(win, streetIndex) {
+    const s = loadStats();
+    if (!currentPuzzle || s.lastId === currentPuzzle.id) return s;
+    s.lastId = currentPuzzle.id;
+    s.played += 1;
+    if (win) {
+        s.wins += 1;
+        s.currentStreak += 1;
+        s.maxStreak = Math.max(s.maxStreak, s.currentStreak);
+        if (streetIndex >= 0 && streetIndex < 4) s.byStreet[streetIndex] += 1;
+    } else {
+        s.currentStreak = 0;
+    }
+    localStorage.setItem(STATS_KEY, JSON.stringify(s));
+    return s;
+}
+// Render the stats summary + "solved on" bar chart into the modal.
+function renderStats(stats, highlightStreet = -1) {
+    const playedEl = document.getElementById('stat-played');
+    const winpctEl = document.getElementById('stat-winpct');
+    const streakEl = document.getElementById('stat-streak');
+    const maxStreakEl = document.getElementById('stat-maxstreak');
+    const distEl = document.getElementById('stats-distribution');
+    if (!distEl) return;
+
+    if (playedEl) playedEl.textContent = stats.played;
+    if (winpctEl) winpctEl.textContent = stats.played ? Math.round((stats.wins / stats.played) * 100) : 0;
+    if (streakEl) streakEl.textContent = stats.currentStreak;
+    if (maxStreakEl) maxStreakEl.textContent = stats.maxStreak;
+
+    const max = Math.max(1, ...stats.byStreet);
+    distEl.innerHTML = STREET_NAMES.map((name, i) => {
+        const count = stats.byStreet[i];
+        const pct = Math.round((count / max) * 100);
+        const cls = 'dist-bar' + (i === highlightStreet ? ' current' : '');
+        return `
+            <div class="dist-row">
+                <span class="dist-label">${name}</span>
+                <div class="dist-track">
+                    <div class="${cls}" style="width:${Math.max(pct, count ? 8 : 0)}%">
+                        <span class="dist-count">${count}</span>
+                    </div>
+                </div>
+            </div>`;
+    }).join('');
 }
 
 /**
@@ -761,12 +840,8 @@ function endGame(win, showModal = true) {
     saveGameState();
     // 1. Disable game buttons
     const submitBtn = document.getElementById('submit-guess-btn');
-    const nextBtn = document.getElementById('next-street-btn');
     if (submitBtn) submitBtn.disabled = true;
-    if (nextBtn) {
-        nextBtn.disabled = true;
-        nextBtn.style.display = 'none';
-    }
+    updateNextStreetBtn(); // hides it (gameOver)
 
     // 2. Show the final correct cards on the table
     const villainCardsContainer = document.getElementById('villain-cards');
@@ -818,7 +893,17 @@ function endGame(win, showModal = true) {
         modalTitle.className = 'loss';
     }
 
-    // Render the larger solution cards
+    // Progressive stats: record once per finished puzzle (recordResult guards
+    // against double-counting via lastId), so a result still counts even if the
+    // game was finished on a previous load. Then render into the modal.
+    const winStreet = win ? currentStreetIndex : -1;
+    const stats = recordResult(win, winStreet);
+    renderStats(stats, winStreet);
+
+    // Label + larger solution cards, using the opponent's name
+    const opponentName = currentPuzzle.villainName || 'Your opponent';
+    const modalSolutionLabel = document.getElementById('modal-solution-label');
+    if (modalSolutionLabel) modalSolutionLabel.textContent = `${opponentName}'s hand was:`;
     modalCards.innerHTML = originalSolution.map(card => renderCard(card)).join('');
     
     // Set context and YouTube link

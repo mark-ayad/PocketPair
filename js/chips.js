@@ -241,6 +241,9 @@ function _renderBlindZone(zone, label, total) {
 function _setReplayVisible(visible) {
     const btn = document.getElementById('replay-animation-btn');
     if (btn) btn.classList.toggle('replay-ready', visible);
+    // The "Show Next Street" button shares this lifecycle (hidden while
+    // animating, shown once settled if the player has already guessed).
+    if (typeof onAnimationSettled === 'function') onAnimationSettled(visible);
 }
 
 // Update the pot bubble to a given amount; hide it entirely when the pot is
