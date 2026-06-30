@@ -33,6 +33,34 @@ const ACTION_TEXT = {
     allin: 'All In',
 };
 
+// Display label for an action type, including n-bet types like "3bet".
+function actionText(type) {
+    const m = /^(\d+)bet$/.exec(type);
+    if (m) return m[1] + '-Bet';
+    return ACTION_TEXT[type] || type;
+}
+
+// Standard poker bet-counting: pre-flop the blinds are the 1st "bet" so the
+// open is a raise (2-bet) and the first re-raise is a 3-bet; post-flop the
+// first wager is a bet, its raise is a raise (2-bet), the re-raise a 3-bet,
+// etc. Returns a label per action: check/call/fold/bet/raise/3bet/4bet/...
+function _betLabel(level) {
+    if (level <= 1) return 'bet';     // post-flop opening bet
+    if (level === 2) return 'raise';  // the open / first raise
+    return level + 'bet';             // 3bet, 4bet, 5bet, ...
+}
+function classifyBetLevels(actions, isPreflop) {
+    let level = isPreflop ? 1 : 0;    // pre-flop: the big blind is the 1st bet
+    return actions.map(a => {
+        const low = a.toLowerCase();
+        if (low.includes('fold')) return 'fold';
+        if (low.includes('raise')) { level += 1; return _betLabel(level); } // incl. check-raise
+        if (low.includes('call')) return 'call';
+        if (low.includes('bet') || /\$\s*\d/.test(a)) { level += 1; return _betLabel(level); }
+        return 'check';
+    });
+}
+
 // Break an amount into denomination counts (greedy, largest first). The amount
 // is first converted to whole big blinds, so chip piles are sized relative to
 // the blinds rather than the raw dollar figure.
@@ -153,35 +181,40 @@ function renderStackChip(el, amount) {
  */
 function parseStreetActions(actions, heroBetInit = 0, villainBetInit = 0) {
     let heroBet = heroBetInit, villainBet = villainBetInit;
+    const isPreflop = heroBetInit > 0 || villainBetInit > 0; // blinds only pre-flop
+    const labels = classifyBetLevels(actions, isPreflop);
 
-    return actions.map(action => {
+    // Hands authored by the recorder prefix actions with the player's nickname
+    // (e.g. "Brunson raises to $80") instead of "Hero"/"Villain". Use the
+    // puzzle's nicks to attribute the action; fall back to the Hero/Villain
+    // literals used by the older library.
+    const p = (typeof currentPuzzle !== 'undefined') ? currentPuzzle : null;
+    const heroNick = (p && p.heroNick || '').toLowerCase();
+    const villNick = (p && p.villainNick || '').toLowerCase();
+
+    return actions.map((action, i) => {
         const lower = action.toLowerCase();
-        const isHero = lower.startsWith('hero');
+        let isHero;
+        if (lower.startsWith('villain')) isHero = false;
+        else if (lower.startsWith('hero')) isHero = true;
+        else if (villNick && lower.startsWith(villNick)) isHero = false;
+        else if (heroNick && lower.startsWith(heroNick)) isHero = true;
+        else isHero = true;
         const m = action.match(/\$([0-9,]+(?:\.[0-9]+)?)/);
         const amount = m ? parseFloat(m[1].replace(/,/g, '')) : 0;
         const allIn = /\ball[\s-]?in\b|shove|jam/.test(lower);
 
-        let type = 'check';
+        // type = the n-bet label (check/call/fold/bet/raise/3bet/...). A
+        // bet/raise/n-bet all commit "to" the absolute amount, so the chip math
+        // is the same for all of them.
+        let type = labels[i];
         let delta = 0;
-
-        // Order matters: "raise" is checked before "check" so a check-raise
-        // ("Hero check-raises to $900") is treated as a raise, not a check.
-        if (lower.includes('fold')) {
-            type = 'fold';
-        } else if (lower.includes('raise')) {
-            type = 'raise';
-            if (isHero) { delta = amount - heroBet; heroBet = amount; }
-            else        { delta = amount - villainBet; villainBet = amount; }
-        } else if (lower.includes('call')) {
-            type = 'call';
+        if (type === 'call') {
             delta = amount;
             if (isHero) heroBet += delta; else villainBet += delta;
-        } else if (lower.includes('bet') || amount > 0) {
-            type = 'bet';
+        } else if (type !== 'check' && type !== 'fold') {
             if (isHero) { delta = amount - heroBet; heroBet = amount; }
             else        { delta = amount - villainBet; villainBet = amount; }
-        } else if (lower.includes('check')) {
-            type = 'check';
         }
 
         if (allIn) type = 'allin';
@@ -298,14 +331,16 @@ function _renderZone(zone, ev, total) {
     zone.innerHTML = '';
 
     const badge = document.createElement('div');
-    badge.className = 'action-badge action-' + ev.type;
+    // n-bet types (3bet/4bet) reuse the raise styling.
+    const styleType = /^\d+bet$/.test(ev.type) ? 'raise' : ev.type;
+    badge.className = 'action-badge action-' + styleType;
     if (ev.type === 'allin') {
         const tri = document.createElement('span');
         tri.className = 'allin-tri';
         badge.appendChild(tri);
         badge.appendChild(document.createTextNode(ACTION_TEXT.allin));
     } else {
-        badge.textContent = ACTION_TEXT[ev.type] || ev.type;
+        badge.textContent = actionText(ev.type);
     }
     zone.appendChild(badge);
 
@@ -315,6 +350,21 @@ function _renderZone(zone, ev, total) {
         if (holder.firstChild) zone.appendChild(holder.firstChild);
         zone.appendChild(_amountPill(total));
     }
+}
+
+// Update a player's stack pill + chips during the animation. Skips unknown
+// stacks (0 = unknown) so we never show a bogus/negative count for them.
+function _setOneStack(pillId, chipsId, amount, known) {
+    if (!known) return;
+    const v = Math.max(0, Math.round(amount * 100) / 100);
+    const pill = document.getElementById(pillId);
+    const chips = document.getElementById(chipsId);
+    if (pill) pill.textContent = formatCurrency(v);
+    if (chips) renderStackChip(chips, v);
+}
+function _setStacks(heroAmt, villAmt, heroKnown, villKnown) {
+    _setOneStack('hero-stack', 'hero-stack-chips', heroAmt, heroKnown);
+    _setOneStack('villain-stack', 'villain-stack-chips', villAmt, villKnown);
 }
 
 /**
@@ -336,15 +386,21 @@ async function animateStreetActions(streetData) {
     _clearZone(heroZone);
     _setReplayVisible(false); // hide replay while the action animates
 
-    // Reset the pot to where it stood BEFORE this street's action, so the
-    // chips visibly build it up (and a replay starts from the same place).
-    if (potChips && !prefersReduced) {
-        const hist = (typeof currentPuzzle !== 'undefined' && currentPuzzle)
-            ? currentPuzzle.ActionHistory : null;
-        const idx = hist ? hist.indexOf(streetData) : -1;
-        const startPot = idx > 0 ? hist[idx - 1].PotEnd : 0;
-        renderChipPile(potChips, startPot);
-        setPotDisplay(startPot); // bubble tracks the chips (hidden when empty)
+    // Pre-street pot + stacks (where things stood BEFORE this street's action),
+    // so the chips build up and the stacks count down — and a replay starts
+    // from the same place rather than the finished values.
+    const _p = (typeof currentPuzzle !== 'undefined') ? currentPuzzle : null;
+    const _hist = _p ? _p.ActionHistory : null;
+    const _idx = _hist ? _hist.indexOf(streetData) : -1;
+    const startPot = _idx > 0 ? _hist[_idx - 1].PotEnd : 0;
+    const preHero = _idx > 0 ? _hist[_idx - 1].HeroStack : (_p ? _p.heroStartingStackBBs : 0);
+    const preVill = _idx > 0 ? _hist[_idx - 1].VillainStack : (_p ? _p.villainStartingStackBBs : 0);
+    const heroKnown = !!(_p && _p.heroStartingStackBBs > 0);
+    const villKnown = !!(_p && _p.villainStartingStackBBs > 0);
+
+    if (!prefersReduced) {
+        if (potChips) { renderChipPile(potChips, startPot); setPotDisplay(startPot); }
+        _setStacks(preHero, preVill, heroKnown, villKnown); // full stacks, pre-blinds
     }
 
     // Pre-flop carries posted blinds; seed each player's committed total with
@@ -388,6 +444,7 @@ async function animateStreetActions(streetData) {
         heroZone.classList.add('chip-slide-up');
     }
     if (blinds.villain > 0 || blinds.hero > 0) {
+        _setStacks(preHero - hShown, preVill - vShown, heroKnown, villKnown); // minus blinds
         await pause(900);
         if (!alive()) return;
     }
@@ -404,6 +461,9 @@ async function animateStreetActions(streetData) {
             if (ev.actor === 'hero') hShown += ev.delta; else vShown += ev.delta;
         }
         const total = ev.actor === 'hero' ? hShown : vShown;
+
+        // Count this player's stack down as their chips go into the bet zone.
+        _setStacks(preHero - hShown, preVill - vShown, heroKnown, villKnown);
 
         const slideClass = ev.actor === 'villain' ? 'chip-slide-down' : 'chip-slide-up';
         zone.classList.remove('chip-slide-down', 'chip-slide-up');
@@ -455,5 +515,7 @@ async function animateStreetActions(streetData) {
         _clearZone(heroZone);
     }
 
+    // Land on the exact end-of-street stacks.
+    _setStacks(streetData.HeroStack, streetData.VillainStack, heroKnown, villKnown);
     if (alive()) _setReplayVisible(true); // action settled — allow replay
 }

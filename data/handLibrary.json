@@ -1,0 +1,100 @@
+[
+    {
+        "name": "Sara vs Ronnie",
+        "context": "PokerStars \"Shark Cage\": on the very first hand against poker pro Ronnie Bardah, Miss Finland 2012 Sara Chafak pulls off one of poker's most famous bluffs. Bardah turns trip fours and bets big, but Chafak moves all-in for ~$700K on the river holding nothing but ace-high \u2014 and Bardah lays down his trips after an agonizing dwell. The clip went viral and made Chafak a poker sensation.",
+        "youtubeLink": "https://www.youtube.com/shorts/M7DjhweSx7E",
+        "heroName": "Ronnie Bardah",
+        "villainName": "Sara Chafak",
+        "heroNick": "Ronnie",
+        "villainNick": "Sara",
+        "HeroPosition": "BB",
+        "smallBlind": 10000,
+        "bigBlind": 20000,
+        "ante": 0,
+        "heroStartingStackBBs": 1600000,
+        "villainStartingStackBBs": 1006000,
+        "HeroHand": [
+            "8c",
+            "4s"
+        ],
+        "VillainSolution": [
+            "Ah",
+            "2d"
+        ],
+        "Board": [
+            "Qs",
+            "5s",
+            "4c",
+            "4d",
+            "6h"
+        ],
+        "StartingPot": 30000,
+        "ActionHistory": [
+            {
+                "Street": "Pre-Flop",
+                "Actions": [
+                    "Sara calls $10000",
+                    "Ronnie checks"
+                ],
+                "PotEnd": 40000,
+                "HeroStack": 1580000,
+                "VillainStack": 986000,
+                "CardsShown": []
+            },
+            {
+                "Street": "Flop",
+                "Actions": [
+                    "Ronnie bets $15000",
+                    "Sara raises to $30000",
+                    "Ronnie calls $15000"
+                ],
+                "PotEnd": 100000,
+                "HeroStack": 1550000,
+                "VillainStack": 956000,
+                "CardsShown": [
+                    "Qs",
+                    "5s",
+                    "4c"
+                ]
+            },
+            {
+                "Street": "Turn",
+                "Actions": [
+                    "Ronnie checks",
+                    "Sara bets $55000",
+                    "Ronnie raises to $155000",
+                    "Sara raises to $255000",
+                    "Ronnie calls $100000"
+                ],
+                "PotEnd": 610000,
+                "HeroStack": 1295000,
+                "VillainStack": 701000,
+                "CardsShown": [
+                    "Qs",
+                    "5s",
+                    "4c",
+                    "4d"
+                ]
+            },
+            {
+                "Street": "River",
+                "Actions": [
+                    "Ronnie checks",
+                    "Sara bets $701000 (all-in)",
+                    "Ronnie folds"
+                ],
+                "PotEnd": 1311000,
+                "HeroStack": 1295000,
+                "VillainStack": 0,
+                "CardsShown": [
+                    "Qs",
+                    "5s",
+                    "4c",
+                    "4d",
+                    "6h"
+                ]
+            }
+        ],
+        "id": "1"
+    }
+]

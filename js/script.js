@@ -1,6 +1,7 @@
 // js/script.js
 
-// Money shown in the on-table bubbles — no "$" (the context makes it obvious).
+// Money shown on the table — no "$". K/M to two decimals when they apply;
+// amounts under 1,000 stay as plain numbers (no trailing ".00").
 function formatCurrency(num) {
     if (num >= 1000000) {
         return (num / 1000000).toFixed(2) + 'M';
@@ -8,7 +9,38 @@ function formatCurrency(num) {
     if (num >= 1000) {
         return (num / 1000).toFixed(2) + 'K';
     }
-    return num.toFixed(2);
+    return Number.isInteger(num) ? String(num) : num.toFixed(2);
+}
+
+// Format a street's plays for the timeline: correct poker terminology
+// (raise / 3-bet / 4-bet … from the betting sequence) + K/M amounts, no "$".
+// The raw stored strings keep their "$N" so the chip parser still works.
+function formatStreetPlays(actions, isPreflop) {
+    const labels = classifyBetLevels(actions, isPreflop); // shared with chips.js
+    return actions.map((a, i) => relabelPlay(a, labels[i]));
+}
+function relabelPlay(str, label) {
+    const allIn = /\(all-in\)|\ball[\s-]?in\b|shove|jam/i.test(str);
+    const m = str.match(/\$([0-9,]+(?:\.[0-9]+)?)/);
+    const amt = m ? formatCurrency(parseFloat(m[1].replace(/,/g, ''))) : null;
+    // Actor = everything before the first action keyword.
+    const vIdx = str.search(/\b(checks?|check-raises?|raises?|re-?raises?|\d+-bets?|bets?|calls?|folds?|shoves?|jams?|moves?)\b/i);
+    const actor = vIdx > 0 ? str.slice(0, vIdx).trim() : str.trim();
+
+    const checkRaise = /check-?rais/i.test(str);
+    let phrase;
+    if (label === 'fold') phrase = 'folds';
+    else if (label === 'check') phrase = 'checks';
+    else if (label === 'call') phrase = amt ? `calls ${amt}` : 'calls';
+    else if (label === 'bet') phrase = amt ? `bets ${amt}` : 'bets';
+    else if (label === 'raise') {
+        const verb = checkRaise ? 'check-raises' : 'raises';
+        phrase = amt ? `${verb} to ${amt}` : verb;
+    } else { // 3bet / 4bet / 5bet ...
+        const n = label.replace('bet', '');
+        phrase = amt ? `${n}-bets to ${amt}` : `${n}-bets`;
+    }
+    return `${actor} ${phrase}${allIn ? ' (all-in)' : ''}`;
 }
 
 function normalizeCard(card) {
@@ -22,8 +54,13 @@ function normalizeRank(rank) {
     return rank === '10' ? 'T' : rank;
 }
 
-const API_URL = '/api/daily-puzzle';
-const STORAGE_KEY = 'pocketpair_state';
+// Preview mode: /?preview=<id> playtests a recorded hand from handLibrary
+// instead of the daily puzzle, with isolated storage and no stats recording.
+const PREVIEW_ID = new URLSearchParams(location.search).get('preview');
+const isPreview = !!PREVIEW_ID;
+
+const API_URL = isPreview ? '/api/builder/hand/' + encodeURIComponent(PREVIEW_ID) : '/api/daily-puzzle';
+const STORAGE_KEY = isPreview ? 'pocketpair_preview_' + PREVIEW_ID : 'pocketpair_state';
 const STATS_KEY = 'pocketpair_stats';
 const STREET_NAMES = ['Pre-Flop', 'Flop', 'Turn', 'River'];
 const MAX_ATTEMPTS = 6;
@@ -243,7 +280,8 @@ function renderFullActionStatus() {
         else if (index === currentStreetIndex) state = 'current';
 
         const actionsHTML = (index <= currentStreetIndex)
-            ? streetData.Actions.map(action => `<p class="action-line">${action}</p>`).join('')
+            ? formatStreetPlays(streetData.Actions, index === 0)
+                .map(line => `<p class="action-line">${line}</p>`).join('')
             : '<p class="action-line muted">—</p>';
 
         return `
@@ -897,7 +935,7 @@ function endGame(win, showModal = true) {
     // against double-counting via lastId), so a result still counts even if the
     // game was finished on a previous load. Then render into the modal.
     const winStreet = win ? currentStreetIndex : -1;
-    const stats = recordResult(win, winStreet);
+    const stats = isPreview ? loadStats() : recordResult(win, winStreet);
     renderStats(stats, winStreet);
 
     // Label + larger solution cards, using the opponent's name

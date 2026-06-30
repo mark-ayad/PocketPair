@@ -3,6 +3,9 @@
     --color-green-wordle: #6aaa64;
     --color-yellow-wordle: #c9b458;
     --color-grey-wordle: #787c7e;
+    /* "Known" cards (your hand / the board) — muted red, distinct from the
+       grey "rank not in their hand" result. */
+    --color-known: #bd6e6e;
     
     /* --- Light Theme (New Default) --- */
     --color-background: #f3f3f3;
@@ -665,7 +668,8 @@ header h1 {
 
 .legend-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    text-align: left;
 }
 
 .legend-color-box {
@@ -687,6 +691,10 @@ header h1 {
 
 .legend-color-box.grey {
     background-color: var(--color-grey-wordle);
+}
+
+.legend-color-box.known {
+    background-color: var(--color-known);
 }
 
 #guess-history-grid {
@@ -868,10 +876,10 @@ header h1 {
 }
 
 .card-wrapper.known-card .card {
-    background-color: var(--color-grey-wordle);
-    border-color: var(--color-grey-wordle);
+    background-color: var(--color-known);
+    border-color: var(--color-known);
     color: var(--color-text-light);
-    opacity: 0.6;
+    opacity: 0.55;
     cursor: not-allowed;
     pointer-events: none;
 }
@@ -1031,7 +1039,7 @@ body.restoring .guess-row {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    max-width: 320px;
+    max-width: 400px;
     margin: 0 auto 30px auto;
 }
 
@@ -1043,6 +1051,7 @@ body.restoring .guess-row {
 
 .intro-legend-preview .legend-item p {
     margin: 0;
+    text-align: left;
 }
 
 .intro-legend-preview .legend-item strong {

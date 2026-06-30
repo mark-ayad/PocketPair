@@ -1,6 +1,6 @@
 # server/app.py
 
-from flask import Flask, jsonify, send_from_directory
+from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS
 import json
 import os
@@ -38,6 +38,7 @@ def set_security_headers(response):
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 RANGE_LIBRARY_PATH = os.path.join(DATA_DIR, 'rangeLibrary.json')
 HISTORY_PATH = os.path.join(DATA_DIR, 'gameHistory.json')
+HAND_LIBRARY_PATH = os.path.join(DATA_DIR, 'handLibrary.json')
 
 # --- Helper Functions for Data Management ---
 
@@ -173,6 +174,53 @@ def serve_js(filename):
 @app.route('/styles/<path:filename>')
 def serve_styles(filename):
     return send_from_directory(os.path.join(ROOT_DIR, 'styles'), filename)
+
+
+# --- Hand recorder (content authoring tool) ---
+
+@app.route('/builder')
+def serve_builder():
+    return send_from_directory(ROOT_DIR, 'builder.html')
+
+@app.route('/api/builder/library', methods=['GET'])
+def builder_library():
+    """How many hands have been recorded so far (for the recorder's counter)."""
+    hands = load_json(HAND_LIBRARY_PATH) or []
+    return jsonify({'count': len(hands), 'ids': [h.get('id') for h in hands]})
+
+@app.route('/api/builder/hand/<hid>', methods=['GET'])
+def builder_hand(hid):
+    """Serve a single recorded hand by id, for playtesting via /?preview=<id>."""
+    hands = load_json(HAND_LIBRARY_PATH) or []
+    hand = next((h for h in hands if str(h.get('id')) == str(hid)), None)
+    if not hand:
+        return jsonify({'error': 'hand not found'}), 404
+    return jsonify(normalize_puzzle(hand))
+
+@app.route('/api/builder/save', methods=['POST'])
+def builder_save():
+    """Append a finished hand to handLibrary.json, auto-assigning the next id."""
+    hand = request.get_json(silent=True)
+    if not isinstance(hand, dict):
+        return jsonify({'error': 'Invalid hand payload'}), 400
+
+    lock_path = HAND_LIBRARY_PATH + '.lock'
+    with open(lock_path, 'w') as lock_file:
+        fcntl.flock(lock_file, fcntl.LOCK_EX)
+        try:
+            hands = load_json(HAND_LIBRARY_PATH) or []
+            next_id = 0
+            for h in hands:
+                try:
+                    next_id = max(next_id, int(h.get('id', 0)))
+                except (ValueError, TypeError):
+                    pass
+            hand['id'] = str(next_id + 1)
+            hands.append(hand)
+            save_json(HAND_LIBRARY_PATH, hands)
+            return jsonify({'ok': True, 'id': hand['id'], 'count': len(hands)})
+        finally:
+            fcntl.flock(lock_file, fcntl.LOCK_UN)
 
 
 if __name__ == '__main__':

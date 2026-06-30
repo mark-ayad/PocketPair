@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketPair — Hand Recorder</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/builder.css">
+</head>
+
+<body class="builder-body">
+    <div class="builder-wrap">
+        <header class="builder-header">
+            <h1>Hand Recorder</h1>
+            <span id="lib-count" class="lib-count">— saved</span>
+        </header>
+
+        <!-- Screen 1: setup -->
+        <section id="setup-screen" class="builder-card">
+            <h2 id="setup-heading">Hand setup</h2>
+            <div class="form-grid">
+                <label>Hand title<input id="f-title" type="text" placeholder="Moneymaker vs Farha"></label>
+                <label>Video URL<input id="f-video" type="url" placeholder="https://www.youtube.com/watch?v=..."></label>
+                <label class="full">Context (shown after the game)<textarea id="f-context" rows="2" placeholder="2003 WSOP Main Event final hand..."></textarea></label>
+                <label>Small blind ($)<input id="f-sb" type="number" value="10"></label>
+                <label>Big blind ($)<input id="f-bb" type="number" value="20"></label>
+                <label>Ante ($, each)<input id="f-ante" type="number" value="0"></label>
+            </div>
+
+            <div class="players-row">
+                <div class="player-setup">
+                    <h3>Small Blind <span class="hint">acts first pre-flop · on the button</span></h3>
+                    <label>Full name<input id="sb-name" type="text" placeholder="Doyle Brunson"></label>
+                    <label>Shown in the plays<input id="sb-nick" type="text" placeholder="Brunson"></label>
+                    <label>Starting stack ($, optional)<input id="sb-stack" type="number" placeholder="10000"></label>
+                    <div class="holecards">
+                        <span>Hole cards</span>
+                        <button class="card-pick" data-slot="sb-c1">+</button>
+                        <button class="card-pick" data-slot="sb-c2">+</button>
+                    </div>
+                </div>
+                <div class="player-setup">
+                    <h3>Big Blind <span class="hint">acts first post-flop</span></h3>
+                    <label>Full name<input id="bb-name" type="text" placeholder="Sam Farha"></label>
+                    <label>Shown in the plays<input id="bb-nick" type="text" placeholder="Farha"></label>
+                    <label>Starting stack ($, optional)<input id="bb-stack" type="number" placeholder="10000"></label>
+                    <div class="holecards">
+                        <span>Hole cards</span>
+                        <button class="card-pick" data-slot="bb-c1">+</button>
+                        <button class="card-pick" data-slot="bb-c2">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guess-target">
+                <span>Which player does the user have to guess? <em>(their cards are hidden in the game)</em></span>
+                <div class="radio-row">
+                    <label><input type="radio" name="guess" value="SB"> Small Blind</label>
+                    <label><input type="radio" name="guess" value="BB" checked> Big Blind</label>
+                </div>
+            </div>
+
+            <p id="setup-error" class="builder-error"></p>
+            <button id="start-btn" class="builder-btn primary">Start recording →</button>
+        </section>
+
+        <!-- Screen 2: action recording -->
+        <section id="action-screen" class="builder-card hidden">
+            <div class="street-head">
+                <div class="street-steps" id="street-steps"></div>
+                <div class="street-meta">Pot <strong id="cur-pot">$0</strong></div>
+            </div>
+            <div id="board-display" class="board-display"></div>
+            <div id="action-log" class="action-log"></div>
+            <div id="prompt-zone" class="prompt-zone"></div>
+            <div class="action-controls">
+                <button id="edit-setup-btn" class="builder-btn ghost">‹ Edit setup</button>
+                <button id="undo-btn" class="builder-btn">↶ Undo</button>
+                <button id="restart-btn" class="builder-btn ghost">Restart hand</button>
+            </div>
+        </section>
+
+        <!-- Screen 3: review / save -->
+        <section id="review-screen" class="builder-card hidden">
+            <h2>Review &amp; save</h2>
+            <div id="review-summary" class="review-summary"></div>
+            <p id="review-error" class="builder-error"></p>
+            <details class="json-details">
+                <summary>View raw JSON</summary>
+                <pre id="review-json" class="review-json"></pre>
+            </details>
+            <div class="action-controls">
+                <button id="review-edit-setup-btn" class="builder-btn ghost">‹ Edit setup</button>
+                <button id="back-edit-btn" class="builder-btn ghost">↶ Undo last</button>
+                <button id="save-btn" class="builder-btn primary">Save to library</button>
+            </div>
+            <p id="save-status" class="save-status"></p>
+        </section>
+    </div>
+
+    <!-- Card picker -->
+    <div id="card-picker" class="card-picker-overlay hidden">
+        <div class="card-picker-box">
+            <div class="card-picker-head">
+                <span id="card-picker-title">Pick a card</span>
+                <button id="card-picker-close" aria-label="Close">&times;</button>
+            </div>
+            <input id="card-picker-input" class="card-picker-input" type="text"
+                   placeholder="Type a card then Enter — e.g. Ah, Ks, Td" autocomplete="off">
+            <div id="card-picker-grid" class="card-picker-grid"></div>
+        </div>
+    </div>
+
+    <script src="js/builder.js"></script>
+</body>
+
+</html>

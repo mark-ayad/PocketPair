@@ -54,16 +54,28 @@ def infer_blinds(hand):
     return sb, bb, ante
 
 
-def street_totals(actions, hero_init, villain_init):
+def street_totals(actions, hero_init, villain_init, hero_nick='', vill_nick=''):
     """Return (hero_total, villain_total) wagered this street.
 
     Matches js/chips.js parseStreetActions: 'raise/bet to $X' sets the absolute
-    street total; 'call $X' adds X. Seeded with posted blinds pre-flop.
+    street total; 'call $X' adds X. Seeded with posted blinds pre-flop. Actions
+    may start with "Hero"/"Villain" (older library) or the player's nickname
+    (recorder-authored hands).
     """
+    hn, vn = hero_nick.lower(), vill_nick.lower()
     hero_bet, villain_bet = hero_init, villain_init
     for a in actions:
         low = a.lower()
-        hero = low.startswith('hero')
+        if low.startswith('villain'):
+            hero = False
+        elif low.startswith('hero'):
+            hero = True
+        elif vn and low.startswith(vn):
+            hero = False
+        elif hn and low.startswith(hn):
+            hero = True
+        else:
+            hero = True
         m = re.search(r'\$([0-9,]+(?:\.[0-9]+)?)', a)
         amt = float(m.group(1).replace(',', '')) if m else 0
         # Order matches js/chips.js: raise before check, so a check-raise is a
@@ -149,10 +161,12 @@ def validate_hand(hand, seen_combos):
             errors.append(f'{STREETS[i]} CardsShown {shown} != board prefix '
                           f'{board[:len(shown)]}')
 
+        hn = hand.get('heroNick', '')
+        vn = hand.get('villainNick', '')
         if i == 0:
-            h, v = street_totals(street['Actions'], hero_total, villain_total)
+            h, v = street_totals(street['Actions'], hero_total, villain_total, hn, vn)
         else:
-            h, v = street_totals(street['Actions'], 0, 0)
+            h, v = street_totals(street['Actions'], 0, 0, hn, vn)
         hero_contrib += h
         villain_contrib += v
         running_pot += h + v
@@ -161,17 +175,23 @@ def validate_hand(hand, seen_combos):
             errors.append(f'{STREETS[i]} PotEnd {street["PotEnd"]} != '
                           f'reconciled {round(running_pot, 2)}')
 
-        # Stacks
-        exp_hero = hand['heroStartingStackBBs'] - hero_contrib
-        exp_vill = hand['villainStartingStackBBs'] - villain_contrib
-        if 'HeroStack' in street and abs(street['HeroStack'] - exp_hero) > 0.01:
-            warnings.append(f'{STREETS[i]} HeroStack {street["HeroStack"]} != '
-                            f'expected {round(exp_hero, 2)}')
-        if 'VillainStack' in street and abs(street['VillainStack'] - exp_vill) > 0.01:
-            warnings.append(f'{STREETS[i]} VillainStack {street["VillainStack"]} '
-                            f'!= expected {round(exp_vill, 2)}')
-        if exp_hero < -0.01 or exp_vill < -0.01:
-            errors.append(f'{STREETS[i]} stack went negative')
+        # Stacks — a starting stack of 0 means "unknown", so skip its checks.
+        hero_known = hand['heroStartingStackBBs'] > 0
+        vill_known = hand['villainStartingStackBBs'] > 0
+        if hero_known:
+            exp_hero = hand['heroStartingStackBBs'] - hero_contrib
+            if 'HeroStack' in street and abs(street['HeroStack'] - exp_hero) > 0.01:
+                warnings.append(f'{STREETS[i]} HeroStack {street["HeroStack"]} != '
+                                f'expected {round(exp_hero, 2)}')
+            if exp_hero < -0.01:
+                errors.append(f'{STREETS[i]} hero stack went negative')
+        if vill_known:
+            exp_vill = hand['villainStartingStackBBs'] - villain_contrib
+            if 'VillainStack' in street and abs(street['VillainStack'] - exp_vill) > 0.01:
+                warnings.append(f'{STREETS[i]} VillainStack {street["VillainStack"]} '
+                                f'!= expected {round(exp_vill, 2)}')
+            if exp_vill < -0.01:
+                errors.append(f'{STREETS[i]} villain stack went negative')
 
     # youtube link
     link = (hand.get('youtubeLink') or '').strip()
