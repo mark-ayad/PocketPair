@@ -118,7 +118,8 @@ function renderCard(cardCode) {
     if (!cardCode) return '';
 
     let displayRank = cardCode.slice(0, -1);
-    if (displayRank === "10") displayRank = "T";
+    if (displayRank === "T") displayRank = "10";
+    const tenClass = displayRank === "10" ? " is-ten" : "";
     const suitCode = cardCode.slice(-1).toLowerCase();
     let suitSymbol;
     let suitColorClass;
@@ -133,7 +134,7 @@ function renderCard(cardCode) {
 
     return `
         <span class="card ${suitColorClass}" data-card="${cardCode}">
-            <div class="card-rank-display">${displayRank}</div>
+            <div class="card-rank-display${tenClass}">${displayRank}</div>
             <div class="card-symbol-display">${suitSymbol}</div>
         </span>
     `;

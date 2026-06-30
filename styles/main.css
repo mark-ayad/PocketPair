@@ -645,6 +645,14 @@ header h1 {
     line-height: 1;
 }
 
+/* "10" is two characters — same size as other ranks, just tighter tracking.
+   The trailing letter-spacing + the "1"'s wide left bearing make the ink lean
+   right, so nudge it left to optically center under the suit. */
+.card-rank-display.is-ten {
+    letter-spacing: -0.08em;
+    text-indent: -0.08em;
+}
+
 .card-symbol-display {
     font-size: 1.1em;
     line-height: 1;

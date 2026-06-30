@@ -15,10 +15,12 @@ function round2(n) { return Math.round(n * 100) / 100; }
 function other(role) { return role === 'SB' ? 'BB' : 'SB'; }
 
 function renderCardFace(code) {
-    const rank = code.slice(0, -1);
+    let rank = code.slice(0, -1);
+    if (rank === 'T') rank = '10';
+    const tenClass = rank === '10' ? ' is-ten' : '';
     const s = SUITS.find(x => x[0] === code.slice(-1));
     return `<span class="card card-suit-${s ? s[2] : ''}">` +
-        `<div class="card-rank-display">${rank}</div>` +
+        `<div class="card-rank-display${tenClass}">${rank}</div>` +
         `<div class="card-symbol-display">${s ? s[1] : ''}</div></span>`;
 }
 
