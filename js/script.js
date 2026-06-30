@@ -214,8 +214,12 @@ function initializeGame(data) {
     // Pot starts empty — the pre-flop animation builds it from the blinds.
     setPotDisplay(0);
 
+    // Stacks start at their full (pre-blind) amounts; the animation counts them
+    // down. Render both the pill and the chips so nothing is blank pre-animation.
     document.getElementById('hero-stack').textContent = formatCurrency(data.heroStartingStackBBs);
     document.getElementById('villain-stack').textContent = formatCurrency(data.villainStartingStackBBs);
+    renderStackChip(document.getElementById('hero-stack-chips'), data.heroStartingStackBBs);
+    renderStackChip(document.getElementById('villain-stack-chips'), data.villainStartingStackBBs);
 
 
     document.getElementById('villain-cards').innerHTML = `
@@ -297,20 +301,11 @@ function renderFullActionStatus() {
     if (!currentStreetData) return;
 
     const boardContainer = document.getElementById('board-cards');
-    const heroStackEl = document.getElementById('hero-stack');
-    const villainStackEl = document.getElementById('villain-stack');
 
-    // The pot bubble is driven by the chip animation (and by restore), so it
-    // isn't set here — that avoids briefly flashing the final pot before the
-    // chips build it up.
-
-    if (heroStackEl) heroStackEl.textContent = formatCurrency(currentStreetData.HeroStack);
-    if (villainStackEl) villainStackEl.textContent = formatCurrency(currentStreetData.VillainStack);
-
-    const heroStackChips    = document.getElementById('hero-stack-chips');
-    const villainStackChips = document.getElementById('villain-stack-chips');
-    if (heroStackChips)    renderStackChip(heroStackChips,    currentStreetData.HeroStack);
-    if (villainStackChips) renderStackChip(villainStackChips, currentStreetData.VillainStack);
+    // The pot bubble AND the player stacks are driven by the chip animation
+    // (which resets them to the pre-street amount and counts down) and, on a
+    // page reload, by restoreGameState. Setting them here too would briefly
+    // flash the end-of-street values before the animation resets them.
 
 
     if (boardContainer) {
@@ -1009,10 +1004,14 @@ function restoreGameState(savedState) {
     const currentStreetData = currentPuzzle.ActionHistory[currentStreetIndex];
     if (currentStreetData) {
         markKnownCards(currentPuzzle.HeroHand, currentStreetData.CardsShown);
-        // Restore pot chips + bubble statically (no animation on page reload)
+        // Restore pot + stacks statically (no animation on page reload).
         const potChips = document.getElementById('pot-chips');
         if (potChips) renderChipPile(potChips, currentStreetData.PotEnd);
         setPotDisplay(currentStreetData.PotEnd);
+        document.getElementById('hero-stack').textContent = formatCurrency(currentStreetData.HeroStack);
+        document.getElementById('villain-stack').textContent = formatCurrency(currentStreetData.VillainStack);
+        renderStackChip(document.getElementById('hero-stack-chips'), currentStreetData.HeroStack);
+        renderStackChip(document.getElementById('villain-stack-chips'), currentStreetData.VillainStack);
     }
 
     // No animation runs on restore, so the street is already settled — allow replay.
